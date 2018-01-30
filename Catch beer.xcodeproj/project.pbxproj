@@ -8,26 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		0A4166B9201F156A00BD5087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166B8201F156A00BD5087 /* AppDelegate.swift */; };
-		0A4166BB201F156A00BD5087 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166BA201F156A00BD5087 /* GameScene.sks */; };
 		0A4166BD201F156A00BD5087 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166BC201F156A00BD5087 /* Actions.sks */; };
-		0A4166BF201F156A00BD5087 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166BE201F156A00BD5087 /* GameScene.swift */; };
 		0A4166C1201F156A00BD5087 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166C0201F156A00BD5087 /* GameViewController.swift */; };
 		0A4166C4201F156A00BD5087 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166C2201F156A00BD5087 /* Main.storyboard */; };
 		0A4166C6201F156A00BD5087 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166C5201F156A00BD5087 /* Assets.xcassets */; };
 		0A4166C9201F156A00BD5087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166C7201F156A00BD5087 /* LaunchScreen.storyboard */; };
+		0A4166D2201F169A00BD5087 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166D1201F169A00BD5087 /* MainMenu.sks */; };
+		0A4166D6201F171200BD5087 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166D5201F171200BD5087 /* MainMenuScene.swift */; };
+		0A4166D8201F1E0200BD5087 /* GameplayScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A4166D7201F1E0200BD5087 /* GameplayScene.sks */; };
+		0A4166DA201F1E2B00BD5087 /* GameplaySceneClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166D9201F1E2B00BD5087 /* GameplaySceneClass.swift */; };
+		0A4166DD201F272F00BD5087 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166DC201F272F00BD5087 /* Player.swift */; };
+		0A4166E0201F2F9700BD5087 /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166DF201F2F9700BD5087 /* ItemController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A4166B5201F156A00BD5087 /* Catch beer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch beer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A4166B8201F156A00BD5087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0A4166BA201F156A00BD5087 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		0A4166BC201F156A00BD5087 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		0A4166BE201F156A00BD5087 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0A4166C0201F156A00BD5087 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0A4166C3201F156A00BD5087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A4166C5201F156A00BD5087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A4166C8201F156A00BD5087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A4166CA201F156A00BD5087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A4166D1201F169A00BD5087 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		0A4166D5201F171200BD5087 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		0A4166D7201F1E0200BD5087 /* GameplayScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameplayScene.sks; sourceTree = "<group>"; };
+		0A4166D9201F1E2B00BD5087 /* GameplaySceneClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplaySceneClass.swift; sourceTree = "<group>"; };
+		0A4166DC201F272F00BD5087 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		0A4166DF201F2F9700BD5087 /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +68,10 @@
 		0A4166B7201F156A00BD5087 /* Catch beer */ = {
 			isa = PBXGroup;
 			children = (
+				0A4166D3201F16C300BD5087 /* Classes */,
+				0A4166D0201F165C00BD5087 /* Scenes */,
 				0A4166B8201F156A00BD5087 /* AppDelegate.swift */,
-				0A4166BA201F156A00BD5087 /* GameScene.sks */,
 				0A4166BC201F156A00BD5087 /* Actions.sks */,
-				0A4166BE201F156A00BD5087 /* GameScene.swift */,
 				0A4166C0201F156A00BD5087 /* GameViewController.swift */,
 				0A4166C2201F156A00BD5087 /* Main.storyboard */,
 				0A4166C5201F156A00BD5087 /* Assets.xcassets */,
@@ -71,6 +79,50 @@
 				0A4166CA201F156A00BD5087 /* Info.plist */,
 			);
 			path = "Catch beer";
+			sourceTree = "<group>";
+		};
+		0A4166D0201F165C00BD5087 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				0A4166D1201F169A00BD5087 /* MainMenu.sks */,
+				0A4166D7201F1E0200BD5087 /* GameplayScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		0A4166D3201F16C300BD5087 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0A4166DE201F2F5A00BD5087 /* Items Controller Classes */,
+				0A4166DB201F271E00BD5087 /* Player Class */,
+				0A4166D4201F16D500BD5087 /* Scene Classes */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		0A4166D4201F16D500BD5087 /* Scene Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0A4166D5201F171200BD5087 /* MainMenuScene.swift */,
+				0A4166D9201F1E2B00BD5087 /* GameplaySceneClass.swift */,
+			);
+			path = "Scene Classes";
+			sourceTree = "<group>";
+		};
+		0A4166DB201F271E00BD5087 /* Player Class */ = {
+			isa = PBXGroup;
+			children = (
+				0A4166DC201F272F00BD5087 /* Player.swift */,
+			);
+			path = "Player Class";
+			sourceTree = "<group>";
+		};
+		0A4166DE201F2F5A00BD5087 /* Items Controller Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0A4166DF201F2F9700BD5087 /* ItemController.swift */,
+			);
+			path = "Items Controller Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +185,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A4166C4201F156A00BD5087 /* Main.storyboard in Resources */,
-				0A4166BB201F156A00BD5087 /* GameScene.sks in Resources */,
 				0A4166C6201F156A00BD5087 /* Assets.xcassets in Resources */,
 				0A4166C9201F156A00BD5087 /* LaunchScreen.storyboard in Resources */,
+				0A4166D2201F169A00BD5087 /* MainMenu.sks in Resources */,
+				0A4166D8201F1E0200BD5087 /* GameplayScene.sks in Resources */,
 				0A4166BD201F156A00BD5087 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,9 +200,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A4166BF201F156A00BD5087 /* GameScene.swift in Sources */,
+				0A4166D6201F171200BD5087 /* MainMenuScene.swift in Sources */,
 				0A4166C1201F156A00BD5087 /* GameViewController.swift in Sources */,
 				0A4166B9201F156A00BD5087 /* AppDelegate.swift in Sources */,
+				0A4166DD201F272F00BD5087 /* Player.swift in Sources */,
+				0A4166E0201F2F9700BD5087 /* ItemController.swift in Sources */,
+				0A4166DA201F1E2B00BD5087 /* GameplaySceneClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WE494UD8EM;
 				INFOPLIST_FILE = "Catch beer/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -304,6 +361,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WE494UD8EM;
 				INFOPLIST_FILE = "Catch beer/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
