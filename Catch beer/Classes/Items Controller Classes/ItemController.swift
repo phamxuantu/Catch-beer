@@ -17,17 +17,25 @@ class ItemController {
     
     private var minX = CGFloat(-175), maxX = CGFloat(175)
     
-    func spawnItems() -> SKSpriteNode {
+    func spawnItems(y: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?
         item = SKSpriteNode(imageNamed: "beer")
         item!.name = "beer"
         item!.setScale(0.2)
-        item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 2)
+        item?.physicsBody = SKPhysicsBody(rectangleOf: (item?.size)!)
         item!.physicsBody?.categoryBitMask = ColliderType.BEER
+        item?.physicsBody?.contactTestBitMask = ColliderType.PLAYER
+        item?.physicsBody?.collisionBitMask = 0
+        item?.physicsBody?.isDynamic = true
         item!.zPosition = 3
         item?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         item!.position.x = randomBetweenNumbers(firstNum: minX, secondNum: maxX)
-        item!.position.y = 500
+        item!.position.y = y + (item?.size.height)!
+//        let animationDuration:TimeInterval = 5
+//        var actionArray = [SKAction]()
+//        actionArray.append(SKAction.move(to: CGPoint(x: (item?.position.x)!, y: -(y + (item?.size.height)!)), duration: animationDuration))
+//        actionArray.append(SKAction.removeFromParent())
+//        item?.run(SKAction.sequence(actionArray))
         return item!
     }
     

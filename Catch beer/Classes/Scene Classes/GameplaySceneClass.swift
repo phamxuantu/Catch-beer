@@ -22,30 +22,53 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     var secondBody = SKPhysicsBody()
     var alertController: UIAlertController?
     var endRandom: Int?
+    var oldPosition: CGFloat?
+    private var minX = CGFloat(-175), maxX = CGFloat(175)
     
     override func didMove(to view: SKView) {
         initializeGame()
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        managePlayer()
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let touchLocation = touch.location(in: self)
+//            print(touchLocation.y)
+//            print(self.frame.size.height)
+            if touchLocation.y < -(self.frame.size.height/2 - 200) {
+                let sub = touchLocation.x - oldPosition!
+                player?.position.x += sub
+                if (player?.position.x)! < minX {
+                    player?.position.x = minX
+                }
+                if (player?.position.x)! > maxX {
+                    player?.position.x = maxX
+                }
+                oldPosition = touchLocation.x
+            }
+        }
     }
+    
+//    override func update(_ currentTime: TimeInterval) {
+//        managePlayer()
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if location.x > center {
-                moveLeft = false
-            } else {
-                moveLeft = true
-            }
-        }
-        canMove = true
+            oldPosition = location.x
+//            if location.x > center {
+//                moveLeft = false
+//            } else {
+//                moveLeft = true
+//            }
+//        }
+//        canMove = true
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        canMove = false
     }
+//
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        canMove = false
+//    }
     
     
     
@@ -96,19 +119,20 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
 //        } else if score >= 15 {
 //            endRandom = Int(itemController.randomBetweenNumbers(firstNum: 2, secondNum: 3))
 //        }
+//        endRandom = Int(itemController.randomBetweenNumbers(firstNum: 2, secondNum: 4))
 //        for _ in 1...endRandom! {
             if life > 0 {
-                Timer.scheduledTimer(timeInterval: TimeInterval(itemController.randomBetweenNumbers(firstNum: 1, secondNum: 2)), target: self, selector: #selector(GameplaySceneClass.spawnItems), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: TimeInterval(itemController.randomBetweenNumbers(firstNum: 0.6, secondNum: 0.9)), target: self, selector: #selector(GameplaySceneClass.spawnItems), userInfo: nil, repeats: true)
             }
-            Timer.scheduledTimer(timeInterval: TimeInterval(0), target: self, selector: #selector(GameplaySceneClass.removeItems), userInfo: nil, repeats: true)
+//            Timer.scheduledTimer(timeInterval: TimeInterval(0), target: self, selector: #selector(GameplaySceneClass.removeItems), userInfo: nil, repeats: true)
 //        }
     }
     
-    private func managePlayer(){
-        if canMove {
-            player?.move(left: moveLeft)
-        }
-    }
+//    private func managePlayer(){
+//        if canMove {
+//            player?.move()
+//        }
+//    }
     
     @objc func spawnItems(){
         if life <= 0 {
@@ -136,16 +160,22 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             view?.window?.rootViewController?.present(alertController!, animated: true, completion: nil)
 
         } else {
-//            if score < 15 {
-//                endRandom = Int(itemController.randomBetweenNumbers(firstNum: 1, secondNum: 3))
-//            } else if score >= 15 {
-//                endRandom = Int(itemController.randomBetweenNumbers(firstNum: 2, secondNum: 3))
-//            }
-//            for _ in 1...endRandom! {
-//                if life > 0 {
-                    self.scene?.addChild(itemController.spawnItems())
+            let item = itemController.spawnItems(y: self.frame.size.height / 2)
+//            self.scene?.addChild(itemController.spawnItems(y: self.frame.size.height))
+            self.scene?.addChild(item)
+//            let animationDuration:TimeInterval = 5
+//            var actionArray = [SKAction]()
+//            actionArray.append(SKAction.move(to: CGPoint(x: item.position.x, y: -(self.frame.size.height/2 + item.size.height)), duration: animationDuration))
+//            if item.position.y == -(self.frame.size.height/2) {
+//                life -= 1
+//                if life <= 0 {
+//                    lifeLabel?.text = "0"
+//                } else {
+//                    lifeLabel?.text = String(life)
 //                }
 //            }
+//            actionArray.append(SKAction.removeFromParent())
+//            item.run(SKAction.sequence(actionArray))
         }
         
     }
@@ -157,15 +187,13 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    @objc func removeItems() {
-        for child in children {
-            if child.name == "beer" {
-                if child.position.y < -self.scene!.frame.height - 100 {
-                    life -= 1
-                    lifeLabel?.text = String(life)
-                    child.removeFromParent()
-                }
-            }
-        }
-    }
+//    @objc func removeItems() {
+//        for child in children {
+//            if child.name == "beer" {
+//                if child.position.y < -self.scene!.frame.height - 100 {
+//                    child.removeFromParent()
+//                }
+//            }
+//        }
+//    }
 }
