@@ -11,6 +11,9 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    
+    static var bestScore: Int = 0
+    static var coinCollect: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()

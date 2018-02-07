@@ -19,6 +19,8 @@
 		0A4166DA201F1E2B00BD5087 /* GameplaySceneClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166D9201F1E2B00BD5087 /* GameplaySceneClass.swift */; };
 		0A4166DD201F272F00BD5087 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166DC201F272F00BD5087 /* Player.swift */; };
 		0A4166E0201F2F9700BD5087 /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4166DF201F2F9700BD5087 /* ItemController.swift */; };
+		0A5F6C952029976400C5BDF3 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A5F6C932029976400C5BDF3 /* Explosion.sks */; };
+		0A5F6C962029976400C5BDF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A5F6C942029976400C5BDF3 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		0A4166D9201F1E2B00BD5087 /* GameplaySceneClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplaySceneClass.swift; sourceTree = "<group>"; };
 		0A4166DC201F272F00BD5087 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		0A4166DF201F2F9700BD5087 /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		0A5F6C932029976400C5BDF3 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		0A5F6C942029976400C5BDF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,8 +88,10 @@
 		0A4166D0201F165C00BD5087 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0A5F6C932029976400C5BDF3 /* Explosion.sks */,
 				0A4166D1201F169A00BD5087 /* MainMenu.sks */,
 				0A4166D7201F1E0200BD5087 /* GameplayScene.sks */,
+				0A5F6C942029976400C5BDF3 /* Assets.xcassets */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -188,7 +194,9 @@
 				0A4166C6201F156A00BD5087 /* Assets.xcassets in Resources */,
 				0A4166C9201F156A00BD5087 /* LaunchScreen.storyboard in Resources */,
 				0A4166D2201F169A00BD5087 /* MainMenu.sks in Resources */,
+				0A5F6C952029976400C5BDF3 /* Explosion.sks in Resources */,
 				0A4166D8201F1E0200BD5087 /* GameplayScene.sks in Resources */,
+				0A5F6C962029976400C5BDF3 /* Assets.xcassets in Resources */,
 				0A4166BD201F156A00BD5087 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
