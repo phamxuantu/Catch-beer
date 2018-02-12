@@ -1,0 +1,6 @@
+framework module Pods_Catch_beer {
+  umbrella header "Pods-Catch beer-umbrella.h"
+
+  export *
+  module * { export * }
+}

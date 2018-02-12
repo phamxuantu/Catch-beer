@@ -15,60 +15,56 @@ struct ColliderType {
 
 class ItemController {
     
-    private var minX = CGFloat(-300), maxX = CGFloat(300)
+    let bom = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).bom
+    let heart = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).heart
+    let beerGold = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).beerGold
+    let coin = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).coin
+    let beer = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).beer
     
-//    func spawnItems(y: CGFloat, life: Int) -> SKSpriteNode {
-//
-//        if life == 3 || life == 4 {
-//            spawnLittleHeart(y: y)
-//        } else if life == 5 {
-//            spawnNoHeart(y: y)
-//        } else {
-//            spawnNormal(y: y)
-//        }
-//    }
-    
-    func spawnLittleHeart(y: CGFloat) -> SKSpriteNode {
+    func spawnLittleHeart(y: CGFloat, width: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?
         let number = Int(randomBetweenNumbers(firstNum: 1, secondNum: 100))
-        
         if number <= 25 {
             item = SKSpriteNode(imageNamed: "bom")
             //            let bomTexture = SKTexture(imageNamed: "bom")
             item!.name = "bom"
-            item?.setScale(0.2)
+            item?.setScale(bom)
+            item?.anchorPoint.y = 0.4
             //            item!.physicsBody = SKPhysicsBody(texture: bomTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.width / 2)
         } else if number >= 26 && number <= 30 {
             item = SKSpriteNode(imageNamed: "heart")
             //            let heartTexture = SKTexture(imageNamed: "heart")
             item!.name = "heart"
-            item?.setScale(0.097)
+            item?.setScale(heart)
             //            item!.physicsBody = SKPhysicsBody(texture: heartTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else if number >= 31 && number <= 45 {
-            item = SKSpriteNode(imageNamed: "beer-gold")
+            item = SKSpriteNode(imageNamed: "beerGold")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
-            item!.name = "beer-gold"
-            item?.setScale(1.1)
+            item!.name = "beerGold"
+            item?.setScale(beerGold)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else if number >= 46 && number <= 55 {
             item = SKSpriteNode(imageNamed: "coin")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
             item!.name = "coin"
-            item?.setScale(0.35)
+            item?.setScale(coin)
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else {
             item = SKSpriteNode(imageNamed: "beer")
             //            let beerTexture = SKTexture(imageNamed: "beer")
             item!.name = "beer"
-            item?.setScale(0.3)
+            item?.setScale(beer)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         }
         item?.zPosition = 3
+        let minX = CGFloat(-(width / 2 - item!.size.width / 2)), maxX = (width / 2 - item!.size.width / 2)
         let position = randomBetweenNumbers(firstNum: minX, secondNum: maxX)
         item!.position = CGPoint(x: position, y: y + item!.size.height)
         item!.physicsBody?.isDynamic = true
@@ -78,7 +74,7 @@ class ItemController {
         return item!
     }
     
-    func spawnNoHeart(y: CGFloat) -> SKSpriteNode {
+    func spawnNoHeart(y: CGFloat, width: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?
         let number = Int(randomBetweenNumbers(firstNum: 1, secondNum: 100))
         
@@ -86,32 +82,36 @@ class ItemController {
             item = SKSpriteNode(imageNamed: "bom")
             //            let bomTexture = SKTexture(imageNamed: "bom")
             item!.name = "bom"
-            item?.setScale(0.2)
+            item?.setScale(bom)
+            item?.anchorPoint.y = 0.4
             //            item!.physicsBody = SKPhysicsBody(texture: bomTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.width / 2)
         } else if number >= 31 && number <= 45 {
-            item = SKSpriteNode(imageNamed: "beer-gold")
+            item = SKSpriteNode(imageNamed: "beerGold")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
-            item!.name = "beer-gold"
-            item?.setScale(1.1)
+            item!.name = "beerGold"
+            item?.setScale(beerGold)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else if number >= 46 && number <= 55 {
             item = SKSpriteNode(imageNamed: "coin")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
             item!.name = "coin"
-            item?.setScale(0.35)
+            item?.setScale(coin)
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else {
             item = SKSpriteNode(imageNamed: "beer")
             //            let beerTexture = SKTexture(imageNamed: "beer")
             item!.name = "beer"
-            item?.setScale(0.3)
+            item?.setScale(beer)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         }
         item?.zPosition = 3
+        let minX = CGFloat(-(width / 2 - item!.size.width / 2)), maxX = (width / 2 - item!.size.width / 2)
         let position = randomBetweenNumbers(firstNum: minX, secondNum: maxX)
         item!.position = CGPoint(x: position, y: y + item!.size.height)
         item!.physicsBody?.isDynamic = true
@@ -121,7 +121,7 @@ class ItemController {
         return item!
     }
     
-    func spawnNormal(y: CGFloat) -> SKSpriteNode {
+    func spawnNormal(y: CGFloat, width: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?
         let number = Int(randomBetweenNumbers(firstNum: 0, secondNum: 100))
         
@@ -129,39 +129,44 @@ class ItemController {
             item = SKSpriteNode(imageNamed: "bom")
             //            let bomTexture = SKTexture(imageNamed: "bom")
             item!.name = "bom"
-            item?.setScale(0.2)
+            
+            item?.setScale(bom)
+            item?.anchorPoint.y = 0.4
             //            item!.physicsBody = SKPhysicsBody(texture: bomTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.width / 2)
         } else if number >= 21 && number <= 30 {
             item = SKSpriteNode(imageNamed: "heart")
             //            let heartTexture = SKTexture(imageNamed: "heart")
             item!.name = "heart"
-            item?.setScale(0.097)
+            item?.setScale(heart)
             //            item!.physicsBody = SKPhysicsBody(texture: heartTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else if number >= 31 && number <= 45 {
-            item = SKSpriteNode(imageNamed: "beer-gold")
+            item = SKSpriteNode(imageNamed: "beerGold")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
-            item!.name = "beer-gold"
-            item?.setScale(1.1)
+            item!.name = "beerGold"
+            item?.setScale(beerGold)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else if number >= 46 && number <= 55 {
             item = SKSpriteNode(imageNamed: "coin")
             //            let beerGoldTexture = SKTexture(imageNamed: "beer-gold")
             item!.name = "coin"
-            item?.setScale(0.35)
+            item?.setScale(coin)
             //            item!.physicsBody = SKPhysicsBody(texture: beerGoldTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         } else {
             item = SKSpriteNode(imageNamed: "beer")
             //            let beerTexture = SKTexture(imageNamed: "beer")
             item!.name = "beer"
-            item?.setScale(0.3)
+            item?.setScale(beer)
+            item?.anchorPoint.y = 0.3
             //            item!.physicsBody = SKPhysicsBody(texture: beerTexture, size: CGSize(width: item!.size.width, height: item!.size.height))
             item!.physicsBody = SKPhysicsBody(circleOfRadius: item!.size.height / 3)
         }
         item?.zPosition = 3
+        let minX = CGFloat(-(width / 2 - item!.size.width / 2)), maxX = (width / 2 - item!.size.width / 2)
         let position = randomBetweenNumbers(firstNum: minX, secondNum: maxX)
         item!.position = CGPoint(x: position, y: y + item!.size.height)
         item!.physicsBody?.isDynamic = true

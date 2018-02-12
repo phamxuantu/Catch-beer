@@ -22,7 +22,10 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     var coin: Int = 0
     var firstBody = SKPhysicsBody()
     var secondBody = SKPhysicsBody()
-    private var minX = CGFloat(-300), maxX = CGFloat(300)
+    var sound: SKSpriteNode?
+//    let width = UIScreen.main.bounds.width
+    var width: CGFloat?
+    var checkSound: Bool = GameViewController.checkSound
     private var score = 0 {
         didSet {
             if score > GameViewController.bestScore {
@@ -98,7 +101,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     private var life = 3 {
         didSet {
             if life <= 0 {
-                GameViewController.coinCollect += coin
+                GameViewController.defaults.set(GameViewController.bestScore, forKey: "bestScore")
                 firstBody.node?.removeFromParent()
                 secondBody.node?.removeFromParent()
                 
@@ -109,6 +112,13 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 
                 alertController = UIAlertController(title: "Game over", message: "Your score: \(score)", preferredStyle: .alert)
                 let restartAction = UIAlertAction(title: "Play again", style: .default) { (action) in
+                    
+                    
+                    let coinCollect = GameViewController.coinCollect + self.coin
+                    GameViewController.coinCollect = coinCollect
+                    GameViewController.defaults.set(coinCollect, forKey: "coinCollect")
+                    
+                    
                     self.life = 3
                     Timer.scheduledTimer(timeInterval: TimeInterval(0), target: self, selector: #selector(GameplaySceneClass.restartGame), userInfo: nil, repeats: false)
                 }
@@ -119,7 +129,11 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                         self.gameTimer = nil
                     }
                     
-                    if let scene = MainMenuScene(fileNamed: "MainMenu") {
+                    let coinCollect = GameViewController.coinCollect + self.coin
+                    GameViewController.coinCollect = coinCollect
+                    GameViewController.defaults.set(coinCollect, forKey: "coinCollect")
+                    
+                    if let scene = MainMenuScene(fileNamed: GetSceneForDevice().getScene(deviceName: UIDevice().modelName)[0]) {
                         // Set the scale mode to scale to fit the window
                         scene.scaleMode = .aspectFill
                         
@@ -132,20 +146,19 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 alertController?.addAction(exitAction)
                 view?.window?.rootViewController?.present(alertController!, animated: true, completion: nil)
             }
-//            else {
-//                self.lifeLabel?.text = ""
-//                for _ in 1...self.life {
-//                    self.lifeLabel?.text = self.lifeLabel!.text! + "❤️"
-//                }
-//            }
         }
     }
     
     override func didMove(to view: SKView) {
+        width = self.frame.size.width
+        sound = childNode(withName: "Sound") as? SKSpriteNode
         initializeGame()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let width = self.frame.size.width
+//        print(self.frame.size.width)
+        let minX = CGFloat(-(width! / 2 - player!.size.width / 2)), maxX = CGFloat(width! / 2 - player!.size.width / 2)
         for touch in touches {
             let touchLocation = touch.location(in: self)
             if touchLocation.y < 0 {
@@ -166,6 +179,17 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.location(in: self)
             oldPosition = location.x
+            
+            if atPoint(location).name == "Sound" {
+                if checkSound {
+                    sound?.texture = SKTexture(imageNamed: "mute")
+                    GameViewController.defaults.set("mute", forKey: "checkSound")
+                } else {
+                    sound?.texture = SKTexture(imageNamed: "sound")
+                    GameViewController.defaults.set("sound", forKey: "checkSound")
+                }
+                checkSound = !checkSound
+            }
         }
     }
     
@@ -183,23 +207,28 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
 //        print(arr.count)
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "beer" {
+//            self.run(SKAction.playSoundFileNamed("bottleIn.mp3", waitForCompletion: false))
             score += 5
             scoreLabel?.text = String(score)
             secondBody.node?.removeFromParent()
         }
         
-        if firstBody.node?.name == "Player" && secondBody.node?.name == "beer-gold" {
+        if firstBody.node?.name == "Player" && secondBody.node?.name == "beerGold" {
+//            self.run(SKAction.playSoundFileNamed("bottleIn.mp3", waitForCompletion: false))
             score += 10
             scoreLabel?.text = String(score)
             secondBody.node?.removeFromParent()
         }
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "heart" {
+            if checkSound {
+                self.run(SKAction.playSoundFileNamed("heart.wav", waitForCompletion: false))
+            }
             if life == 5 {
                 life = 5
-                secondBody.node?.setScale(0.05)
+                secondBody.node?.setScale(secondBody.node!.xScale - 0.005)
                 var arrAction = [SKAction]()
-                arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 1))
+                arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 0.5))
                 arrAction.append(SKAction.run {
                     self.lifeLabel?.text = ""
                     for _ in 1...self.life {
@@ -210,9 +239,9 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 secondBody.node?.run(SKAction.sequence(arrAction))
             } else {
                 life += 1
-                secondBody.node?.setScale(0.05)
+                secondBody.node?.setScale(secondBody.node!.xScale - 0.005)
                 var arrAction = [SKAction]()
-                arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 1))
+                arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 0.5))
                 arrAction.append(SKAction.run {
                     self.lifeLabel?.text = ""
                     for _ in 1...self.life {
@@ -221,22 +250,33 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 })
                 arrAction.append(SKAction.removeFromParent())
                 secondBody.node?.run(SKAction.sequence(arrAction))
-//                secondBody.node?.removeFromParent()
             }
         }
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "coin" {
             coin += 1
-            coinLabel?.text = String(coin)
-            secondBody.node?.removeFromParent()
+            if checkSound {
+                self.run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: false))
+            }
+            secondBody.node?.setScale(secondBody.node!.xScale - 0.05)
+            var arrAction = [SKAction]()
+            arrAction.append(SKAction.move(to: coinLabel!.position, duration: 0.5))
+            arrAction.append(SKAction.run {
+                self.coinLabel?.text = String(self.coin)
+            })
+            arrAction.append(SKAction.removeFromParent())
+            secondBody.node?.run(SKAction.sequence(arrAction))
         }
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "bom" {
 //            let explosion = SKEmitterNode(fileNamed: "Explosion.sks")!
+            if checkSound {
+                self.run(SKAction.playSoundFileNamed("boom.mp3", waitForCompletion: false))
+            }
             lifeLabel?.text = ""
             for child in self.children {
                 let explosion = SKEmitterNode(fileNamed: "Explosion")!
-                if child.name == "beer" ||  child.name == "beer-gold" || child.name == "bom" || child.name == "heart" || child.name == "coin" {
+                if child.name == "beer" ||  child.name == "beerGold" || child.name == "bom" || child.name == "heart" || child.name == "coin" {
                     explosion.position = child.position
                     child.removeFromParent()
                     self.addChild(explosion)
@@ -285,11 +325,11 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     @objc func spawnItems(){
         let item: SKSpriteNode?
         if life == 3 || life == 4 {
-            item = itemController.spawnLittleHeart(y: self.frame.size.height / 2)
+            item = itemController.spawnLittleHeart(y: self.frame.size.height / 2, width: self.frame.size.width)
         } else if life == 5 {
-            item = itemController.spawnNoHeart(y: self.frame.size.height / 2)
+            item = itemController.spawnNoHeart(y: self.frame.size.height / 2, width: self.frame.size.width)
         } else {
-            item = itemController.spawnNormal(y: self.frame.size.height / 2)
+            item = itemController.spawnNormal(y: self.frame.size.height / 2, width: self.frame.size.width)
         }
 //        let item = itemController.spawnItems(y: self.frame.size.height / 2)
         self.addChild(item!)
@@ -316,12 +356,15 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         actionArray.append(SKAction.move(to: CGPoint(x: item!.position.x, y: -(self.frame.size.height / 2 + item!.size.height)), duration: animationDuration!))
         actionArray.append(SKAction.run {
             if item!.position.y <= -(self.frame.size.height / 2) {
-                if item!.name == "beer" || item!.name == "beer-gold" {
+                if item!.name == "beer" || item!.name == "beerGold" {
                     self.life -= 1
+                    if self.checkSound {
+                        self.run(SKAction.playSoundFileNamed("bottleFalls.mp3", waitForCompletion: false))
+                    }
                     if self.life <= 0 {
                         self.lifeLabel?.text = ""
                         for child in self.children {
-                            if child.name == "beer" ||  child.name == "beer-gold" || child.name == "bom" || child.name == "heart" || child.name == "coin" {
+                            if child.name == "beer" ||  child.name == "beerGold" || child.name == "bom" || child.name == "heart" || child.name == "coin" {
                                 child.removeFromParent()
                                 if self.gameTimer != nil {
                                     self.gameTimer.invalidate()
@@ -344,7 +387,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func restartGame() {
-        if let scene = GameplaySceneClass(fileNamed: "GameplayScene") {
+        if let scene = GameplaySceneClass(fileNamed: GetSceneForDevice().getScene(deviceName: UIDevice().modelName)[1]) {
             scene.scaleMode = .aspectFill
             view?.presentScene(scene, transition: SKTransition.doorsOpenHorizontal(withDuration: TimeInterval(2)))
         }
