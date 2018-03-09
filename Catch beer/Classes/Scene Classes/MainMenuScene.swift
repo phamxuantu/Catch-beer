@@ -32,6 +32,8 @@ class MainMenuScene: SKScene {
     override func didMove(to view: SKView) {
         MainMenuScene.sharedInstance = self
 //        print("did move")
+        
+        username?.text = userInfo["email"] as? String != "" ? userInfo["email"] as? String : "Username"
         BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
         BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
         avatar = BGSetting?.childNode(withName: "Avatar") as? SKSpriteNode
