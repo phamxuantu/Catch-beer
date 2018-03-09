@@ -15,11 +15,11 @@ struct ColliderType {
 
 class ItemController {
     
-    let bom = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).bom
-    let heart = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).heart
-    let beerGold = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).beerGold
-    let coin = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).coin
-    let beer = GetSceneForDevice().getScale(deviceName: UIDevice().modelName).beer
+    let bom = GetSceneForDevice().getScaleItem(deviceName: UIDevice().modelName).bom
+    let heart = GetSceneForDevice().getScaleItem(deviceName: UIDevice().modelName).heart
+    let beerGold = GetSceneForDevice().getScaleItem(deviceName: UIDevice().modelName).beerGold
+    let coin = GetSceneForDevice().getScaleItem(deviceName: UIDevice().modelName).coin
+    let beer = GetSceneForDevice().getScaleItem(deviceName: UIDevice().modelName).beer
     
     func spawnLittleHeart(y: CGFloat, width: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?

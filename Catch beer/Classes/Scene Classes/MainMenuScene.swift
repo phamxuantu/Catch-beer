@@ -9,24 +9,60 @@
 import SpriteKit
 import AVFoundation
 import FBSDKLoginKit
+import TwitterKit
+import FBSDKShareKit
+import Toast_Swift
 
 class MainMenuScene: SKScene {
     
-//    var bestScoreLabel: SKLabelNode?
-//    var coinCollectLabel: SKLabelNode?
+    static var sharedInstance = MainMenuScene()
+    
+    var bestScoreLabel: SKLabelNode?
+    var coinCollectLabel: SKLabelNode?
     var audioPlayer = AVAudioPlayer()
     var alertLogout: UIAlertController?
     var dict : [String : AnyObject]!
     let loginManager = FBSDKLoginManager()
-    var sound: SKSpriteNode?
-//    var checkSound: Bool?
+    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore: SKSpriteNode?
+    var username, textLogin: SKLabelNode?
+    let scaleXSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).x
+    let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
     
     override func didMove(to view: SKView) {
-//        bestScoreLabel = childNode(withName: "BestScoreLabelMenu") as? SKLabelNode!
-//        bestScoreLabel?.text = String(GameViewController.bestScore)
-//
-//        coinCollectLabel = childNode(withName: "CoinCollectLabel") as? SKLabelNode!
-//        coinCollectLabel?.text = String(GameViewController.coinCollect)
+        MainMenuScene.sharedInstance = self
+//        print("did move")
+        BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
+        BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
+        avatar = BGSetting?.childNode(withName: "Avatar") as? SKSpriteNode
+        checkMusic = BGSetting?.childNode(withName: "CheckMusic") as? SKSpriteNode
+        checkSound = BGSetting?.childNode(withName: "CheckSound") as? SKSpriteNode
+        checkNotification = BGSetting?.childNode(withName: "CheckNotification") as? SKSpriteNode
+        username = BGSetting?.childNode(withName: "Username") as? SKLabelNode!
+        textLogin = childNode(withName: "TextLogin") as? SKLabelNode!
+        BGHighScore = childNode(withName: "BGHighScore") as? SKSpriteNode
+//        BGPopup?.zPosition = -1
+//        BGSetting?.zPosition = -1
+//        avatar?.zPosition = -1
+//        checkMusic?.zPosition = -1
+//        checkSound?.zPosition = -1
+//        checkNotification?.zPosition = -1
+//        changePassword?.zPosition = -1
+//        closeSetting?.zPosition = -1
+//        username?.zPosition = -1
+//        textMusic?.zPosition = -1
+//        textSound?.zPosition = -1
+//        textNotification?.zPosition = -1
+//        textChangePassword?.zPosition = -1
+        BGPopup?.run(SKAction.hide())
+        BGSetting?.run(SKAction.hide())
+        BGSetting?.setScale(0)
+        BGHighScore?.run(SKAction.hide())
+        BGHighScore?.setScale(0)
+        bestScoreLabel = childNode(withName: "BestScore") as? SKLabelNode!
+        bestScoreLabel?.text = String(GameViewController.bestScore)
+
+        coinCollectLabel = childNode(withName: "CoinCollect") as? SKLabelNode!
+        coinCollectLabel?.text = String(GameViewController.coinCollect)
         
         let alertSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "mainsence", ofType: "mp3")!)
         
@@ -35,16 +71,23 @@ class MainMenuScene: SKScene {
         try! audioPlayer = AVAudioPlayer(contentsOf: alertSound as URL)
         audioPlayer.prepareToPlay()
         audioPlayer.numberOfLoops = -1
-        audioPlayer.play()
-        sound = childNode(withName: "Sound") as? SKSpriteNode
         if GameViewController.checkSound {
-            audioPlayer.volume = 1
-            sound?.texture = SKTexture(imageNamed: "sound")
+            checkSound?.texture = SKTexture(imageNamed: "check")
         } else {
-            audioPlayer.volume = 0
-            sound?.texture = SKTexture(imageNamed: "mute")
+            checkSound?.texture = SKTexture(imageNamed: "uncheck")
         }
         
+        if GameViewController.checkMusic {
+            checkMusic?.texture = SKTexture(imageNamed: "check")
+            audioPlayer.play()
+        } else {
+            checkMusic?.texture = SKTexture(imageNamed: "uncheck")
+            audioPlayer.stop()
+        }
+        
+        if (FBSDKAccessToken.current()) != nil {
+            textLogin?.text = "Log out"
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -61,71 +104,176 @@ class MainMenuScene: SKScene {
             }
             
             if atPoint(location).name == "Facebook" {
-                self.loginFBClicked()
+                print("Click FB")
+                if (FBSDKAccessToken.current()) == nil {
+                    self.loginFBClicked()
+                }
             }
             
-            if atPoint(location).name == "Sound" {
+            if atPoint(location).name == "Twitter" {
+                self.loginTWClicked()
+            }
+            
+            if atPoint(location).name == "CheckSound" {
                 if GameViewController.checkSound {
-                    audioPlayer.volume = 0
-                    sound?.texture = SKTexture(imageNamed: "mute")
+                    checkSound?.texture = SKTexture(imageNamed: "uncheck")
                     GameViewController.defaults.set("mute", forKey: "checkSound")
                 } else {
-                    audioPlayer.volume = 1
-                    sound?.texture = SKTexture(imageNamed: "sound")
+                    checkSound?.texture = SKTexture(imageNamed: "check")
                     GameViewController.defaults.set("sound", forKey: "checkSound")
                 }
                 GameViewController.checkSound = !GameViewController.checkSound
+            }
+            
+            if atPoint(location).name == "CheckMusic" {
+                if GameViewController.checkMusic {
+                    audioPlayer.stop()
+                    checkMusic?.texture = SKTexture(imageNamed: "uncheck")
+                    GameViewController.defaults.set("mute", forKey: "checkMusic")
+                } else {
+                    audioPlayer.play()
+                    checkMusic?.texture = SKTexture(imageNamed: "check")
+                    GameViewController.defaults.set("music", forKey: "checkMusic")
+                }
+                GameViewController.checkMusic = !GameViewController.checkMusic
+            }
+            
+            if atPoint(location).name == "Login" || atPoint(location).name == "TextLogin" {
+                if textLogin?.text == "Login" {
+                    print("login")
+                    let storyBoard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+                    let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    self.view?.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
+                } else {
+                    print("logout")
+                    self.loginManager.logOut()
+                    textLogin?.text = "Login"
+                }
+            }
+            
+            if atPoint(location).name == "Setting" {
+//                BGPopup?.zPosition = 3
+//                BGSetting?.zPosition = 4
+//                avatar?.zPosition = 5
+//                checkMusic?.zPosition = 5
+//                checkSound?.zPosition = 5
+//                checkNotification?.zPosition = 5
+//                changePassword?.zPosition = 5
+//                closeSetting?.zPosition = 5
+//                username?.zPosition = 5
+//                textMusic?.zPosition = 5
+//                textSound?.zPosition = 5
+//                textNotification?.zPosition = 5
+//                textChangePassword?.zPosition = 6
+                BGPopup?.run(SKAction.unhide())
+                BGSetting?.run(SKAction.unhide())
+                BGSetting?.run(SKAction.group([SKAction.scaleX(to: scaleXSetting, duration: 0.3), SKAction.scaleY(to: scaleYSetting, duration: 0.3)]))
+            }
+            
+            if atPoint(location).name == "CloseSetting" || atPoint(location).name == "BGPopup" || atPoint(location).name == "CloseHighScore" {
+//                BGPopup?.zPosition = -1
+//                BGSetting?.zPosition = -1
+//                avatar?.zPosition = -1
+//                checkMusic?.zPosition = -1
+//                checkSound?.zPosition = -1
+//                checkNotification?.zPosition = -1
+//                changePassword?.zPosition = -1
+//                closeSetting?.zPosition = -1
+//                username?.zPosition = -1
+//                textMusic?.zPosition = -1
+//                textSound?.zPosition = -1
+//                textNotification?.zPosition = -1
+//                textChangePassword?.zPosition = -1
+                BGSetting?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
+                BGHighScore?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
+                BGPopup?.run(SKAction.hide())
+            }
+            
+            if atPoint(location).name == "HighScore" {
+//                print("High Score")
+//                let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+//                content.contentURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
+//                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
+                
+//                let bounds = self.scene?.view?.bounds
+//                UIGraphicsBeginImageContextWithOptions(bounds!.size, true, UIScreen.main.scale)
+//                self.scene?.view?.drawHierarchy(in: bounds!, afterScreenUpdates: true)
+//                let image = UIGraphicsGetImageFromCurrentImageContext()
+//                UIGraphicsEndImageContext()
+//
+//                let photo: FBSDKSharePhoto = FBSDKSharePhoto()
+//                photo.image = image
+//                photo.isUserGenerated = true
+//                let content:FBSDKSharePhotoContent = FBSDKSharePhotoContent()
+//                content.photos = [photo]
+//                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
+                
+                BGPopup?.run(SKAction.unhide())
+                BGHighScore?.run(SKAction.unhide())
+                BGHighScore?.run(SKAction.scale(to: 0.75, duration: 0.3))
+            }
+        }
+    }
+    
+    fileprivate func loginTWClicked() {
+        TWTRTwitter.sharedInstance().logIn {(session, error) in
+            if session != nil {
+                if let s = session {
+                    let client = TWTRAPIClient()
+                    
+                    client.loadUser(withID: s.userID, completion: { (user, error) in
+                        print("user twitter: ", user as Any)
+                    })
+                }
+            } else {
+                print("Failed to login via Twitter: ", error as Any)
             }
         }
     }
     
     
     func loginFBClicked() {
-        if (FBSDKAccessToken.current()) != nil {
-            self.didLogIn()
-//            print("da co du lieu")
-        } else {
-            self.loginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: view?.window?.rootViewController) { (loginResult, error) -> Void  in
-                if (error == nil) {
-                    let fbloginresult : FBSDKLoginManagerLoginResult = loginResult!
-                    
-                    if(fbloginresult.isCancelled) {
-                        print("User press cancel")
-                        //Show Cancel alert
-                    } else if(fbloginresult.grantedPermissions.contains("public_profile") && fbloginresult.grantedPermissions.contains("email") && fbloginresult.grantedPermissions.contains("user_friends")) {
-                        self.returnUserData()
-                        //fbLoginManager.logOut()
-                    }
+        self.loginManager.logIn(withReadPermissions: ["email", "public_profile", "user_friends"], from: view?.window?.rootViewController) { (loginResult, error) -> Void  in
+            if (error == nil) {
+                let fbloginresult : FBSDKLoginManagerLoginResult = loginResult!
+                
+                if(fbloginresult.isCancelled) {
+                    print("User press cancel")
+                    //Show Cancel alert
+                } else if(fbloginresult.grantedPermissions.contains("public_profile") && fbloginresult.grantedPermissions.contains("email") && fbloginresult.grantedPermissions.contains("user_friends")) {
+                    self.textLogin?.text = "Log out"
+                    self.returnUserData()
+                    //fbLoginManager.logOut()
                 }
             }
         }
     }
     
-    func didLogIn() {
-        if((FBSDKAccessToken.current()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
-                if (error == nil){
-                    self.dict = result as! [String : AnyObject]
-                    self.alertLogout = UIAlertController(title: "Hello, \(self.dict["name"]!)", message: "", preferredStyle: .actionSheet)
-                    
-                    let logoutAction = UIAlertAction(title: "Log out", style: .destructive, handler: { (action) in
-                        self.loginManager.logOut()
-                    })
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
-                        print("Cancel log out")
-                    })
-                    
-                    self.alertLogout?.addAction(logoutAction)
-                    self.alertLogout?.addAction(cancelAction)
-                    
-                    self.view?.window?.rootViewController?.present(self.alertLogout!, animated: true, completion: nil)
-                    
-                    print(result as Any)
-                }
-            })
-        }
-    }
+//    func didLogIn() {
+//        if((FBSDKAccessToken.current()) != nil){
+//            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
+//                if (error == nil){
+//                    self.dict = result as! [String : AnyObject]
+//                    self.alertLogout = UIAlertController(title: "Hello, \(self.dict["name"]!)", message: "", preferredStyle: .actionSheet)
+//
+//                    let logoutAction = UIAlertAction(title: "Log out", style: .destructive, handler: { (action) in
+//                        self.loginManager.logOut()
+//                    })
+//
+//                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+//                        print("Cancel log out")
+//                    })
+//
+//                    self.alertLogout?.addAction(logoutAction)
+//                    self.alertLogout?.addAction(cancelAction)
+//
+//                    self.view?.window?.rootViewController?.present(self.alertLogout!, animated: true, completion: nil)
+//
+//                    print(result as Any)
+//                }
+//            })
+//        }
+//    }
     
     func returnUserData() {
         if((FBSDKAccessToken.current()) != nil){

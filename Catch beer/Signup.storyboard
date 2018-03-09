@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Comic Book.otf">
+            <string>ComicBook</string>
+        </array>
+        <array key="comic.ttf">
+            <string>ComicSansMS</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Signup View Controller-->
+        <scene sceneID="NYN-em-ZQK">
+            <objects>
+                <viewController restorationIdentifier="SignupViewController" storyboardIdentifier="SignupViewController" id="Ow6-Uh-8gs" customClass="SignupViewController" customModule="Catch_beer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hRp-XA-jEP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4P7-bA-c2O">
+                                <rect key="frame" x="10" y="11" width="300" height="478.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_user" translatesAutoresizingMaskIntoConstraints="NO" id="ElZ-f1-kVJ">
+                                        <rect key="frame" x="75" y="0.0" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="Qdf-vk-OqE"/>
+                                            <constraint firstAttribute="width" secondItem="ElZ-f1-kVJ" secondAttribute="height" multiplier="1:1" id="rMZ-O7-trc"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Jzn-4m-ZIX">
+                                        <rect key="frame" x="0.0" y="170" width="300" height="260"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="username" translatesAutoresizingMaskIntoConstraints="NO" id="nMa-d4-csp" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="P96-hC-wR0"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="password" translatesAutoresizingMaskIntoConstraints="NO" id="pjw-XG-QsC" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="70" width="300" height="50"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Retype Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="password" translatesAutoresizingMaskIntoConstraints="NO" id="Edg-fO-yzn" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="140" width="300" height="50"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDo-xg-Y6d">
+                                                <rect key="frame" x="0.0" y="210" width="300" height="50"/>
+                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="20"/>
+                                                <state key="normal" title="Create an account" backgroundImage="Button">
+                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="signUp:" destination="Ow6-Uh-8gs" eventType="touchUpInside" id="ffd-JH-6AQ"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="pjw-XG-QsC" firstAttribute="height" secondItem="nMa-d4-csp" secondAttribute="height" id="CKE-H0-Wrp"/>
+                                            <constraint firstItem="Edg-fO-yzn" firstAttribute="height" secondItem="nMa-d4-csp" secondAttribute="height" id="XPw-na-Tes"/>
+                                            <constraint firstItem="mDo-xg-Y6d" firstAttribute="height" secondItem="nMa-d4-csp" secondAttribute="height" id="dJh-qm-pOL"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vSB-Qg-1Hz">
+                                        <rect key="frame" x="43.5" y="450" width="213" height="28.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8c-no-Oo6">
+                                                <rect key="frame" x="0.0" y="0.0" width="163" height="28.5"/>
+                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FAe-69-2Ev">
+                                                <rect key="frame" x="168" y="0.0" width="45" height="28.5"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="Sign in">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <font key="NSFont" size="13" name="ComicBook"/>
+                                                                <integer key="NSUnderline" value="1"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </state>
+                                                <connections>
+                                                    <action selector="signIn:" destination="Ow6-Uh-8gs" eventType="touchUpInside" id="6hp-RT-rnM"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="GDq-Cr-soq"/>
+                                    <constraint firstItem="Jzn-4m-ZIX" firstAttribute="width" secondItem="4P7-bA-c2O" secondAttribute="width" id="R6x-pc-xfJ"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0T-Xq-zZF">
+                                <rect key="frame" x="290" y="35" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="21M-yO-MV7"/>
+                                    <constraint firstAttribute="width" secondItem="M0T-Xq-zZF" secondAttribute="height" multiplier="1:1" id="dCB-hG-jfo"/>
+                                </constraints>
+                                <state key="normal" image="close-button">
+                                    <color key="titleColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="Ow6-Uh-8gs" eventType="touchUpInside" id="S99-Ch-xrf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zMF-Ur-Uw2" firstAttribute="trailing" secondItem="4P7-bA-c2O" secondAttribute="trailing" constant="30" id="9mi-jL-zIS"/>
+                            <constraint firstItem="4P7-bA-c2O" firstAttribute="centerY" secondItem="zMF-Ur-Uw2" secondAttribute="centerY" id="APq-WY-6oK"/>
+                            <constraint firstItem="M0T-Xq-zZF" firstAttribute="top" secondItem="zMF-Ur-Uw2" secondAttribute="top" constant="15" id="Mvk-PP-GuW"/>
+                            <constraint firstItem="M0T-Xq-zZF" firstAttribute="trailing" secondItem="zMF-Ur-Uw2" secondAttribute="trailing" constant="-10" id="NSO-Y9-hq3"/>
+                            <constraint firstItem="4P7-bA-c2O" firstAttribute="centerX" secondItem="zMF-Ur-Uw2" secondAttribute="centerX" id="e6W-Xr-k6D"/>
+                            <constraint firstItem="4P7-bA-c2O" firstAttribute="leading" secondItem="zMF-Ur-Uw2" secondAttribute="leading" constant="30" id="y6z-WP-Dz3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zMF-Ur-Uw2"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9mi-jL-zIS"/>
+                                <exclude reference="y6z-WP-Dz3"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="txtPassword" destination="pjw-XG-QsC" id="zfl-pJ-jKK"/>
+                        <outlet property="txtRetypePass" destination="Edg-fO-yzn" id="CxE-33-wkE"/>
+                        <outlet property="txtUsername" destination="nMa-d4-csp" id="v11-qV-Cjp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="81b-rJ-0bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="10" y="130"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Button" width="156" height="24"/>
+        <image name="close-button" width="50" height="50"/>
+        <image name="logo_user" width="200" height="200"/>
+        <image name="password" width="305" height="44"/>
+        <image name="username" width="305" height="44"/>
+    </resources>
+</document>

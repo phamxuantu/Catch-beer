@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Comic Book.otf">
+            <string>ComicBook</string>
+        </array>
+        <array key="comic.ttf">
+            <string>ComicSansMS</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="4Rs-dx-w0Z">
+            <objects>
+                <viewController restorationIdentifier="LoginViewController" storyboardIdentifier="LoginViewController" id="N0x-Wu-W5A" customClass="LoginViewController" customModule="Catch_beer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6xi-Ux-0jE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8nD-Ep-Wco">
+                                <rect key="frame" x="10" y="31.5" width="300" height="437"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_user" translatesAutoresizingMaskIntoConstraints="NO" id="G5K-MS-w9M">
+                                        <rect key="frame" x="75" y="0.0" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="G5K-MS-w9M" secondAttribute="height" multiplier="1:1" id="Bi6-3t-UV6"/>
+                                            <constraint firstAttribute="height" constant="150" id="KBy-qX-sAL"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="itO-DW-KG9">
+                                        <rect key="frame" x="0.0" y="170" width="300" height="190"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="username" translatesAutoresizingMaskIntoConstraints="NO" id="RQ3-Hc-wdQ" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="ebU-px-1R1"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="password" translatesAutoresizingMaskIntoConstraints="NO" id="ZhU-Qh-WW9" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="70" width="300" height="50"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKc-IV-fic">
+                                                <rect key="frame" x="0.0" y="140" width="300" height="50"/>
+                                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="20"/>
+                                                <state key="normal" title="Login" backgroundImage="Button">
+                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="login:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="yIg-Gh-FeL"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ZhU-Qh-WW9" firstAttribute="height" secondItem="RQ3-Hc-wdQ" secondAttribute="height" id="0wW-Vo-JRK"/>
+                                            <constraint firstItem="VKc-IV-fic" firstAttribute="height" secondItem="RQ3-Hc-wdQ" secondAttribute="height" id="zLB-qQ-hfE"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="etd-u7-Yx5">
+                                        <rect key="frame" x="46.5" y="380" width="207.5" height="57"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yOq-Qb-StN">
+                                                <rect key="frame" x="9.5" y="0.0" width="188.5" height="28.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-zQ-bfG">
+                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="28.5"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU0-V5-fTx">
+                                                        <rect key="frame" x="122.5" y="0.0" width="66" height="28.5"/>
+                                                        <state key="normal">
+                                                            <attributedString key="attributedTitle">
+                                                                <fragment content="Click Here">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="13" name="ComicBook"/>
+                                                                        <integer key="NSUnderline" value="1"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="forgotPassword:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="bdh-aH-i3P"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fpl-YW-tTU">
+                                                <rect key="frame" x="0.0" y="28.5" width="207.5" height="28.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXY-O5-QVC">
+                                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="28.5"/>
+                                                        <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abU-86-XLd">
+                                                        <rect key="frame" x="158.5" y="0.0" width="49" height="28.5"/>
+                                                        <state key="normal">
+                                                            <attributedString key="attributedTitle">
+                                                                <fragment content="Sign up">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="13" name="ComicBook"/>
+                                                                        <integer key="NSUnderline" value="1"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="signup:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="AHp-Et-oNg"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="ZvD-zf-fgc"/>
+                                    <constraint firstItem="itO-DW-KG9" firstAttribute="width" secondItem="8nD-Ep-Wco" secondAttribute="width" id="rof-YJ-S7i"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPO-L3-yt5">
+                                <rect key="frame" x="290" y="35" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hPO-L3-yt5" secondAttribute="height" multiplier="1:1" id="b2R-RU-Xkf"/>
+                                    <constraint firstAttribute="width" constant="20" id="jUk-Jx-TOo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" image="close-button">
+                                    <color key="titleColor" red="0.59993487599999995" green="0.60003864770000004" blue="0.59992027280000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="Jip-Ve-Qm2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="8nD-Ep-Wco" firstAttribute="centerX" secondItem="ot1-Hr-f7i" secondAttribute="centerX" id="A83-aU-5rc"/>
+                            <constraint firstItem="hPO-L3-yt5" firstAttribute="top" secondItem="ot1-Hr-f7i" secondAttribute="top" constant="15" id="McH-P4-iik"/>
+                            <constraint firstItem="ot1-Hr-f7i" firstAttribute="trailing" secondItem="8nD-Ep-Wco" secondAttribute="trailing" constant="30" id="NHa-Hb-dnG"/>
+                            <constraint firstItem="8nD-Ep-Wco" firstAttribute="leading" secondItem="ot1-Hr-f7i" secondAttribute="leading" constant="30" id="Opv-0Y-vv7"/>
+                            <constraint firstItem="8nD-Ep-Wco" firstAttribute="centerY" secondItem="ot1-Hr-f7i" secondAttribute="centerY" id="SnW-zg-rEj"/>
+                            <constraint firstItem="ot1-Hr-f7i" firstAttribute="trailing" secondItem="hPO-L3-yt5" secondAttribute="trailing" constant="10" id="YFU-e7-gxS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ot1-Hr-f7i"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="NHa-Hb-dnG"/>
+                                <exclude reference="Opv-0Y-vv7"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="textFieldsPassword" destination="ZhU-Qh-WW9" id="kRl-7i-Nzr"/>
+                        <outlet property="textFieldsUsername" destination="RQ3-Hc-wdQ" id="pcz-RG-h3h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RkU-bu-feu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="30.134932533733135"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Button" width="156" height="24"/>
+        <image name="close-button" width="50" height="50"/>
+        <image name="logo_user" width="200" height="200"/>
+        <image name="password" width="305" height="44"/>
+        <image name="username" width="305" height="44"/>
+    </resources>
+</document>

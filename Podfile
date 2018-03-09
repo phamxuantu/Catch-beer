@@ -8,6 +8,9 @@ target 'Catch beer' do
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
+pod 'TwitterKit'
+pod 'Alamofire'
+pod 'Toast-Swift', '~> 3.0.1'
   # Pods for Catch beer
 
 end

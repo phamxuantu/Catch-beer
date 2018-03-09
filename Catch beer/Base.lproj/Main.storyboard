@@ -12,7 +12,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Catch_beer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="GameViewController" storyboardIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Catch_beer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V5h-aX-gUA"/>
                         <viewControllerLayoutGuide type="bottom" id="VRo-el-zuP"/>

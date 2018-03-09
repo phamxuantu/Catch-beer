@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import Toast_Swift
 
 class GameViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class GameViewController: UIViewController {
     static var bestScore: Int = 0
     static var coinCollect: Int = 0
     static var checkSound: Bool = true
+    static var checkMusic: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,17 +42,26 @@ class GameViewController: UIViewController {
             }
         }
         
+        let statusMusic = GameViewController.defaults.string(forKey: "checkMusic")
+        if statusMusic != nil {
+            if statusMusic == "music" {
+                GameViewController.checkMusic = true
+            } else {
+                GameViewController.checkMusic = false
+            }
+        }
+        
 //        print(UIDevice.current.modelName)
 
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
 //            UIDevice().modelName
-            if let scene = MainMenuScene(fileNamed: GetSceneForDevice().getScene(deviceName: UIDevice().modelName)[0]) {
+            if let sceneMenu = MainMenuScene(fileNamed: GetSceneForDevice().getScene(deviceName: UIDevice().modelName)[0]) {
                 // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
+                sceneMenu.scaleMode = .aspectFill
                 // Present the scene
-                view.presentScene(scene)
+                view.presentScene(sceneMenu)
             }
             
             
@@ -63,6 +74,10 @@ class GameViewController: UIViewController {
             view.showsNodeCount = false
         }
     }
+    
+//    func loginView() {
+//
+//    }
 
     override var shouldAutorotate: Bool {
         return true
