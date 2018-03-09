@@ -23,10 +23,11 @@ class MainMenuScene: SKScene {
     var alertLogout: UIAlertController?
     var dict : [String : AnyObject]!
     let loginManager = FBSDKLoginManager()
-    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore: SKSpriteNode?
-    var username, textLogin: SKLabelNode?
+    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword: SKSpriteNode?
+    var username, textLogin, textChangePassword: SKLabelNode?
     let scaleXSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).x
     let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
+    let scaleHighScore = GetSceneForDevice().getScaleHighScore(deviceName: UIDevice().modelName)
     
     override func didMove(to view: SKView) {
         MainMenuScene.sharedInstance = self
@@ -38,21 +39,10 @@ class MainMenuScene: SKScene {
         checkSound = BGSetting?.childNode(withName: "CheckSound") as? SKSpriteNode
         checkNotification = BGSetting?.childNode(withName: "CheckNotification") as? SKSpriteNode
         username = BGSetting?.childNode(withName: "Username") as? SKLabelNode!
+        changePassword = BGSetting?.childNode(withName: "ChangePassword") as? SKSpriteNode
+        textChangePassword = BGSetting?.childNode(withName: "TextChangePassword") as? SKLabelNode!
         textLogin = childNode(withName: "TextLogin") as? SKLabelNode!
         BGHighScore = childNode(withName: "BGHighScore") as? SKSpriteNode
-//        BGPopup?.zPosition = -1
-//        BGSetting?.zPosition = -1
-//        avatar?.zPosition = -1
-//        checkMusic?.zPosition = -1
-//        checkSound?.zPosition = -1
-//        checkNotification?.zPosition = -1
-//        changePassword?.zPosition = -1
-//        closeSetting?.zPosition = -1
-//        username?.zPosition = -1
-//        textMusic?.zPosition = -1
-//        textSound?.zPosition = -1
-//        textNotification?.zPosition = -1
-//        textChangePassword?.zPosition = -1
         BGPopup?.run(SKAction.hide())
         BGSetting?.run(SKAction.hide())
         BGSetting?.setScale(0)
@@ -87,6 +77,8 @@ class MainMenuScene: SKScene {
         
         if (FBSDKAccessToken.current()) != nil {
             textLogin?.text = "Log out"
+            self.changePassword?.zPosition = -1
+            self.textChangePassword?.zPosition = -1
         }
     }
     
@@ -148,42 +140,18 @@ class MainMenuScene: SKScene {
                     print("logout")
                     self.loginManager.logOut()
                     textLogin?.text = "Login"
+                    self.changePassword?.zPosition = 5
+                    self.textChangePassword?.zPosition = 6
                 }
             }
             
             if atPoint(location).name == "Setting" {
-//                BGPopup?.zPosition = 3
-//                BGSetting?.zPosition = 4
-//                avatar?.zPosition = 5
-//                checkMusic?.zPosition = 5
-//                checkSound?.zPosition = 5
-//                checkNotification?.zPosition = 5
-//                changePassword?.zPosition = 5
-//                closeSetting?.zPosition = 5
-//                username?.zPosition = 5
-//                textMusic?.zPosition = 5
-//                textSound?.zPosition = 5
-//                textNotification?.zPosition = 5
-//                textChangePassword?.zPosition = 6
                 BGPopup?.run(SKAction.unhide())
                 BGSetting?.run(SKAction.unhide())
                 BGSetting?.run(SKAction.group([SKAction.scaleX(to: scaleXSetting, duration: 0.3), SKAction.scaleY(to: scaleYSetting, duration: 0.3)]))
             }
             
             if atPoint(location).name == "CloseSetting" || atPoint(location).name == "BGPopup" || atPoint(location).name == "CloseHighScore" {
-//                BGPopup?.zPosition = -1
-//                BGSetting?.zPosition = -1
-//                avatar?.zPosition = -1
-//                checkMusic?.zPosition = -1
-//                checkSound?.zPosition = -1
-//                checkNotification?.zPosition = -1
-//                changePassword?.zPosition = -1
-//                closeSetting?.zPosition = -1
-//                username?.zPosition = -1
-//                textMusic?.zPosition = -1
-//                textSound?.zPosition = -1
-//                textNotification?.zPosition = -1
-//                textChangePassword?.zPosition = -1
                 BGSetting?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGHighScore?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGPopup?.run(SKAction.hide())
@@ -191,26 +159,16 @@ class MainMenuScene: SKScene {
             
             if atPoint(location).name == "HighScore" {
 //                print("High Score")
-//                let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-//                content.contentURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
-//                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
-                
-//                let bounds = self.scene?.view?.bounds
-//                UIGraphicsBeginImageContextWithOptions(bounds!.size, true, UIScreen.main.scale)
-//                self.scene?.view?.drawHierarchy(in: bounds!, afterScreenUpdates: true)
-//                let image = UIGraphicsGetImageFromCurrentImageContext()
-//                UIGraphicsEndImageContext()
-//
-//                let photo: FBSDKSharePhoto = FBSDKSharePhoto()
-//                photo.image = image
-//                photo.isUserGenerated = true
-//                let content:FBSDKSharePhotoContent = FBSDKSharePhotoContent()
-//                content.photos = [photo]
-//                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
                 
                 BGPopup?.run(SKAction.unhide())
                 BGHighScore?.run(SKAction.unhide())
-                BGHighScore?.run(SKAction.scale(to: 0.75, duration: 0.3))
+                BGHighScore?.run(SKAction.scale(to: scaleHighScore, duration: 0.3))
+            }
+            
+            if atPoint(location).name == "ShareFB" {
+                let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+                content.contentURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
+                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
             }
         }
     }
@@ -242,6 +200,8 @@ class MainMenuScene: SKScene {
                     //Show Cancel alert
                 } else if(fbloginresult.grantedPermissions.contains("public_profile") && fbloginresult.grantedPermissions.contains("email") && fbloginresult.grantedPermissions.contains("user_friends")) {
                     self.textLogin?.text = "Log out"
+                    self.changePassword?.zPosition = -1
+                    self.textChangePassword?.zPosition = -1
                     self.returnUserData()
                     //fbLoginManager.logOut()
                 }

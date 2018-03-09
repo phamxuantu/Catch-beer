@@ -8,6 +8,7 @@
 
 import SpriteKit
 import AVFoundation
+import FBSDKShareKit
 
 class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     
@@ -34,6 +35,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     var yourScoreLabel: SKLabelNode?
     var menu: SKSpriteNode?
     var playAgain: SKSpriteNode?
+    var share: SKSpriteNode?
     var checkBestScore: Bool = false
     var checkGameScene: Bool = false
     var BGTap: SKSpriteNode?
@@ -134,6 +136,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 yourScoreLabel?.zPosition = 7
                 menu?.zPosition = 7
                 playAgain?.zPosition = 7
+                share?.zPosition = 7
             }
         }
     }
@@ -190,6 +193,8 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         menu?.zPosition = -2
         playAgain = childNode(withName: "PlayAgain") as? SKSpriteNode
         playAgain?.zPosition = -2
+        share = childNode(withName: "Share") as? SKSpriteNode
+        share?.zPosition = -2
         BGTap = childNode(withName: "BGTap") as? SKSpriteNode
         BGTap?.zPosition = -2
         textTap = childNode(withName: "TapToResume") as? SKLabelNode
@@ -338,6 +343,22 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 BGTap?.zPosition = -2
                 textTap?.zPosition = -2
                 resumeGame()
+            }
+            
+            if atPoint(location).name == "Share" {
+                let bounds = self.scene?.view?.bounds
+                UIGraphicsBeginImageContextWithOptions(bounds!.size, true, UIScreen.main.scale)
+                self.scene?.view?.drawHierarchy(in: bounds!, afterScreenUpdates: true)
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                let photo: FBSDKSharePhoto = FBSDKSharePhoto()
+                photo.image = image
+                photo.isUserGenerated = true
+                let content:FBSDKSharePhotoContent = FBSDKSharePhotoContent()
+                content.photos = [photo]
+                FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
+
             }
         }
     }
