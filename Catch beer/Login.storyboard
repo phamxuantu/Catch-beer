@@ -28,7 +28,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8nD-Ep-Wco">
-                                <rect key="frame" x="10" y="32.5" width="300" height="435"/>
+                                <rect key="frame" x="10" y="31.5" width="300" height="437"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_user" translatesAutoresizingMaskIntoConstraints="NO" id="G5K-MS-w9M">
                                         <rect key="frame" x="75" y="0.0" width="150" height="150"/>
@@ -72,25 +72,25 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="etd-u7-Yx5">
-                                        <rect key="frame" x="48" y="380" width="204.5" height="55"/>
+                                        <rect key="frame" x="46.5" y="380" width="207.5" height="57"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yOq-Qb-StN">
-                                                <rect key="frame" x="9.5" y="0.0" width="185.5" height="27.5"/>
+                                                <rect key="frame" x="9.5" y="0.0" width="188.5" height="28.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-zQ-bfG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="27.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="28.5"/>
                                                         <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU0-V5-fTx">
-                                                        <rect key="frame" x="122.5" y="0.0" width="63" height="27.5"/>
+                                                        <rect key="frame" x="122.5" y="0.0" width="66" height="28.5"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
                                                                 <fragment content="Click Here">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <font key="NSFont" metaFont="system"/>
+                                                                        <font key="NSFont" size="13" name="ComicBook"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -104,22 +104,22 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fpl-YW-tTU">
-                                                <rect key="frame" x="0.0" y="27.5" width="204.5" height="27.5"/>
+                                                <rect key="frame" x="0.0" y="28.5" width="207.5" height="28.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXY-O5-QVC">
-                                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="27.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="28.5"/>
                                                         <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abU-86-XLd">
-                                                        <rect key="frame" x="158.5" y="0.0" width="46" height="27.5"/>
+                                                        <rect key="frame" x="158.5" y="0.0" width="49" height="28.5"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
                                                                 <fragment content="Sign up">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <font key="NSFont" metaFont="system"/>
+                                                                        <font key="NSFont" size="13" name="ComicBook"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -196,23 +196,23 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Email" adjustsFontForContentSizeCategory="YES" minimumFontSize="10" background="username" translatesAutoresizingMaskIntoConstraints="NO" id="NuR-HB-Ds4" customClass="CustomTextField" customModule="Catch_beer" customModuleProvider="target">
-                                <rect key="frame" x="35" y="233" width="250" height="50"/>
+                                <rect key="frame" x="35" y="231.5" width="250" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="CDW-lT-tGN"/>
                                     <constraint firstAttribute="height" constant="50" id="yy9-Vs-Vuz"/>
                                 </constraints>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email for forgot password" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rkh-eP-Nlr">
-                                <rect key="frame" x="5" y="192" width="310" height="21"/>
-                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="15"/>
+                                <rect key="frame" x="5" y="192" width="310" height="19.5"/>
+                                <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hRf-nz-WYk">
-                                <rect key="frame" x="35" y="308" width="250" height="50"/>
+                                <rect key="frame" x="35" y="306.5" width="250" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="28m-8I-qJg"/>
                                     <constraint firstAttribute="height" constant="50" id="zID-AU-gYe"/>
@@ -226,12 +226,22 @@
                                     <action selector="login:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="5Wk-Dx-rid"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wM5-43-1en">
+                                <rect key="frame" x="290" y="15" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="JAe-Ad-eEr"/>
+                                    <constraint firstAttribute="width" secondItem="wM5-43-1en" secondAttribute="height" multiplier="1:1" id="zJX-Rg-H5g"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="close-button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Rkh-eP-Nlr" firstAttribute="top" secondItem="KJ9-zA-7QF" secondAttribute="bottom" constant="15" id="1PK-GN-wmG"/>
                             <constraint firstItem="NuR-HB-Ds4" firstAttribute="top" secondItem="Rkh-eP-Nlr" secondAttribute="bottom" constant="20" id="1hj-8h-hy9"/>
                             <constraint firstItem="hRf-nz-WYk" firstAttribute="centerX" secondItem="YJA-1C-lGY" secondAttribute="centerX" id="QAr-ru-sAd"/>
+                            <constraint firstItem="wM5-43-1en" firstAttribute="top" secondItem="YJA-1C-lGY" secondAttribute="top" constant="15" id="Sqc-dB-t8l"/>
+                            <constraint firstAttribute="trailing" secondItem="wM5-43-1en" secondAttribute="trailing" constant="10" id="X3L-ui-Zqr"/>
                             <constraint firstItem="qaF-B9-MVh" firstAttribute="trailing" secondItem="Rkh-eP-Nlr" secondAttribute="trailing" constant="5" id="Yhq-3K-Lh0"/>
                             <constraint firstItem="Rkh-eP-Nlr" firstAttribute="centerX" secondItem="YJA-1C-lGY" secondAttribute="centerX" id="Zvd-Yg-iV4"/>
                             <constraint firstItem="KJ9-zA-7QF" firstAttribute="centerX" secondItem="YJA-1C-lGY" secondAttribute="centerX" id="aia-EV-q8g"/>
