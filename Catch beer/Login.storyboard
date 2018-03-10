@@ -226,11 +226,28 @@
                                     <action selector="login:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="5Wk-Dx-rid"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JbA-QB-aP4">
+                                <rect key="frame" x="295" y="20" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="bAN-XF-SWz"/>
+                                    <constraint firstAttribute="width" constant="20" id="dO6-SJ-tGo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" image="close-button">
+                                    <color key="titleColor" red="0.59993487599999995" green="0.60003864770000004" blue="0.59992027280000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="N0x-Wu-W5A" eventType="touchUpInside" id="Qt8-u6-y6p"/>
+                                    <action selector="btnClose:" destination="pye-WX-rqB" eventType="touchUpInside" id="QEc-dU-0uV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Rkh-eP-Nlr" firstAttribute="top" secondItem="KJ9-zA-7QF" secondAttribute="bottom" constant="15" id="1PK-GN-wmG"/>
                             <constraint firstItem="NuR-HB-Ds4" firstAttribute="top" secondItem="Rkh-eP-Nlr" secondAttribute="bottom" constant="20" id="1hj-8h-hy9"/>
+                            <constraint firstItem="qaF-B9-MVh" firstAttribute="trailing" secondItem="JbA-QB-aP4" secondAttribute="trailing" constant="5" id="Gbg-Zw-CdQ"/>
+                            <constraint firstItem="JbA-QB-aP4" firstAttribute="top" secondItem="YJA-1C-lGY" secondAttribute="top" constant="20" id="OE0-4z-Yb1"/>
                             <constraint firstItem="hRf-nz-WYk" firstAttribute="centerX" secondItem="YJA-1C-lGY" secondAttribute="centerX" id="QAr-ru-sAd"/>
                             <constraint firstItem="qaF-B9-MVh" firstAttribute="trailing" secondItem="Rkh-eP-Nlr" secondAttribute="trailing" constant="5" id="Yhq-3K-Lh0"/>
                             <constraint firstItem="Rkh-eP-Nlr" firstAttribute="centerX" secondItem="YJA-1C-lGY" secondAttribute="centerX" id="Zvd-Yg-iV4"/>

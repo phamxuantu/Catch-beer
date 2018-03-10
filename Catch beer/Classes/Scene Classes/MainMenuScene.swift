@@ -12,6 +12,7 @@ import FBSDKLoginKit
 import TwitterKit
 import FBSDKShareKit
 import Toast_Swift
+import Alamofire
 
 class MainMenuScene: SKScene {
     
@@ -33,6 +34,16 @@ class MainMenuScene: SKScene {
         MainMenuScene.sharedInstance = self
 //        print("did move")
         
+        if ConnectionCheck.isConnectedToNetwork() {
+            print("Connected")
+            if let tokenLogin = defaults.string(forKey: "tokenLogin") {
+                //            print("tokenLogin: ", tokenLogin) // Some String Value
+                getInfoUser(tokenLogin: tokenLogin)
+            }
+        } else {
+            print("DisConnected")
+            self.view?.makeToast("You are not conected internet", duration: 3.0, position: .bottom)
+        }
         username?.text = userInfo["email"] as? String != "" ? userInfo["email"] as? String : "Username"
         BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
         BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
@@ -81,6 +92,16 @@ class MainMenuScene: SKScene {
             textLogin?.text = "Log out"
             self.changePassword?.zPosition = -1
             self.textChangePassword?.zPosition = -1
+        }
+    }
+    
+    func getInfoUser(tokenLogin: String) {
+//        print("tokenLoginGetUser: ", tokenLogin)
+        let parametersUserInfo: Parameters = [
+            "token" : tokenLogin,
+            ]
+        Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON { (respond) in
+            print("respond Login: ", respond)
         }
     }
     
