@@ -28,7 +28,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8nD-Ep-Wco">
-                                <rect key="frame" x="10" y="31.5" width="300" height="437"/>
+                                <rect key="frame" x="10" y="32.5" width="300" height="435"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_user" translatesAutoresizingMaskIntoConstraints="NO" id="G5K-MS-w9M">
                                         <rect key="frame" x="75" y="0.0" width="150" height="150"/>
@@ -72,25 +72,25 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="etd-u7-Yx5">
-                                        <rect key="frame" x="46.5" y="380" width="207.5" height="57"/>
+                                        <rect key="frame" x="48" y="380" width="204.5" height="55"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yOq-Qb-StN">
-                                                <rect key="frame" x="9.5" y="0.0" width="188.5" height="28.5"/>
+                                                <rect key="frame" x="9.5" y="0.0" width="185.5" height="27.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxa-zQ-bfG">
-                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="28.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="117.5" height="27.5"/>
                                                         <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GU0-V5-fTx">
-                                                        <rect key="frame" x="122.5" y="0.0" width="66" height="28.5"/>
+                                                        <rect key="frame" x="122.5" y="0.0" width="63" height="27.5"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
                                                                 <fragment content="Click Here">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <font key="NSFont" size="13" name="ComicBook"/>
+                                                                        <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -104,22 +104,22 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fpl-YW-tTU">
-                                                <rect key="frame" x="0.0" y="28.5" width="207.5" height="28.5"/>
+                                                <rect key="frame" x="0.0" y="27.5" width="204.5" height="27.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXY-O5-QVC">
-                                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="28.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="27.5"/>
                                                         <fontDescription key="fontDescription" name="ComicBook" family="Comic Book" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abU-86-XLd">
-                                                        <rect key="frame" x="158.5" y="0.0" width="49" height="28.5"/>
+                                                        <rect key="frame" x="158.5" y="0.0" width="46" height="27.5"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
                                                                 <fragment content="Sign up">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.42959245439999999" green="1" blue="0.43853517489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <font key="NSFont" size="13" name="ComicBook"/>
+                                                                        <font key="NSFont" metaFont="system"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>

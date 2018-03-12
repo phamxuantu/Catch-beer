@@ -174,6 +174,15 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 BGSetting?.run(SKAction.group([SKAction.scaleX(to: scaleXSetting, duration: 0.3), SKAction.scaleY(to: scaleYSetting, duration: 0.3)]))
             }
             
+            //ChangePassword
+            
+            if atPoint(location).name == "ChangePassword" || atPoint(location).name == "TextChangePassword" {
+                print("ChangePassword")
+                let storyBoard: UIStoryboard = UIStoryboard(name: "ChangePassword", bundle: nil)
+                let ChangePasswordViewController = storyBoard.instantiateViewController(withIdentifier: "ChangePasswordVC") as! ChangePasswordViewController
+                self.view?.window?.rootViewController?.present(ChangePasswordViewController, animated: true, completion: nil)
+            }
+            
             if atPoint(location).name == "CloseSetting" || atPoint(location).name == "BGPopup" || atPoint(location).name == "CloseHighScore" {
                 BGSetting?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGHighScore?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))

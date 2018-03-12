@@ -34,6 +34,15 @@ class ForgotPasswordViewController: UIViewController {
   @IBAction func btn_Enter(_ sender: Any) {
     print("text email: ", txtEmail.text ?? "nothing!")
     
+    // create loading view
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    activityIndicatorView.color = UIColor.black
+    self.view.addSubview(activityIndicatorView)
+    activityIndicatorView.frame = self.view.frame
+    activityIndicatorView.center = self.view.center
+    activityIndicatorView.startAnimating()
+    
+    
     if txtEmail.text == "" {
         self.view.makeToast("Please enter your email", duration: 3.0, position: .bottom)
     } else if isValidEmail(testStr: txtEmail.text!) == false {
@@ -45,6 +54,19 @@ class ForgotPasswordViewController: UIViewController {
         ]
         Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/change-pass", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
             print("return respond reset password: ", respond)
+            
+            if let respondData = respond.result.value as! [String: Any]? {
+                if (respondData["state"] as? String) ?? "" == "error" {
+                    self.view.makeToast(respondData["message"] as? String, duration: 3.0, position: .bottom)
+                    activityIndicatorView.stopAnimating()
+                } else if (respondData["state"] as? String) ?? "" == "Success" {
+                    let alert = UIAlertController(title: "Success", message: "Please check your email to reset password", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                    activityIndicatorView.stopAnimating()
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            
         })
     }
   }
