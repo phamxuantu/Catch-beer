@@ -240,12 +240,11 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                         }
                     }
                 }
-                
-                if atPoint(location).name == "Shop" {
-                    BGPopup?.run(SKAction.unhide())
-                    BGShop?.run(SKAction.unhide())
-                    BGShop?.run(SKAction.scale(to: 0.95, duration: 0.3))
-                }
+            }
+            if atPoint(location).name == "Shop" {
+                BGPopup?.run(SKAction.unhide())
+                BGShop?.run(SKAction.unhide())
+                BGShop?.run(SKAction.scale(to: 0.95, duration: 0.3))
             }
         }
     }
