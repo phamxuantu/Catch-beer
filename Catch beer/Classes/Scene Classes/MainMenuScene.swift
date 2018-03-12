@@ -24,7 +24,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     var alertLogout: UIAlertController?
     var dict : [String : AnyObject]!
     let loginManager = FBSDKLoginManager()
-    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword: SKSpriteNode?
+    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword, BGShop: SKSpriteNode?
     var username, textLogin, textChangePassword: SKLabelNode?
     let scaleXSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).x
     let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
@@ -61,6 +61,9 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         BGSetting?.setScale(0)
         BGHighScore?.run(SKAction.hide())
         BGHighScore?.setScale(0)
+        BGShop = childNode(withName: "BGShop") as? SKSpriteNode
+        BGShop?.run(SKAction.hide())
+        BGShop?.setScale(0)
         bestScoreLabel = childNode(withName: "BestScore") as? SKLabelNode!
         bestScoreLabel?.text = String(GameViewController.bestScore)
 
@@ -174,9 +177,19 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 BGSetting?.run(SKAction.group([SKAction.scaleX(to: scaleXSetting, duration: 0.3), SKAction.scaleY(to: scaleYSetting, duration: 0.3)]))
             }
             
-            if atPoint(location).name == "CloseSetting" || atPoint(location).name == "BGPopup" || atPoint(location).name == "CloseHighScore" {
+            //ChangePassword
+            
+            if atPoint(location).name == "ChangePassword" || atPoint(location).name == "TextChangePassword" {
+                print("ChangePassword")
+                let storyBoard: UIStoryboard = UIStoryboard(name: "ChangePassword", bundle: nil)
+                let ChangePasswordViewController = storyBoard.instantiateViewController(withIdentifier: "ChangePasswordVC") as! ChangePasswordViewController
+                self.view?.window?.rootViewController?.present(ChangePasswordViewController, animated: true, completion: nil)
+            }
+            
+            if atPoint(location).name == "CloseSetting" || atPoint(location).name == "BGPopup" || atPoint(location).name == "CloseHighScore" || atPoint(location).name == "CloseShop" {
                 BGSetting?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGHighScore?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
+                BGShop?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGPopup?.run(SKAction.hide())
             }
             
@@ -226,6 +239,12 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                             self.view?.window?.rootViewController?.present(alert, animated: false, completion: nil)
                         }
                     }
+                }
+                
+                if atPoint(location).name == "Shop" {
+                    BGPopup?.run(SKAction.unhide())
+                    BGShop?.run(SKAction.unhide())
+                    BGShop?.run(SKAction.scale(to: 0.95, duration: 0.3))
                 }
             }
         }

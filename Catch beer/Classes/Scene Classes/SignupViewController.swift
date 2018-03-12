@@ -18,6 +18,8 @@ class SignupViewController: UIViewController {
     
     @IBOutlet weak var txtRetypePass: CustomTextField!
     
+    var hideText: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -96,4 +98,19 @@ class SignupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func btnHideOrShowText(_ sender: UIButton) {
+        hideText = !hideText
+        if hideText == true {
+            sender.setImage(UIImage(named: "eyeClose"), for: .normal)
+        } else {
+            sender.setImage(UIImage(named: "eyeOpen"), for: .normal)
+        }
+        if sender.tag == 1 {
+            txtPassword.isSecureTextEntry = hideText
+        }
+        
+        if sender.tag == 2 {
+            txtRetypePass.isSecureTextEntry = hideText
+        }
+    }
 }

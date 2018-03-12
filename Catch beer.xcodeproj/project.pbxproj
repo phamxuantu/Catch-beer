@@ -59,6 +59,8 @@
 		0AE0D6622053857A009C67FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE0D6612053857A009C67FA /* Login.storyboard */; };
 		0AF4F1482047970200A02B68 /* comic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF4F147204795F600A02B68 /* comic.ttf */; };
 		0AF4F1492047970400A02B68 /* MotivaSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8E9E792044118C005C08EE /* MotivaSans-MediumItalic.otf */; };
+		21376353205610A500AF7B24 /* ChangePassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21376352205610A500AF7B24 /* ChangePassword.storyboard */; };
+		2137635520565FFF00AF7B24 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */; };
 		21BB26F82052956A0001D224 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */; };
 		21BB26FC205295D50001D224 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FB205295D50001D224 /* LoginViewController.swift */; };
 		21BB26FE20537AC00001D224 /* ConnectionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FD20537AC00001D224 /* ConnectionCheck.swift */; };
@@ -122,6 +124,8 @@
 		0ABA1D4C204560EB0013B06B /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		0AE0D6612053857A009C67FA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		0AF4F147204795F600A02B68 /* comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic.ttf; sourceTree = "<group>"; };
+		21376352205610A500AF7B24 /* ChangePassword.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangePassword.storyboard; sourceTree = "<group>"; };
+		2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		21BB26FB205295D50001D224 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		21BB26FD20537AC00001D224 /* ConnectionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCheck.swift; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				0ABA1D4A204557840013B06B /* Signup.storyboard */,
 				0AE0D6612053857A009C67FA /* Login.storyboard */,
 				0A77B36E20322EAB008ABA04 /* Launch Screen.storyboard */,
+				21376352205610A500AF7B24 /* ChangePassword.storyboard */,
 				0A4166CA201F156A00BD5087 /* Info.plist */,
 				0A706B47202BFCDA006FACB2 /* GetSceneForDevice.swift */,
 				0A3D6CA7203272F200CCC037 /* Catch beer-Bridging-Header.h */,
@@ -281,6 +286,7 @@
 				0ABA1D4C204560EB0013B06B /* SignupViewController.swift */,
 				21BB26FB205295D50001D224 /* LoginViewController.swift */,
 				21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */,
+				2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */,
 			);
 			path = "Scene Classes";
 			sourceTree = "<group>";
@@ -459,6 +465,7 @@
 				0A4166D8201F1E0200BD5087 /* GameplayScene.sks in Resources */,
 				0A706B9E202C568A006FACB2 /* boom.mp3 in Resources */,
 				0A706B8B202C2A30006FACB2 /* GameplayScene6sPlus.sks in Resources */,
+				21376353205610A500AF7B24 /* ChangePassword.storyboard in Resources */,
 				0A5F6C962029976400C5BDF3 /* Assets.xcassets in Resources */,
 				0A77B36D20322DE8008ABA04 /* Assets.xcassets in Resources */,
 				0A4166BD201F156A00BD5087 /* Actions.sks in Resources */,
@@ -558,6 +565,7 @@
 				0A706B46202BFC1A006FACB2 /* UIDevice+Extensions.swift in Sources */,
 				0A706B48202BFCDA006FACB2 /* GetSceneForDevice.swift in Sources */,
 				21BB26FE20537AC00001D224 /* ConnectionCheck.swift in Sources */,
+				2137635520565FFF00AF7B24 /* ChangePasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
