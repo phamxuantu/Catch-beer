@@ -148,37 +148,10 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         height = self.frame.size.height
         sound = childNode(withName: "Sound") as? SKSpriteNode
         
-//        try!AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-//        try! AVAudioSession.sharedInstance().setActive(true)
-//
-//        let soundBottleFalls = NSURL(fileURLWithPath: Bundle.main.path(forResource: "bottleFalls", ofType: "mp3")!)
-//        try! audioBottleFalls = AVAudioPlayer(contentsOf: soundBottleFalls as URL)
-//        audioBottleFalls.prepareToPlay()
-//
-//        let soundBoom = NSURL(fileURLWithPath: Bundle.main.path(forResource: "boom", ofType: "mp3")!)
-//        try! audioBoom = AVAudioPlayer(contentsOf: soundBoom as URL)
-//        audioBoom.prepareToPlay()
-//
-//        let soundCoin = NSURL(fileURLWithPath: Bundle.main.path(forResource: "coin", ofType: "wav")!)
-//        try! audioCoin = AVAudioPlayer(contentsOf: soundCoin as URL)
-//        audioCoin.prepareToPlay()
-//
-//        let soundHeart = NSURL(fileURLWithPath: Bundle.main.path(forResource: "heart", ofType: "wav")!)
-//        try! audioHeart = AVAudioPlayer(contentsOf: soundHeart as URL)
-//        audioHeart.prepareToPlay()
-        
         if checkSound {
             sound?.texture = SKTexture(imageNamed: "sound")
-//            audioBottleFalls.volume = 1
-//            audioBoom.volume = 1
-//            audioCoin.volume = 1
-//            audioHeart.volume = 1
         } else {
             sound?.texture = SKTexture(imageNamed: "mute")
-//            audioBottleFalls.volume = 0
-//            audioBoom.volume = 0
-//            audioCoin.volume = 0
-//            audioHeart.volume = 0
         }
         
         BG = childNode(withName: "BG") as? SKSpriteNode
@@ -208,7 +181,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             self.gameTimer.invalidate()
             self.physicsWorld.speed = 0.0
             self.speed = 0.0
-//            textTap?.speed = 1.0
             print("ok")
         } else {
             print("not ok")
@@ -289,19 +261,11 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             
             if atPoint(location).name == "Sound" {
                 if checkSound {
-//                    audioBottleFalls.volume = 0
-//                    audioBoom.volume = 0
-//                    audioCoin.volume = 0
-//                    audioHeart.volume = 0
                     sound?.texture = SKTexture(imageNamed: "mute")
                     GameViewController.defaults.set("mute", forKey: "checkSound")
                     GameViewController.defaults.set("mute", forKey: "checkMusic")
                     GameViewController.checkMusic = false
                 } else {
-//                    audioBottleFalls.volume = 1
-//                    audioBoom.volume = 1
-//                    audioCoin.volume = 1
-//                    audioHeart.volume = 1
                     sound?.texture = SKTexture(imageNamed: "sound")
                     GameViewController.defaults.set("sound", forKey: "checkSound")
                     GameViewController.defaults.set("music", forKey: "checkMusic")
@@ -377,14 +341,12 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
 //        print(arr.count)
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "beer" {
-//            self.run(SKAction.playSoundFileNamed("bottleIn.mp3", waitForCompletion: false))
             score += 5
             scoreLabel?.text = String(score)
             secondBody.node?.removeFromParent()
         }
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "beerGold" {
-//            self.run(SKAction.playSoundFileNamed("bottleIn.mp3", waitForCompletion: false))
             score += 10
             scoreLabel?.text = String(score)
             secondBody.node?.removeFromParent()
@@ -394,7 +356,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             if checkSound {
                 self.run(SKAction.playSoundFileNamed("heart.wav", waitForCompletion: false))
             }
-//            audioHeart.play()
             if life == 5 {
                 life = 5
                 secondBody.node?.setScale(secondBody.node!.xScale - 0.1)
@@ -402,9 +363,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 0.5))
                 arrAction.append(SKAction.run {
                     self.lifeLabel?.text = "x5"
-//                    for _ in 1...self.life {
-//                        self.lifeLabel?.text = self.lifeLabel!.text! + "❤️"
-//                    }
                 })
                 arrAction.append(SKAction.removeFromParent())
                 secondBody.node?.run(SKAction.sequence(arrAction))
@@ -415,9 +373,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 arrAction.append(SKAction.move(to: lifeLabel!.position, duration: 0.5))
                 arrAction.append(SKAction.run {
                     self.lifeLabel?.text = "x\(self.life)"
-//                    for _ in 1...self.life {
-//                        self.lifeLabel?.text = self.lifeLabel!.text! + "❤️"
-//                    }
                 })
                 arrAction.append(SKAction.removeFromParent())
                 secondBody.node?.run(SKAction.sequence(arrAction))
@@ -429,7 +384,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             if checkSound {
                 self.run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: false))
             }
-//            audioCoin.play()
             secondBody.node?.setScale(secondBody.node!.xScale - 0.1)
             var arrAction = [SKAction]()
             arrAction.append(SKAction.move(to: coinLabel!.position, duration: 0.5))
@@ -441,11 +395,9 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.node?.name == "Player" && secondBody.node?.name == "bom" {
-//            let explosion = SKEmitterNode(fileNamed: "Explosion.sks")!
             if checkSound {
                 self.run(SKAction.playSoundFileNamed("boom.mp3", waitForCompletion: false))
             }
-//            audioBoom.play()
             lifeLabel?.text = "x0"
             for child in self.children {
                 let explosion = SKEmitterNode(fileNamed: "Explosion")!
@@ -501,7 +453,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         } else {
             item = itemController.spawnNormal(y: self.frame.size.height / 2, width: self.frame.size.width)
         }
-//        let item = itemController.spawnItems(y: self.frame.size.height / 2)
         self.addChild(item!)
         let animationDuration:TimeInterval?
         if score < 100 {
@@ -531,7 +482,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                     if self.checkSound {
                         self.run(SKAction.playSoundFileNamed("bottleFalls.mp3", waitForCompletion: false))
                     }
-//                    self.audioBottleFalls.play()
                     if self.life <= 0 {
                         self.lifeLabel?.text = "x0"
                         for child in self.children {
@@ -545,9 +495,6 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                         }
                     } else {
                         self.lifeLabel?.text = "x\(self.life)"
-//                        for _ in 1...self.life {
-//                            self.lifeLabel?.text = self.lifeLabel!.text! + "❤️"
-//                        }
                     }
                 }
             }

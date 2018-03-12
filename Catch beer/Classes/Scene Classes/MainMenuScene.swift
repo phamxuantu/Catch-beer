@@ -12,8 +12,9 @@ import FBSDKLoginKit
 import TwitterKit
 import FBSDKShareKit
 import Toast_Swift
+import Alamofire
 
-class MainMenuScene: SKScene {
+class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     
     static var sharedInstance = MainMenuScene()
     
@@ -33,6 +34,16 @@ class MainMenuScene: SKScene {
         MainMenuScene.sharedInstance = self
 //        print("did move")
         
+        if ConnectionCheck.isConnectedToNetwork() {
+            print("Connected")
+            if let tokenLogin = defaults.string(forKey: "tokenLogin") {
+                //            print("tokenLogin: ", tokenLogin) // Some String Value
+                getInfoUser(tokenLogin: tokenLogin)
+            }
+        } else {
+            print("DisConnected")
+            self.view?.makeToast("You are not conected internet", duration: 3.0, position: .bottom)
+        }
         username?.text = userInfo["email"] as? String != "" ? userInfo["email"] as? String : "Username"
         BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
         BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
@@ -81,6 +92,16 @@ class MainMenuScene: SKScene {
             textLogin?.text = "Log out"
             self.changePassword?.zPosition = -1
             self.textChangePassword?.zPosition = -1
+        }
+    }
+    
+    func getInfoUser(tokenLogin: String) {
+//        print("tokenLoginGetUser: ", tokenLogin)
+        let parametersUserInfo: Parameters = [
+            "token" : tokenLogin,
+            ]
+        Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON { (respond) in
+            print("respond Login: ", respond)
         }
     }
     
@@ -171,6 +192,41 @@ class MainMenuScene: SKScene {
                 let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
                 content.contentURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
                 FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
+            }
+            
+            if atPoint(location).name == "ShareTwiter" {
+                if (TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers()) {
+                    // App must have at least one logged-in user to compose a Tweet
+                    let appURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
+                    let composer = TWTRComposer()
+                    composer.setURL(appURL)
+                    composer.show(from: (self.view?.window?.rootViewController)!, completion: { (result) in
+                        if result == .done {
+                            print("done")
+                        } else {
+                            print("cancel")
+                        }
+                    })
+                } else {
+                    // Log in, and then check again
+                    TWTRTwitter.sharedInstance().logIn { session, error in
+                        if session != nil { // Log in succeeded
+                            let appURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
+                            let composer = TWTRComposer()
+                            composer.setURL(appURL)
+                            composer.show(from: (self.view?.window?.rootViewController)!, completion: { (result) in
+                                if result == .done {
+                                    print("done")
+                                } else {
+                                    print("cancel")
+                                }
+                            })
+                        } else {
+                            let alert = UIAlertController(title: "No Twitter Accounts Available", message: "You must log in before presenting a composer.", preferredStyle: .alert)
+                            self.view?.window?.rootViewController?.present(alert, animated: false, completion: nil)
+                        }
+                    }
+                }
             }
         }
     }

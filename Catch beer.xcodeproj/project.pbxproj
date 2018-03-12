@@ -56,11 +56,12 @@
 		0ABA1D4920454F930013B06B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABA1D4820454F930013B06B /* CustomTextField.swift */; };
 		0ABA1D4B204557840013B06B /* Signup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABA1D4A204557840013B06B /* Signup.storyboard */; };
 		0ABA1D4D204560EB0013B06B /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABA1D4C204560EB0013B06B /* SignupViewController.swift */; };
-		0AE0D66020538474009C67FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE0D65F20538473009C67FA /* Login.storyboard */; };
+		0AE0D6622053857A009C67FA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AE0D6612053857A009C67FA /* Login.storyboard */; };
 		0AF4F1482047970200A02B68 /* comic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AF4F147204795F600A02B68 /* comic.ttf */; };
 		0AF4F1492047970400A02B68 /* MotivaSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8E9E792044118C005C08EE /* MotivaSans-MediumItalic.otf */; };
 		21BB26F82052956A0001D224 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */; };
 		21BB26FC205295D50001D224 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FB205295D50001D224 /* LoginViewController.swift */; };
+		21BB26FE20537AC00001D224 /* ConnectionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FD20537AC00001D224 /* ConnectionCheck.swift */; };
 		BB8D2836A115B4F5D3ADAEC5 /* Pods_Catch_beer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 973CE7671B01BBC14B6D42B2 /* Pods_Catch_beer.framework */; };
 /* End PBXBuildFile section */
 
@@ -119,10 +120,11 @@
 		0ABA1D4820454F930013B06B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		0ABA1D4A204557840013B06B /* Signup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Signup.storyboard; sourceTree = "<group>"; };
 		0ABA1D4C204560EB0013B06B /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		0AE0D65F20538473009C67FA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		0AE0D6612053857A009C67FA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		0AF4F147204795F600A02B68 /* comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic.ttf; sourceTree = "<group>"; };
 		21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		21BB26FB205295D50001D224 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		21BB26FD20537AC00001D224 /* ConnectionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCheck.swift; sourceTree = "<group>"; };
 		4C71A3108B3AEF9BCD1AB149 /* Pods-Catch beer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Catch beer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Catch beer/Pods-Catch beer.debug.xcconfig"; sourceTree = "<group>"; };
 		5DB8E6FC1DC6088A193BC2CD /* Pods-Catch beer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Catch beer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Catch beer/Pods-Catch beer.release.xcconfig"; sourceTree = "<group>"; };
 		973CE7671B01BBC14B6D42B2 /* Pods_Catch_beer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Catch_beer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,8 +234,8 @@
 				0A4166BC201F156A00BD5087 /* Actions.sks */,
 				0A4166C0201F156A00BD5087 /* GameViewController.swift */,
 				0A4166C2201F156A00BD5087 /* Main.storyboard */,
-				0AE0D65F20538473009C67FA /* Login.storyboard */,
 				0ABA1D4A204557840013B06B /* Signup.storyboard */,
+				0AE0D6612053857A009C67FA /* Login.storyboard */,
 				0A77B36E20322EAB008ABA04 /* Launch Screen.storyboard */,
 				0A4166CA201F156A00BD5087 /* Info.plist */,
 				0A706B47202BFCDA006FACB2 /* GetSceneForDevice.swift */,
@@ -317,6 +319,7 @@
 			children = (
 				0A706B45202BFC1A006FACB2 /* UIDevice+Extensions.swift */,
 				0ABA1D4820454F930013B06B /* CustomTextField.swift */,
+				21BB26FD20537AC00001D224 /* ConnectionCheck.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -420,7 +423,7 @@
 			files = (
 				0A5CD7B62043FBE000BB2AD8 /* Firework.sks in Resources */,
 				0A706B83202C29C3006FACB2 /* GameplaySceneIpad97.sks in Resources */,
-				0AE0D66020538474009C67FA /* Login.storyboard in Resources */,
+				0AE0D6622053857A009C67FA /* Login.storyboard in Resources */,
 				0A762EB9203EA72D0045D53E /* Comic Book Bold.otf in Resources */,
 				0A706B9F202C568A006FACB2 /* heart.wav in Resources */,
 				0A706B89202C2A1E006FACB2 /* MainMenu6sPlus.sks in Resources */,
@@ -554,6 +557,7 @@
 				0A4166DA201F1E2B00BD5087 /* GameplaySceneClass.swift in Sources */,
 				0A706B46202BFC1A006FACB2 /* UIDevice+Extensions.swift in Sources */,
 				0A706B48202BFCDA006FACB2 /* GetSceneForDevice.swift in Sources */,
+				21BB26FE20537AC00001D224 /* ConnectionCheck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
