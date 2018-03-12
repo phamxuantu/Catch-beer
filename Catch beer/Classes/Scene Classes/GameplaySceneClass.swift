@@ -9,6 +9,7 @@
 import SpriteKit
 import AVFoundation
 import FBSDKShareKit
+import TwitterKit
 
 class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     
@@ -40,11 +41,9 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     var checkGameScene: Bool = false
     var BGTap: SKSpriteNode?
     var textTap: SKLabelNode?
+    var BGPopupShare, ShareFB, ShareTwiter, ClosePopupShare, BGShare: SKSpriteNode?
     var checkTouch = false
-//    var audioBottleFalls = AVAudioPlayer()
-//    var audioBoom = AVAudioPlayer()
-//    var audioCoin = AVAudioPlayer()
-//    var audioHeart = AVAudioPlayer()
+    var image: UIImage?
     var score = 0 {
         didSet {
             if score > GameViewController.bestScore {
@@ -172,6 +171,21 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         BGTap?.zPosition = -2
         textTap = childNode(withName: "TapToResume") as? SKLabelNode
         textTap?.zPosition = -2
+        BGShare = childNode(withName: "BGShare") as? SKSpriteNode
+        BGShare?.zPosition = -2
+        BGPopupShare = childNode(withName: "BGPopupShare") as? SKSpriteNode
+//        BGPopupShare?.zPosition = -2
+        ShareFB = BGPopupShare?.childNode(withName: "ShareFB") as? SKSpriteNode
+//        ShareFB = childNode(withName: "ShareFB") as? SKSpriteNode
+//        ShareFB?.zPosition = -2
+        ShareTwiter = BGPopupShare?.childNode(withName: "ShareTwiter") as? SKSpriteNode
+//        ShareTwiter = childNode(withName: "ShareTwiter") as? SKSpriteNode
+//        ShareTwiter?.zPosition = -2
+        ClosePopupShare = BGPopupShare?.childNode(withName: "ClosePopupShare") as? SKSpriteNode
+//        ClosePopupShare = childNode(withName: "ClosePopupShare") as? SKSpriteNode
+//        ClosePopupShare?.zPosition = -2
+        BGPopupShare?.run(SKAction.hide())
+        BGPopupShare?.position = CGPoint(x: 0, y: -700)
         
         initializeGame()
     }
@@ -310,19 +324,61 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             }
             
             if atPoint(location).name == "Share" {
+                BGPopupShare?.run(SKAction.sequence([SKAction.unhide(), SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.3)]))
+//                BGPopupShare?.run(SKAction.unhide())
+                BGShare?.zPosition = 8
+                
                 let bounds = self.scene?.view?.bounds
                 UIGraphicsBeginImageContextWithOptions(bounds!.size, true, UIScreen.main.scale)
                 self.scene?.view?.drawHierarchy(in: bounds!, afterScreenUpdates: true)
-                let image = UIGraphicsGetImageFromCurrentImageContext()
+                image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
-                
+            }
+            
+            if atPoint(location).name == "ClosePopupShare" {
+                BGPopupShare?.run(SKAction.sequence([SKAction.moveTo(y: -700, duration: 0.3), SKAction.hide()]))
+//                BGPopupShare?.run(SKAction.hide())
+                BGShare?.zPosition = -2
+            }
+            
+            if atPoint(location).name == "ShareFB" {
                 let photo: FBSDKSharePhoto = FBSDKSharePhoto()
                 photo.image = image
                 photo.isUserGenerated = true
                 let content:FBSDKSharePhotoContent = FBSDKSharePhotoContent()
                 content.photos = [photo]
                 FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
-
+            }
+            
+            if atPoint(location).name == "ShareTwiter" {
+                if (TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers()) {                 let composer = TWTRComposer()
+                    composer.setImage(image)
+                    composer.show(from: (self.view?.window?.rootViewController)!, completion: { (result) in
+                        if result == .done {
+                            print("done")
+                        } else {
+                            print("cancel")
+                        }
+                    })
+                } else {
+                    // Log in, and then check again
+                    TWTRTwitter.sharedInstance().logIn { session, error in
+                        if session != nil { // Log in succeeded
+                            let composer = TWTRComposer()
+                            composer.setImage(self.image)
+                            composer.show(from: (self.view?.window?.rootViewController)!, completion: { (result) in
+                                if result == .done {
+                                    print("done")
+                                } else {
+                                    print("cancel")
+                                }
+                            })
+                        } else {
+                            let alert = UIAlertController(title: "No Twitter Accounts Available", message: "You must log in before presenting a composer.", preferredStyle: .alert)
+                            self.view?.window?.rootViewController?.present(alert, animated: false, completion: nil)
+                        }
+                    }
+                }
             }
         }
     }
