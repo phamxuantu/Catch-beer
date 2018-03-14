@@ -15,6 +15,7 @@ import Toast_Swift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -23,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        
+//        // add network reachability observer on app start
+        NetworkManager.shared.startNetworkReachabilityObserver()
+//        print("check connected: ", NetworkManager.shared.startNetworkReachabilityObserver())
         return true
     }
     

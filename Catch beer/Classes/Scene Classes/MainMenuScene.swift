@@ -30,20 +30,13 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
     let scaleHighScore = GetSceneForDevice().getScaleHighScore(deviceName: UIDevice().modelName)
     
+    
+    // create loading view
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    
     override func didMove(to view: SKView) {
         MainMenuScene.sharedInstance = self
 //        print("did move")
-        
-        if ConnectionCheck.isConnectedToNetwork() {
-            print("Connected")
-            if let tokenLogin = defaults.string(forKey: "tokenLogin") {
-                //            print("tokenLogin: ", tokenLogin) // Some String Value
-                getInfoUser(tokenLogin: tokenLogin)
-            }
-        } else {
-            print("DisConnected")
-            self.view?.makeToast("You are not conected internet", duration: 3.0, position: .bottom)
-        }
         username?.text = userInfo["email"] as? String != "" ? userInfo["email"] as? String : "Username"
         BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
         BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
@@ -98,13 +91,59 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         }
     }
     
+    func handleGetUserInfo() {
+        if let tokenLogin = defaults.string(forKey: "tokenLogin") {
+            //            print("tokenLogin: ", tokenLogin) // Some String Value
+
+            activityIndicatorView.color = UIColor.black
+            self.view?.addSubview(activityIndicatorView)
+            activityIndicatorView.frame = (self.view?.frame)!
+            activityIndicatorView.center = (self.view?.center)!
+            activityIndicatorView.startAnimating()
+
+            // call get info user
+            getInfoUser(tokenLogin: tokenLogin)
+        } else {
+            self.view?.makeToast("You are not login", duration: 3.0, position: .bottom)
+        }
+    }
+    
     func getInfoUser(tokenLogin: String) {
 //        print("tokenLoginGetUser: ", tokenLogin)
+        
+        
         let parametersUserInfo: Parameters = [
             "token" : tokenLogin,
             ]
+        
         Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON { (respond) in
-            print("respond Login: ", respond)
+            if let respondData = respond.result.value as! [String: Any]? {
+                if (respondData["state"] as? String) ?? "" == "error" {
+                    if (respondData["token"] != nil) {
+                        // save tokenLogin to local
+                        defaults.set(respondData["token"] as! String, forKey: "tokenLogin")
+                        self.getInfoUser(tokenLogin: respondData["token"] as! String)
+                    } else {
+                        defaults.removeObject(forKey: "tokenLogin")
+                        self.activityIndicatorView.stopAnimating()
+                        self.view?.makeToast("You are not login", duration: 1.5, position: .bottom)
+                    }
+                    
+                } else if (respondData["state"] as? String) ?? "" == "Success" {
+                    // success
+                    //Automatic login
+                    userInfo = respondData["result"] as! [String : Any]
+                    
+                    self.username?.text = userInfo["email"] as? String
+                    self.textLogin?.text = "Log out"
+                    
+                    self.view?.makeToast("Welcome \(String(describing: userInfo["email"] as! String))", duration: 1.5, position: .bottom)
+                    self.activityIndicatorView.stopAnimating()
+                    
+//                    self.activityIndicatorView.stopAnimating()
+                }
+                
+            }
         }
     }
     
@@ -165,6 +204,9 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 } else {
                     print("logout")
                     self.loginManager.logOut()
+                    defaults.removeObject(forKey: "tokenLogin")
+                    userInfo = [:]
+                    self.username?.text = "Username"
                     textLogin?.text = "Login"
                     self.changePassword?.zPosition = 5
                     self.textChangePassword?.zPosition = 6

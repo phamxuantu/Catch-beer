@@ -114,7 +114,7 @@ class ChangePasswordViewController: UIViewController {
             txtOldPassword.text = ""
             txtNewPassword.text = ""
         } else if txtRetypePassword.text != txtNewPassword.text {
-            self.view.makeToast("Please confirm new password", duration: 3.0, position: .bottom)
+            self.view.makeToast("Password and Retype password must match", duration: 3.0, position: .bottom)
             
             txtOldPassword.text = ""
             txtNewPassword.text = ""
@@ -123,16 +123,28 @@ class ChangePasswordViewController: UIViewController {
             activityIndicatorView.startAnimating()
             
             if let tokenLogin = defaults.string(forKey: "tokenLogin") {
-                
+                print("token login for change pass: ", tokenLogin)
                 // create param
                 let parameters: Parameters = [
                     "token" : tokenLogin,
-                    "oldPassword" : txtOldPassword.text!,
-                    "newPassword" : txtNewPassword.text!
+                    "password" : txtOldPassword.text!,
+                    "new_password" : txtNewPassword.text!
                 ]
                 
+                print("params: ", parameters)
+                
                 // request using alamofire
-                Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/change-pass", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
+                    print("respond change pass: ", respond)
+                    if let respondData = respond.result.value as! [String: Any]? {
+                        if (respondData["state"] as? String) ?? "" == "error" {
+                            print(respondData["message"] ?? "null message")
+                        } else if (respondData["state"] as? String) ?? "" == "Success" {
+                            self.view.makeToast(respondData["message"] as? String, duration: 1.5, position: .bottom)
+                        }
+                    }
+                    activityIndicatorView.stopAnimating()
+                })
             } else {
                 //expired token
                 // token login null

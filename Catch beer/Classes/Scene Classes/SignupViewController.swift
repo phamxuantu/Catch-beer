@@ -66,10 +66,12 @@ class SignupViewController: UIViewController {
                     activityIndicatorView.stopAnimating()
                     if (responseData["message"] as? String) ?? "" == "Successfully" {
 //                        self.view.makeToast("Sign up successful", duration: 3.0, position: .bottom)
-                        MainMenuScene.sharedInstance.textLogin?.text = "Log out"
+//                        MainMenuScene.sharedInstance.textLogin?.text = "Log out"
 //                        MainMenuScene().view?.makeToast("Sign up successful", duration: 3.0, position: .bottom)
                         MainMenuScene.sharedInstance.view?.makeToast("Sign up successful", duration: 3.0, position: .bottom)
-                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                        
+                        self.dismiss(animated: true, completion: nil)
+//                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                         self.txtUsername.text = ""
                         self.txtPassword.text = ""
                         self.txtRetypePass.text = ""

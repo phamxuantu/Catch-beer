@@ -7,32 +7,41 @@
 //
 
 import Foundation
-import SystemConfiguration
+import Alamofire
 
-public class ConnectionCheck {
+public class NetworkManager {
     
-    class func isConnectedToNetwork() -> Bool {
+    //shared instance
+    static let shared = NetworkManager()
+    
+    var isconnected: Bool = false
+    
+    let reachabilityManager = Alamofire.NetworkReachabilityManager(host: "www.google.com")
+    
+    func startNetworkReachabilityObserver() {
         
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
-        zeroAddress.sin_family = sa_family_t(AF_INET)
         
-        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
-                SCNetworkReachabilityCreateWithAddress(nil, $0)
+        
+        reachabilityManager?.listener = { status in
+            switch status {
+
+            case .notReachable:
+                print("The network is not reachable")
+                MainMenuScene.sharedInstance.view?.makeToast("You are not conected internet", duration: 1.5, position: .bottom)
+            case .unknown :
+                print("It is unknown whether the network is reachable")
+                MainMenuScene.sharedInstance.view?.makeToast("You are not conected internet", duration: 1.5, position: .bottom)
+            case .reachable(.ethernetOrWiFi):
+                print("The network is reachable over the WiFi connection")
+                MainMenuScene.sharedInstance.handleGetUserInfo()
+            case .reachable(.wwan):
+                print("The network is reachable over the WWAN connection")
+                MainMenuScene.sharedInstance.handleGetUserInfo()
             }
-        }) else {
-            return false
         }
         
-        var flags: SCNetworkReachabilityFlags = []
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
-            return false
-        }
+        // start listening
+        reachabilityManager?.startListening()
         
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        
-        return (isReachable && !needsConnection)
     }
 }
