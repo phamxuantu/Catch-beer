@@ -5,7 +5,7 @@
 //  Created by Xuan Tu on 1/29/18.
 //  Copyright © 2018 TnTechs. All rights reserved.
 //
-
+import UIKit
 import SpriteKit
 import AVFoundation
 import FBSDKLoginKit
@@ -157,18 +157,29 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             audioPlayer.stop()
         }
         
-        if textLogin?.text == "Login" {
-            self.changePassword?.zPosition = -1
-            self.textChangePassword?.zPosition = -1
-        } else if FBSDKAccessToken.current() != nil || TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
-            self.changePassword?.zPosition = -1
-            self.textChangePassword?.zPosition = -1
-            textLogin?.text = "Log out"
+        if let _ = defaults.string(forKey: "tokenLogin") {
+            if FBSDKAccessToken.current() != nil || TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
+                self.changePassword?.zPosition = -1
+                self.textChangePassword?.zPosition = -1
+                textLogin?.text = "Log out"
+            } else {
+                self.changePassword?.zPosition = 5
+                self.textChangePassword?.zPosition = 6
+                textLogin?.text = "Login"
+            }
         } else {
-            self.changePassword?.zPosition = 5
-            self.textChangePassword?.zPosition = 6
+            self.changePassword?.zPosition = -1
+            self.textChangePassword?.zPosition = -1
             textLogin?.text = "Login"
         }
+        
+//        let textFieldFrame = CGRect(origin: CGPoint(x: username!.position.x + (self.frame.size.width / 2),y: -username!.position.y + (self.frame.size.height / 2)), size: CGSize(width: 200, height: 30))
+////        let textFieldFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 200, height: 30))
+//        let textField = UITextField(frame: textFieldFrame)
+//        textField.layer.anchorPoint = CGPoint(x: 1, y: 1)
+//        textField.backgroundColor = UIColor.red
+//        textField.placeholder = "hello world"
+//        self.view?.addSubview(textField)
     }
     
     func handleGetUserInfo() {
@@ -285,13 +296,18 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     self.view?.window?.rootViewController?.present(loginViewController, animated: true, completion: nil)
                 } else {
                     print("logout")
-                    self.loginManager.logOut()
+                    if FBSDKAccessToken.current() != nil {
+                        self.loginManager.logOut()
+                    }
+                    if TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
+                        TWTRTwitter.sharedInstance().sessionStore.logOutUserID(TWTRTwitter.sharedInstance().sessionStore.session()!.userID)
+                    }
                     defaults.removeObject(forKey: "tokenLogin")
                     userInfo = [:]
                     self.username?.text = "Username"
                     textLogin?.text = "Login"
-                    self.changePassword?.zPosition = 5
-                    self.textChangePassword?.zPosition = 6
+                    self.changePassword?.zPosition = -1
+                    self.textChangePassword?.zPosition = -1
                 }
             }
             //open setting
