@@ -77,6 +77,7 @@ class LoginViewController: UIViewController {
                         "token" : respondData["token"] as! String,
                     ]
                     print("token: ", parametersUserInfo)
+                    //get info user
                     Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resUserInfo) in
 //                        activityIndicatorView.stopAnimating()
                         print("userInfo: ", resUserInfo)

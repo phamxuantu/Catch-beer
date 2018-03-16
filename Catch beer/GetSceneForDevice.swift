@@ -87,22 +87,42 @@ class GetSceneForDevice {
         }
     }
     
-    func getPadding(deviceName: String) -> CGFloat {
+    func getScaleShop(deviceName: String) -> CGFloat {
         switch deviceName {
         case "iPhone 4s":
-            return 0
+            return 0.35
         case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
-            return 0
+            return 0.37
         case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
-            return 40
+            return 0.5
         case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
-            return 0
+            return 0.48
         case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
-            return 0
+            return 0.95
         case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
-            return 0
+            return 1
         default:
-            return 0
+            return 0.87
         }
     }
+
+    
+//    func getPadding(deviceName: String) -> CGFloat {
+//        switch deviceName {
+//        case "iPhone 4s":
+//            return 0
+//        case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
+//            return 0
+//        case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
+//            return 40
+//        case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
+//            return 0
+//        case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
+//            return 0
+//        case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
+//            return 0
+//        default:
+//            return 0
+//        }
+//    }
 }

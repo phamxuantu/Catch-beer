@@ -24,11 +24,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     var alertLogout: UIAlertController?
     var dict : [String : AnyObject]!
     let loginManager = FBSDKLoginManager()
-    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword, BGShop: SKSpriteNode?
-    var username, textLogin, textChangePassword: SKLabelNode?
+    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword, BGShop, ShopItem, ShopCoin, ShopOrder, item, coin, order, avatarNo1, avatarNo2, avatarNo3, avatarNo4, avatarNo5, avatarNo6, avatarNo7, avatarNo8, avatarNo9, avatarNo10: SKSpriteNode?
+    var username, textLogin, textChangePassword, usernameNo1, usernameNo2, usernameNo3, usernameNo4, usernameNo5, usernameNo6, usernameNo7, usernameNo8, usernameNo9, usernameNo10, usernameBorderNo1, usernameBorderNo2, usernameBorderNo3, usernameBorderNo4, usernameBorderNo5, usernameBorderNo6, usernameBorderNo7, usernameBorderNo8, usernameBorderNo9, usernameBorderNo10, scoreNo1, scoreNo2, scoreNo3, scoreNo4, scoreNo5, scoreNo6, scoreNo7, scoreNo8, scoreNo9, scoreNo10, scoreBorderNo1, scoreBorderNo2, scoreBorderNo3, scoreBorderNo4, scoreBorderNo5, scoreBorderNo6, scoreBorderNo7, scoreBorderNo8, scoreBorderNo9, scoreBorderNo10: SKLabelNode?
     let scaleXSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).x
     let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
     let scaleHighScore = GetSceneForDevice().getScaleHighScore(deviceName: UIDevice().modelName)
+    let scaleShop = GetSceneForDevice().getScaleShop(deviceName: UIDevice().modelName)
+    var userNameHighScore = [String](repeating: "", count: 10)
+    var scoreHighScore = [String](repeating: "", count: 10)
     
     
     // create loading view
@@ -38,6 +41,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         MainMenuScene.sharedInstance = self
 //        print("did move")
         username?.text = userInfo["email"] as? String != "" ? userInfo["email"] as? String : "Username"
+        
         BGPopup = childNode(withName: "BGPopup") as? SKSpriteNode
         BGSetting = childNode(withName: "BGSetting") as? SKSpriteNode
         avatar = BGSetting?.childNode(withName: "Avatar") as? SKSpriteNode
@@ -48,15 +52,84 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         changePassword = BGSetting?.childNode(withName: "ChangePassword") as? SKSpriteNode
         textChangePassword = BGSetting?.childNode(withName: "TextChangePassword") as? SKLabelNode!
         textLogin = childNode(withName: "TextLogin") as? SKLabelNode!
-        BGHighScore = childNode(withName: "BGHighScore") as? SKSpriteNode
         BGPopup?.run(SKAction.hide())
         BGSetting?.run(SKAction.hide())
         BGSetting?.setScale(0)
+        
+        
+        BGHighScore = childNode(withName: "BGHighScore") as? SKSpriteNode
         BGHighScore?.run(SKAction.hide())
         BGHighScore?.setScale(0)
+        
+        avatarNo1 = BGHighScore?.childNode(withName: "AvatarNo1") as? SKSpriteNode
+        avatarNo2 = BGHighScore?.childNode(withName: "AvatarNo2") as? SKSpriteNode
+        avatarNo3 = BGHighScore?.childNode(withName: "AvatarNo3") as? SKSpriteNode
+        avatarNo4 = BGHighScore?.childNode(withName: "AvatarNo4") as? SKSpriteNode
+        avatarNo5 = BGHighScore?.childNode(withName: "AvatarNo5") as? SKSpriteNode
+        avatarNo6 = BGHighScore?.childNode(withName: "AvatarNo6") as? SKSpriteNode
+        avatarNo7 = BGHighScore?.childNode(withName: "AvatarNo7") as? SKSpriteNode
+        avatarNo8 = BGHighScore?.childNode(withName: "AvatarNo8") as? SKSpriteNode
+        avatarNo9 = BGHighScore?.childNode(withName: "AvatarNo9") as? SKSpriteNode
+        avatarNo10 = BGHighScore?.childNode(withName: "AvatarNo10") as? SKSpriteNode
+        
+        usernameNo1 = BGHighScore?.childNode(withName: "UsernameNo1") as? SKLabelNode
+        usernameNo2 = BGHighScore?.childNode(withName: "UsernameNo2") as? SKLabelNode
+        usernameNo3 = BGHighScore?.childNode(withName: "UsernameNo3") as? SKLabelNode
+        usernameNo4 = BGHighScore?.childNode(withName: "UsernameNo4") as? SKLabelNode
+        usernameNo5 = BGHighScore?.childNode(withName: "UsernameNo5") as? SKLabelNode
+        usernameNo6 = BGHighScore?.childNode(withName: "UsernameNo6") as? SKLabelNode
+        usernameNo7 = BGHighScore?.childNode(withName: "UsernameNo7") as? SKLabelNode
+        usernameNo8 = BGHighScore?.childNode(withName: "UsernameNo8") as? SKLabelNode
+        usernameNo9 = BGHighScore?.childNode(withName: "UsernameNo9") as? SKLabelNode
+        usernameNo10 = BGHighScore?.childNode(withName: "UsernameNo10") as? SKLabelNode
+        
+        usernameBorderNo1 = BGHighScore?.childNode(withName: "UsernameBorderNo1") as? SKLabelNode
+        usernameBorderNo2 = BGHighScore?.childNode(withName: "UsernameBorderNo2") as? SKLabelNode
+        usernameBorderNo3 = BGHighScore?.childNode(withName: "UsernameBorderNo3") as? SKLabelNode
+        usernameBorderNo4 = BGHighScore?.childNode(withName: "UsernameBorderNo4") as? SKLabelNode
+        usernameBorderNo5 = BGHighScore?.childNode(withName: "UsernameBorderNo5") as? SKLabelNode
+        usernameBorderNo6 = BGHighScore?.childNode(withName: "UsernameBorderNo6") as? SKLabelNode
+        usernameBorderNo7 = BGHighScore?.childNode(withName: "UsernameBorderNo7") as? SKLabelNode
+        usernameBorderNo8 = BGHighScore?.childNode(withName: "UsernameBorderNo8") as? SKLabelNode
+        usernameBorderNo9 = BGHighScore?.childNode(withName: "UsernameBorderNo9") as? SKLabelNode
+        usernameBorderNo10 = BGHighScore?.childNode(withName: "UsernameBorderNo10") as? SKLabelNode
+        
+        scoreNo1 = BGHighScore?.childNode(withName: "ScoreNo1") as? SKLabelNode
+        scoreNo2 = BGHighScore?.childNode(withName: "ScoreNo2") as? SKLabelNode
+        scoreNo3 = BGHighScore?.childNode(withName: "ScoreNo3") as? SKLabelNode
+        scoreNo4 = BGHighScore?.childNode(withName: "ScoreNo4") as? SKLabelNode
+        scoreNo5 = BGHighScore?.childNode(withName: "ScoreNo5") as? SKLabelNode
+        scoreNo6 = BGHighScore?.childNode(withName: "ScoreNo6") as? SKLabelNode
+        scoreNo7 = BGHighScore?.childNode(withName: "ScoreNo7") as? SKLabelNode
+        scoreNo8 = BGHighScore?.childNode(withName: "ScoreNo8") as? SKLabelNode
+        scoreNo9 = BGHighScore?.childNode(withName: "ScoreNo9") as? SKLabelNode
+        scoreNo10 = BGHighScore?.childNode(withName: "ScoreNo10") as? SKLabelNode
+        
+        scoreBorderNo1 = BGHighScore?.childNode(withName: "ScoreBorderNo1") as? SKLabelNode
+        scoreBorderNo2 = BGHighScore?.childNode(withName: "ScoreBorderNo2") as? SKLabelNode
+        scoreBorderNo3 = BGHighScore?.childNode(withName: "ScoreBorderNo3") as? SKLabelNode
+        scoreBorderNo4 = BGHighScore?.childNode(withName: "ScoreBorderNo4") as? SKLabelNode
+        scoreBorderNo5 = BGHighScore?.childNode(withName: "ScoreBorderNo5") as? SKLabelNode
+        scoreBorderNo6 = BGHighScore?.childNode(withName: "ScoreBorderNo6") as? SKLabelNode
+        scoreBorderNo7 = BGHighScore?.childNode(withName: "ScoreBorderNo7") as? SKLabelNode
+        scoreBorderNo8 = BGHighScore?.childNode(withName: "ScoreBorderNo8") as? SKLabelNode
+        scoreBorderNo9 = BGHighScore?.childNode(withName: "ScoreBorderNo9") as? SKLabelNode
+        scoreBorderNo10 = BGHighScore?.childNode(withName: "ScoreBorderNo10") as? SKLabelNode
+        
         BGShop = childNode(withName: "BGShop") as? SKSpriteNode
         BGShop?.run(SKAction.hide())
         BGShop?.setScale(0)
+        ShopItem = BGShop?.childNode(withName: "ShopItem") as? SKSpriteNode
+        ShopCoin = BGShop?.childNode(withName: "ShopCoin") as? SKSpriteNode
+        ShopOrder = BGShop?.childNode(withName: "ShopOrder") as? SKSpriteNode
+        item = BGShop?.childNode(withName: "Item") as? SKSpriteNode
+        item?.run(SKAction.hide())
+        coin = BGShop?.childNode(withName: "Coin") as? SKSpriteNode
+        coin?.run(SKAction.hide())
+        order = BGShop?.childNode(withName: "Order") as? SKSpriteNode
+        order?.run(SKAction.hide())
+        
+        
         bestScoreLabel = childNode(withName: "BestScore") as? SKLabelNode!
         bestScoreLabel?.text = String(GameViewController.bestScore)
 
@@ -84,10 +157,17 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             audioPlayer.stop()
         }
         
-        if (FBSDKAccessToken.current()) != nil {
-            textLogin?.text = "Log out"
+        if textLogin?.text == "Login" {
             self.changePassword?.zPosition = -1
             self.textChangePassword?.zPosition = -1
+        } else if FBSDKAccessToken.current() != nil || TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
+            self.changePassword?.zPosition = -1
+            self.textChangePassword?.zPosition = -1
+            textLogin?.text = "Log out"
+        } else {
+            self.changePassword?.zPosition = 5
+            self.textChangePassword?.zPosition = 6
+            textLogin?.text = "Login"
         }
     }
     
@@ -159,18 +239,20 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     view!.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(2)))
                 }
             }
-            
+            // login fb
             if atPoint(location).name == "Facebook" {
                 print("Click FB")
                 if (FBSDKAccessToken.current()) == nil {
                     self.loginFBClicked()
                 }
             }
-            
+            //login twiter
             if atPoint(location).name == "Twitter" {
-                self.loginTWClicked()
+                if !TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
+                    self.loginTWClicked()
+                }
             }
-            
+            //turn on/off sound effect
             if atPoint(location).name == "CheckSound" {
                 if GameViewController.checkSound {
                     checkSound?.texture = SKTexture(imageNamed: "uncheck")
@@ -181,7 +263,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 }
                 GameViewController.checkSound = !GameViewController.checkSound
             }
-            
+            //turn on/off music
             if atPoint(location).name == "CheckMusic" {
                 if GameViewController.checkMusic {
                     audioPlayer.stop()
@@ -194,7 +276,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 }
                 GameViewController.checkMusic = !GameViewController.checkMusic
             }
-            
+            //login with email & password
             if atPoint(location).name == "Login" || atPoint(location).name == "TextLogin" {
                 if textLogin?.text == "Login" {
                     print("login")
@@ -212,7 +294,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     self.textChangePassword?.zPosition = 6
                 }
             }
-            
+            //open setting
             if atPoint(location).name == "Setting" {
                 BGPopup?.run(SKAction.unhide())
                 BGSetting?.run(SKAction.unhide())
@@ -234,21 +316,58 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 BGShop?.run(SKAction.sequence([SKAction.scale(to: 0, duration: 0.3), SKAction.hide()]))
                 BGPopup?.run(SKAction.hide())
             }
-            
+            //open highscore
             if atPoint(location).name == "HighScore" {
 //                print("High Score")
-                
-                BGPopup?.run(SKAction.unhide())
-                BGHighScore?.run(SKAction.unhide())
-                BGHighScore?.run(SKAction.scale(to: scaleHighScore, duration: 0.3))
+                if let tokenLogin = defaults.string(forKey: "tokenLogin") {
+                    
+                    //create loading view
+                    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+                    activityIndicatorView.color = UIColor.black
+                    self.view?.addSubview(activityIndicatorView)
+                    activityIndicatorView.frame = self.view!.frame
+                    activityIndicatorView.center = self.view!.center
+                    activityIndicatorView.startAnimating()
+                    
+                    let parametersBestScore: Parameters = [
+                        "token" : tokenLogin,
+                        ]
+                    
+                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/top-best-score", method: .post, parameters: parametersBestScore, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                        //                        activityIndicatorView.stopAnimating()
+//                        print("best score: ", resBestScore)
+                        if let respondBestScore = resBestScore.result.value as! [String: Any]? {
+                            if (respondBestScore["state"] as? String) ?? "" == "error" {
+                                activityIndicatorView.stopAnimating()
+                                self.view?.makeToast(respondBestScore["message"] as? String, duration: 3.0, position: .bottom)
+                            } else if (respondBestScore["state"] as? String) ?? "" == "Success" {
+                                if let arrBestScore = respondBestScore["data"] as! [[String:Any]]? {
+                                    for i in 0...arrBestScore.count - 1 {
+                                        let email = arrBestScore[i]["email"] as! String
+//                                        print("check email", "\(String(email.prefix(6)))...")
+                                        self.userNameHighScore[i] = "\(String(email.prefix(6)))..."
+                                        let highScore = arrBestScore[i]["best_score"] as! Int
+//                                        print("check high score", highScore)
+                                        self.scoreHighScore[i] = String(highScore)
+                                    }
+                                }
+                                self.setData()
+                                activityIndicatorView.stopAnimating()
+                                self.BGPopup?.run(SKAction.unhide())
+                                self.BGHighScore?.run(SKAction.unhide())
+                                self.BGHighScore?.run(SKAction.scale(to: self.scaleHighScore, duration: 0.3))
+                            }
+                        }
+                    })
+                }
             }
-            
+            //share fb
             if atPoint(location).name == "ShareFB" {
                 let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
                 content.contentURL = NSURL(string: "https://www.google.com.vn/?gfe_rd=cr&dcr=0&ei=KwKeWpeRPI3j8weWlZjQAQ")! as URL
                 FBSDKShareDialog.show(from: self.view?.window?.rootViewController, with: content, delegate: nil)
             }
-            
+            //share twiter
             if atPoint(location).name == "ShareTwiter" {
                 if (TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers()) {
                     // App must have at least one logged-in user to compose a Tweet
@@ -283,12 +402,115 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     }
                 }
             }
+            
+            //open shop
             if atPoint(location).name == "Shop" {
                 BGPopup?.run(SKAction.unhide())
                 BGShop?.run(SKAction.unhide())
-                BGShop?.run(SKAction.scale(to: 0.95, duration: 0.3))
+                ShopItem?.size = CGSize(width: 190, height: 70)
+                ShopItem?.position = CGPoint(x: -200, y: 238)
+                item?.run(SKAction.unhide())
+                ShopCoin?.size = CGSize(width: 190, height: 55)
+                ShopCoin?.position = CGPoint(x: 0, y: 231)
+                coin?.run(SKAction.hide())
+                
+                ShopOrder?.size = CGSize(width: 190, height: 55)
+                ShopOrder?.position = CGPoint(x: 200, y: 231)
+                order?.run(SKAction.hide())
+                BGShop?.run(SKAction.scale(to: scaleShop, duration: 0.3))
+            }
+            
+            //open tab shop item
+            if atPoint(location).name == "ShopItem" || atPoint(location).name == "TextShopItem" {
+                ShopItem?.size = CGSize(width: 190, height: 70)
+                ShopItem?.position = CGPoint(x: -200, y: 238)
+                item?.run(SKAction.unhide())
+                
+                ShopCoin?.size = CGSize(width: 190, height: 55)
+                ShopCoin?.position = CGPoint(x: 0, y: 231)
+                coin?.run(SKAction.hide())
+                
+                ShopOrder?.size = CGSize(width: 190, height: 55)
+                ShopOrder?.position = CGPoint(x: 200, y: 231)
+                order?.run(SKAction.hide())
+            }
+            
+            //open tab shop coin
+            if atPoint(location).name == "ShopCoin" || atPoint(location).name == "TextShopCoin" {
+                ShopItem?.size = CGSize(width: 190, height: 55)
+                ShopItem?.position = CGPoint(x: -200, y: 231)
+                item?.run(SKAction.hide())
+                
+                ShopCoin?.size = CGSize(width: 190, height: 70)
+                ShopCoin?.position = CGPoint(x: 0, y: 238)
+                coin?.run(SKAction.unhide())
+                
+                ShopOrder?.size = CGSize(width: 190, height: 55)
+                ShopOrder?.position = CGPoint(x: 200, y: 231)
+                order?.run(SKAction.hide())
+            }
+            
+            //open tab shop order
+            if atPoint(location).name == "ShopOrder" || atPoint(location).name == "TextShopOrder" {
+                ShopItem?.size = CGSize(width: 190, height: 55)
+                ShopItem?.position = CGPoint(x: -200, y: 231)
+                item?.run(SKAction.hide())
+                
+                ShopCoin?.size = CGSize(width: 190, height: 55)
+                ShopCoin?.position = CGPoint(x: 0, y: 231)
+                coin?.run(SKAction.hide())
+                
+                ShopOrder?.size = CGSize(width: 190, height: 70)
+                ShopOrder?.position = CGPoint(x: 200, y: 238)
+                order?.run(SKAction.unhide())
             }
         }
+    }
+    //set username and score
+    func setData() {
+        usernameNo1?.text = userNameHighScore[0]
+        usernameNo2?.text = userNameHighScore[1]
+        usernameNo3?.text = userNameHighScore[2]
+        usernameNo4?.text = userNameHighScore[3]
+        usernameNo5?.text = userNameHighScore[4]
+        usernameNo6?.text = userNameHighScore[5]
+        usernameNo7?.text = userNameHighScore[6]
+        usernameNo8?.text = userNameHighScore[7]
+        usernameNo9?.text = userNameHighScore[8]
+        usernameNo10?.text = userNameHighScore[9]
+        
+        usernameBorderNo1?.text = userNameHighScore[0]
+        usernameBorderNo2?.text = userNameHighScore[1]
+        usernameBorderNo3?.text = userNameHighScore[2]
+        usernameBorderNo4?.text = userNameHighScore[3]
+        usernameBorderNo5?.text = userNameHighScore[4]
+        usernameBorderNo6?.text = userNameHighScore[5]
+        usernameBorderNo7?.text = userNameHighScore[6]
+        usernameBorderNo8?.text = userNameHighScore[7]
+        usernameBorderNo9?.text = userNameHighScore[8]
+        usernameBorderNo10?.text = userNameHighScore[9]
+        
+        scoreNo1?.text = scoreHighScore[0]
+        scoreNo2?.text = scoreHighScore[1]
+        scoreNo3?.text = scoreHighScore[2]
+        scoreNo4?.text = scoreHighScore[3]
+        scoreNo5?.text = scoreHighScore[4]
+        scoreNo6?.text = scoreHighScore[5]
+        scoreNo7?.text = scoreHighScore[6]
+        scoreNo8?.text = scoreHighScore[7]
+        scoreNo9?.text = scoreHighScore[8]
+        scoreNo10?.text = scoreHighScore[9]
+        
+        scoreBorderNo1?.text = scoreHighScore[0]
+        scoreBorderNo2?.text = scoreHighScore[1]
+        scoreBorderNo3?.text = scoreHighScore[2]
+        scoreBorderNo4?.text = scoreHighScore[3]
+        scoreBorderNo5?.text = scoreHighScore[4]
+        scoreBorderNo6?.text = scoreHighScore[5]
+        scoreBorderNo7?.text = scoreHighScore[6]
+        scoreBorderNo8?.text = scoreHighScore[7]
+        scoreBorderNo9?.text = scoreHighScore[8]
+        scoreBorderNo10?.text = scoreHighScore[9]
     }
     
     fileprivate func loginTWClicked() {
