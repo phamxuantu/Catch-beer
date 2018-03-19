@@ -328,6 +328,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
 //                BGPopupShare?.run(SKAction.unhide())
                 BGShare?.zPosition = 8
                 
+                // chụp ảnh màn hình
                 let bounds = self.scene?.view?.bounds
                 UIGraphicsBeginImageContextWithOptions(bounds!.size, true, UIScreen.main.scale)
                 self.scene?.view?.drawHierarchy(in: bounds!, afterScreenUpdates: true)

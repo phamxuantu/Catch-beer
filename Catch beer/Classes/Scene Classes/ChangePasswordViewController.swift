@@ -138,8 +138,28 @@ class ChangePasswordViewController: UIViewController {
                     print("respond change pass: ", respond)
                     if let respondData = respond.result.value as! [String: Any]? {
                         if (respondData["state"] as? String) ?? "" == "error" {
-                            print(respondData["message"] ?? "null message")
+                            // error
+                            // check have new token login
+                            if (respondData["token"] as? String) != nil {
+                                // save tokenLogin to local
+                                defaults.set(respondData["token"] as! String, forKey: "tokenLogin")
+                                let params: Parameters = [
+                                    "token" : respondData["token"] as! String,
+                                    "password" : self.txtOldPassword.text!,
+                                    "new_password" : self.txtNewPassword.text!
+                                ]
+                                Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/change-pass", method: .post, parameters: params, encoding: JSONEncoding.default).responseJSON(completionHandler: { (res) in
+                                    if let respondData2 = res.result.value as! [String: Any]? {
+                                        self.view.makeToast(respondData2["message"] as? String, duration: 1.5, position: .bottom)
+                                    }
+                                })
+                            } else {
+                                // show error
+                                self.view.makeToast(respondData["message"] as? String, duration: 1.5, position: .bottom)
+                                print(respondData["message"] ?? "null message")
+                            }
                         } else if (respondData["state"] as? String) ?? "" == "Success" {
+                            // success
                             self.view.makeToast(respondData["message"] as? String, duration: 1.5, position: .bottom)
                         }
                     }

@@ -12,6 +12,8 @@ import Toast_Swift
 
 class SignupViewController: UIViewController {
 
+    @IBOutlet weak var txtEmail: CustomTextField!
+    
     @IBOutlet weak var txtUsername: CustomTextField!
     
     @IBOutlet weak var txtPassword: CustomTextField!
@@ -31,7 +33,7 @@ class SignupViewController: UIViewController {
     }
     
     @IBAction func signUp(_ sender: Any) {
-        if txtUsername.text == "" {
+        if txtEmail.text == "" {
             self.view.makeToast("Please enter email", duration: 3.0, position: .bottom)
             txtPassword.text = ""
             txtRetypePass.text = ""
