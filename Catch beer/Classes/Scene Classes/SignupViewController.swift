@@ -34,23 +34,30 @@ class SignupViewController: UIViewController {
     
     @IBAction func signUp(_ sender: Any) {
         if txtEmail.text == "" {
-            self.view.makeToast("Please enter email", duration: 3.0, position: .bottom)
+            self.view.makeToast("Please enter email", duration: 1.5, position: .bottom)
             txtPassword.text = ""
             txtRetypePass.text = ""
+            txtUsername.text = ""
+        } else if txtUsername.text == "" {
+            self.view.makeToast("Please enter your name", duration: 1.5, position: .bottom)
+            txtPassword.text = ""
+            txtRetypePass.text = ""
+            txtEmail.text = ""
         } else if txtPassword.text == "" {
-            self.view.makeToast("Please enter password", duration: 3.0, position: .bottom)
+            self.view.makeToast("Please enter password", duration: 1.5, position: .bottom)
             txtRetypePass.text = ""
         } else if txtPassword.text!.count < 6 {
-            self.view.makeToast("Password at least 6 characters", duration: 3.0, position: .bottom)
+            self.view.makeToast("Password at least 6 characters", duration: 1.5, position: .bottom)
             txtPassword.text = ""
             txtRetypePass.text = ""
         } else if txtPassword.text != txtRetypePass.text {
-            self.view.makeToast("Password and Retype password must match", duration: 3.0, position: .bottom)
+            self.view.makeToast("Password and Retype password must match", duration: 1.5, position: .bottom)
             txtPassword.text = ""
             txtRetypePass.text = ""
         } else {
             let parameters: Parameters = [
-                "email" : txtUsername.text!,
+                "email" : txtEmail.text!,
+                "name": txtUsername.text!,
                 "password" : txtPassword.text!
             ]
             let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -67,16 +74,14 @@ class SignupViewController: UIViewController {
                     //                    print("k loi")
                     activityIndicatorView.stopAnimating()
                     if (responseData["message"] as? String) ?? "" == "Successfully" {
-//                        self.view.makeToast("Sign up successful", duration: 3.0, position: .bottom)
-//                        MainMenuScene.sharedInstance.textLogin?.text = "Log out"
-//                        MainMenuScene().view?.makeToast("Sign up successful", duration: 3.0, position: .bottom)
                         MainMenuScene.sharedInstance.view?.makeToast("Sign up successful", duration: 3.0, position: .bottom)
-                        
+
                         self.dismiss(animated: true, completion: nil)
 //                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
                         self.txtUsername.text = ""
                         self.txtPassword.text = ""
                         self.txtRetypePass.text = ""
+                        self.txtEmail.text = ""
                     } else {
                         self.view.makeToast((responseData["message"] as? String) ?? "", duration: 3.0, position: .bottom)
                         self.txtPassword.text = ""
