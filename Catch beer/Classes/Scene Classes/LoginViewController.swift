@@ -87,6 +87,8 @@ class LoginViewController: UIViewController {
                             } else if (respondInfoUser["state"] as? String) ?? "" == "Success" {
                                 userInfo = respondInfoUser["result"] as! [String : Any]
                                 MainMenuScene.sharedInstance.username?.text = userInfo["email"] as? String
+                                MainMenuScene.sharedInstance.changePassword?.zPosition = 5
+                                MainMenuScene.sharedInstance.textChangePassword?.zPosition = 6
                                 MainMenuScene.sharedInstance.textLogin?.text = "Log out"
                                 self.dismiss(animated: true, completion: nil)
                             }

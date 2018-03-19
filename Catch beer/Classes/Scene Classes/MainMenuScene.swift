@@ -24,14 +24,16 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     var alertLogout: UIAlertController?
     var dict : [String : AnyObject]!
     let loginManager = FBSDKLoginManager()
-    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword, BGShop, ShopItem, ShopCoin, ShopOrder, item, coin, order, avatarNo1, avatarNo2, avatarNo3, avatarNo4, avatarNo5, avatarNo6, avatarNo7, avatarNo8, avatarNo9, avatarNo10: SKSpriteNode?
-    var username, textLogin, textChangePassword, usernameNo1, usernameNo2, usernameNo3, usernameNo4, usernameNo5, usernameNo6, usernameNo7, usernameNo8, usernameNo9, usernameNo10, usernameBorderNo1, usernameBorderNo2, usernameBorderNo3, usernameBorderNo4, usernameBorderNo5, usernameBorderNo6, usernameBorderNo7, usernameBorderNo8, usernameBorderNo9, usernameBorderNo10, scoreNo1, scoreNo2, scoreNo3, scoreNo4, scoreNo5, scoreNo6, scoreNo7, scoreNo8, scoreNo9, scoreNo10, scoreBorderNo1, scoreBorderNo2, scoreBorderNo3, scoreBorderNo4, scoreBorderNo5, scoreBorderNo6, scoreBorderNo7, scoreBorderNo8, scoreBorderNo9, scoreBorderNo10: SKLabelNode?
+    var BGPopup, BGSetting, avatar, checkMusic, checkSound, checkNotification, BGHighScore, changePassword, BGShop, ShopItem, ShopCoin, ShopOrder, item, coin, order, avatarNo1, avatarNo2, avatarNo3, avatarNo4, avatarNo5, avatarNo6, avatarNo7, avatarNo8, avatarNo9, avatarNo10, editName: SKSpriteNode?
+    var username, textLogin, textChangePassword, usernameNo1, usernameNo2, usernameNo3, usernameNo4, usernameNo5, usernameNo6, usernameNo7, usernameNo8, usernameNo9, usernameNo10, usernameBorderNo1, usernameBorderNo2, usernameBorderNo3, usernameBorderNo4, usernameBorderNo5, usernameBorderNo6, usernameBorderNo7, usernameBorderNo8, usernameBorderNo9, usernameBorderNo10, scoreNo1, scoreNo2, scoreNo3, scoreNo4, scoreNo5, scoreNo6, scoreNo7, scoreNo8, scoreNo9, scoreNo10, scoreBorderNo1, scoreBorderNo2, scoreBorderNo3, scoreBorderNo4, scoreBorderNo5, scoreBorderNo6, scoreBorderNo7, scoreBorderNo8, scoreBorderNo9, scoreBorderNo10, quantityItemHeart, quantityItemBom, quantityItemCoin, quantityItemSlow, quantityItemProtect, quantityOrderHeart, quantityOrderBom, quantityOrderCoin, quantityOrderSlow, quantityOrderProtect: SKLabelNode?
     let scaleXSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).x
     let scaleYSetting = GetSceneForDevice().getScaleSetting(deviceName: UIDevice().modelName).y
     let scaleHighScore = GetSceneForDevice().getScaleHighScore(deviceName: UIDevice().modelName)
     let scaleShop = GetSceneForDevice().getScaleShop(deviceName: UIDevice().modelName)
     var userNameHighScore = [String](repeating: "", count: 10)
     var scoreHighScore = [String](repeating: "", count: 10)
+    var textField: UITextField?
+    var checkEdit = true
     
     
     // create loading view
@@ -52,6 +54,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         changePassword = BGSetting?.childNode(withName: "ChangePassword") as? SKSpriteNode
         textChangePassword = BGSetting?.childNode(withName: "TextChangePassword") as? SKLabelNode!
         textLogin = childNode(withName: "TextLogin") as? SKLabelNode!
+        editName = BGSetting?.childNode(withName: "EditName") as? SKSpriteNode
         BGPopup?.run(SKAction.hide())
         BGSetting?.run(SKAction.hide())
         BGSetting?.setScale(0)
@@ -129,11 +132,25 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         order = BGShop?.childNode(withName: "Order") as? SKSpriteNode
         order?.run(SKAction.hide())
         
+        quantityItemHeart = item?.childNode(withName: "QuantityItemHeart") as? SKLabelNode
+        quantityItemBom = item?.childNode(withName: "QuantityItemBom") as? SKLabelNode
+        quantityItemCoin = item?.childNode(withName: "QuantityItemCoin") as? SKLabelNode
+        quantityItemSlow = item?.childNode(withName: "QuantityItemSlow") as? SKLabelNode
+        quantityItemProtect = item?.childNode(withName: "QuantityItemProtect") as? SKLabelNode
+        
+        quantityOrderHeart = order?.childNode(withName: "QuantityOrderHeart") as? SKLabelNode
+        quantityOrderBom = order?.childNode(withName: "QuantityOrderBom") as? SKLabelNode
+        quantityOrderCoin = order?.childNode(withName: "QuantityOrderCoin") as? SKLabelNode
+        quantityOrderSlow = order?.childNode(withName: "QuantityOrderSlow") as? SKLabelNode
+        quantityOrderProtect = order?.childNode(withName: "QuantityOrderProtect") as? SKLabelNode
         
         bestScoreLabel = childNode(withName: "BestScore") as? SKLabelNode!
         bestScoreLabel?.text = String(GameViewController.bestScore)
 
         coinCollectLabel = childNode(withName: "CoinCollect") as? SKLabelNode!
+        if GameViewController.coinCollect > 99999 {
+            coinCollectLabel?.fontSize = 40
+        }
         coinCollectLabel?.text = String(GameViewController.coinCollect)
         
         let alertSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "mainsence", ofType: "mp3")!)
@@ -241,6 +258,32 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
+            
+            if atPoint(location).name == "EditName" {
+                if checkEdit {
+                    print("Edit")
+                    username?.zPosition = -1
+                    editName?.texture = SKTexture(imageNamed: "done_edit")
+                    let textFieldFrame = CGRect(origin: CGPoint(x: username!.position.x + (self.frame.size.width / 2),y: -username!.position.y + (self.frame.size.height / 2)), size: CGSize(width: BGSetting!.size.width / 3, height: 50))
+                    textField = UITextField(frame: textFieldFrame)
+                    textField?.layer.anchorPoint = CGPoint(x: 1, y: 1)
+                    textField?.backgroundColor = UIColor.white
+                    textField?.layer.borderWidth = 1
+                    textField?.layer.borderColor = UIColor.black.cgColor
+                    textField?.font = UIFont(name: "Comic Book", size: 30)
+                    textField?.text = username?.text
+                    self.view?.addSubview(textField!)
+                    checkEdit = false
+                } else {
+                    print("done")
+                    username?.text = textField?.text
+                    username?.zPosition = 5
+                    editName?.texture = SKTexture(imageNamed: "button-edit")
+                    textField?.removeFromSuperview()
+                    checkEdit = true
+                }
+            }
+            
             if atPoint(location).name == "Start" {
                 if let scene = GameplaySceneClass(fileNamed: GetSceneForDevice().getScene(deviceName: UIDevice().modelName)[1]) {
                     // Set the scale mode to scale to fit the window
@@ -421,6 +464,37 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //open shop
             if atPoint(location).name == "Shop" {
+                
+                if defaults.integer(forKey: "itemHeart") > 0 {
+                    quantityItemHeart?.text = "x\(String(defaults.integer(forKey: "itemHeart")))"
+                } else {
+                    quantityItemHeart?.text = ""
+                }
+                
+                if defaults.integer(forKey: "itemBom") > 0 {
+                    quantityItemBom?.text = "x\(String(defaults.integer(forKey: "itemBom")))"
+                } else {
+                    quantityItemBom?.text = ""
+                }
+                
+                if defaults.integer(forKey: "itemCoin") > 0 {
+                    quantityItemCoin?.text = "x\(String(defaults.integer(forKey: "itemCoin")))"
+                } else {
+                    quantityItemCoin?.text = ""
+                }
+                
+                if defaults.integer(forKey: "itemSlow") > 0 {
+                    quantityItemSlow?.text = "x\(String(defaults.integer(forKey: "itemSlow")))"
+                } else {
+                    quantityItemSlow?.text = ""
+                }
+                
+                if defaults.integer(forKey: "itemProtect") > 0 {
+                    quantityItemProtect?.text = "x\(String(defaults.integer(forKey: "itemProtect")))"
+                } else {
+                    quantityItemProtect?.text = ""
+                }
+                
                 BGPopup?.run(SKAction.unhide())
                 BGShop?.run(SKAction.unhide())
                 ShopItem?.size = CGSize(width: 190, height: 70)
@@ -434,6 +508,86 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 ShopOrder?.position = CGPoint(x: 200, y: 231)
                 order?.run(SKAction.hide())
                 BGShop?.run(SKAction.scale(to: scaleShop, duration: 0.3))
+            }
+            
+            //buy heart
+            if atPoint(location).name == "Heart" {
+                if defaults.integer(forKey: "coinCollect") > 50 {
+                    defaults.set(defaults.integer(forKey: "itemHeart") + 1, forKey: "itemHeart")
+                    quantityItemHeart?.text = "x\(String(defaults.integer(forKey: "itemHeart")))"
+                    defaults.set(defaults.integer(forKey: "coinCollect") - 50, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = 40
+                    } else {
+                        coinCollectLabel?.fontSize = 45
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+                    defaults.set(defaults.integer(forKey: "orderHeart") + 1, forKey: "orderHeart")
+                }
+            }
+            
+            //buy bom
+            if atPoint(location).name == "Bom" {
+                if defaults.integer(forKey: "coinCollect") > 100 {
+                    defaults.set(defaults.integer(forKey: "itemBom") + 1, forKey: "itemBom")
+                    quantityItemBom?.text = "x\(String(defaults.integer(forKey: "itemBom")))"
+                    defaults.set(defaults.integer(forKey: "coinCollect") - 100, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = 40
+                    } else {
+                        coinCollectLabel?.fontSize = 45
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+                    defaults.set(defaults.integer(forKey: "orderBom") + 1, forKey: "orderBom")
+                }
+            }
+            
+            //buy coin
+            if atPoint(location).name == "Coin" {
+                if defaults.integer(forKey: "coinCollect") > 160 {
+                    defaults.set(defaults.integer(forKey: "itemCoin") + 1, forKey: "itemCoin")
+                    quantityItemCoin?.text = "x\(String(defaults.integer(forKey: "itemCoin")))"
+                    defaults.set(defaults.integer(forKey: "coinCollect") - 160, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = 40
+                    } else {
+                        coinCollectLabel?.fontSize = 45
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+                    defaults.set(defaults.integer(forKey: "orderCoin") + 1, forKey: "orderCoin")
+                }
+            }
+            
+            //buy slow
+            if atPoint(location).name == "Slow" {
+                if defaults.integer(forKey: "coinCollect") > 200 {
+                    defaults.set(defaults.integer(forKey: "itemSlow") + 1, forKey: "itemSlow")
+                    quantityItemSlow?.text = "x\(String(defaults.integer(forKey: "itemSlow")))"
+                    defaults.set(defaults.integer(forKey: "coinCollect") - 200, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = 40
+                    } else {
+                        coinCollectLabel?.fontSize = 45
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+                    defaults.set(defaults.integer(forKey: "orderSlow") + 1, forKey: "orderSlow")
+                }
+            }
+            
+            //buy protect
+            if atPoint(location).name == "Protect" {
+                if defaults.integer(forKey: "coinCollect") > 250 {
+                    defaults.set(defaults.integer(forKey: "itemProtect") + 1, forKey: "itemProtect")
+                    quantityItemProtect?.text = "x\(String(defaults.integer(forKey: "itemProtect")))"
+                    defaults.set(defaults.integer(forKey: "coinCollect") - 250, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = 40
+                    } else {
+                        coinCollectLabel?.fontSize = 45
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+                    defaults.set(defaults.integer(forKey: "orderProtect") + 1, forKey: "orderProtect")
+                }
             }
             
             //open tab shop item
@@ -451,6 +605,51 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 order?.run(SKAction.hide())
             }
             
+            //buy 100 coin
+            if atPoint(location).name == "Coin1" {
+                defaults.set(defaults.integer(forKey: "coinCollect") + 100, forKey: "coinCollect")
+                if defaults.integer(forKey: "coinCollect") > 99999 {
+                    coinCollectLabel?.fontSize = 40
+                }
+                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+            }
+            
+            //buy 500 coin
+            if atPoint(location).name == "Coin2" {
+                defaults.set(defaults.integer(forKey: "coinCollect") + 500, forKey: "coinCollect")
+                if defaults.integer(forKey: "coinCollect") > 99999 {
+                    coinCollectLabel?.fontSize = 40
+                }
+                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+            }
+            
+            //buy 1000 coin
+            if atPoint(location).name == "Coin3" {
+                defaults.set(defaults.integer(forKey: "coinCollect") + 1000, forKey: "coinCollect")
+                if defaults.integer(forKey: "coinCollect") > 99999 {
+                    coinCollectLabel?.fontSize = 40
+                }
+                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+            }
+            
+            //buy 1800 coin
+            if atPoint(location).name == "Coin4" {
+                defaults.set(defaults.integer(forKey: "coinCollect") + 1800, forKey: "coinCollect")
+                if defaults.integer(forKey: "coinCollect") > 99999 {
+                    coinCollectLabel?.fontSize = 40
+                }
+                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+            }
+            
+            //buy 2490 coin
+            if atPoint(location).name == "Coin5" {
+                defaults.set(defaults.integer(forKey: "coinCollect") + 2490, forKey: "coinCollect")
+                if defaults.integer(forKey: "coinCollect") > 99999 {
+                    coinCollectLabel?.fontSize = 40
+                }
+                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+            }
+            
             //open tab shop coin
             if atPoint(location).name == "ShopCoin" || atPoint(location).name == "TextShopCoin" {
                 ShopItem?.size = CGSize(width: 190, height: 55)
@@ -466,8 +665,17 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 order?.run(SKAction.hide())
             }
             
+            
+            
             //open tab shop order
             if atPoint(location).name == "ShopOrder" || atPoint(location).name == "TextShopOrder" {
+                
+                quantityOrderHeart?.text = "x\(String(defaults.integer(forKey: "orderHeart")))"
+                quantityOrderBom?.text = "x\(String(defaults.integer(forKey: "orderBom")))"
+                quantityOrderCoin?.text = "x\(String(defaults.integer(forKey: "orderCoin")))"
+                quantityOrderSlow?.text = "x\(String(defaults.integer(forKey: "orderSlow")))"
+                quantityOrderProtect?.text = "x\(String(defaults.integer(forKey: "orderProtect")))"
+                
                 ShopItem?.size = CGSize(width: 190, height: 55)
                 ShopItem?.position = CGPoint(x: -200, y: 231)
                 item?.run(SKAction.hide())
@@ -480,6 +688,8 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                 ShopOrder?.position = CGPoint(x: 200, y: 238)
                 order?.run(SKAction.unhide())
             }
+            
+            
         }
     }
     //set username and score
