@@ -378,23 +378,22 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             //open highscore
             if atPoint(location).name == "HighScore" {
 //                print("High Score")
+                
+                //create loading view
+                let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+                activityIndicatorView.color = UIColor.black
+                self.view?.addSubview(activityIndicatorView)
+                activityIndicatorView.frame = self.view!.frame
+                activityIndicatorView.center = self.view!.center
+                activityIndicatorView.startAnimating()
+                
                 if let tokenLogin = defaults.string(forKey: "tokenLogin") {
-                    
-                    //create loading view
-                    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-                    activityIndicatorView.color = UIColor.black
-                    self.view?.addSubview(activityIndicatorView)
-                    activityIndicatorView.frame = self.view!.frame
-                    activityIndicatorView.center = self.view!.center
-                    activityIndicatorView.startAnimating()
                     
                     let parametersBestScore: Parameters = [
                         "token" : tokenLogin,
                         ]
                     
                     Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/top-best-score", method: .post, parameters: parametersBestScore, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
-                        //                        activityIndicatorView.stopAnimating()
-//                        print("best score: ", resBestScore)
                         if let respondBestScore = resBestScore.result.value as! [String: Any]? {
                             if (respondBestScore["state"] as? String) ?? "" == "error" {
                                 activityIndicatorView.stopAnimating()
@@ -407,6 +406,31 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                                         self.userNameHighScore[i] = "\(String(email.prefix(6)))..."
                                         let highScore = arrBestScore[i]["best_score"] as! Int
 //                                        print("check high score", highScore)
+                                        self.scoreHighScore[i] = String(highScore)
+                                    }
+                                }
+                                self.setData()
+                                activityIndicatorView.stopAnimating()
+                                self.BGPopup?.run(SKAction.unhide())
+                                self.BGHighScore?.run(SKAction.unhide())
+                                self.BGHighScore?.run(SKAction.scale(to: self.scaleHighScore, duration: 0.3))
+                            }
+                        }
+                    })
+                } else {
+                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/best-score", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                        if let respondBestScore = resBestScore.result.value as! [String: Any]? {
+                            if (respondBestScore["state"] as? String) ?? "" == "error" {
+                                activityIndicatorView.stopAnimating()
+                                self.view?.makeToast(respondBestScore["message"] as? String, duration: 3.0, position: .bottom)
+                            } else if (respondBestScore["state"] as? String) ?? "" == "Success" {
+                                if let arrBestScore = respondBestScore["data"] as! [[String:Any]]? {
+                                    for i in 0...arrBestScore.count - 1 {
+                                        let name = arrBestScore[i]["name"] as! String
+                                        //                                        print("check email", "\(String(email.prefix(6)))...")
+                                        self.userNameHighScore[i] = "\(String(name.prefix(6)))..."
+                                        let highScore = arrBestScore[i]["best_score"] as! Int
+                                        //                                        print("check high score", highScore)
                                         self.scoreHighScore[i] = String(highScore)
                                     }
                                 }
