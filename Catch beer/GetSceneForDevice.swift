@@ -90,19 +90,38 @@ class GetSceneForDevice {
     func getScaleShop(deviceName: String) -> CGFloat {
         switch deviceName {
         case "iPhone 4s":
-            return 0.35
+            return 0.42
         case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
-            return 0.37
+            return 0.42
         case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
             return 0.5
         case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
-            return 0.48
+            return 0.55
         case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
             return 0.95
         case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
-            return 1
+            return 1.3
         default:
-            return 0.87
+            return 1
+        }
+    }
+    
+    func getFontCoin(deviceName: String) -> (low: CGFloat, high: CGFloat) {
+        switch deviceName {
+        case "iPhone 4s":
+            return (low: 16, high: 19)
+        case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
+            return (low: 18, high: 22)
+        case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
+            return (low: 18, high: 22)
+        case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
+            return (low: 22, high: 27)
+        case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
+            return (low: 40, high: 45)
+        case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
+            return (low: 45, high: 50)
+        default:
+            return (low: 42, high: 50)
         }
     }
 
