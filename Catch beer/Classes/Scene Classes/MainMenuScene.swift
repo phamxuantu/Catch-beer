@@ -34,7 +34,8 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     var scoreHighScore = [String](repeating: "", count: 10)
     var textField: UITextField?
     var checkEdit = true
-    
+    let fontCoinLow = GetSceneForDevice().getFontCoin(deviceName: UIDevice().modelName).low
+    let fontCoinHigh = GetSceneForDevice().getFontCoin(deviceName: UIDevice().modelName).high
     
     // create loading view
     let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -148,10 +149,10 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         bestScoreLabel?.text = String(GameViewController.bestScore)
 
         coinCollectLabel = childNode(withName: "CoinCollect") as? SKLabelNode!
-        if GameViewController.coinCollect > 99999 {
-            coinCollectLabel?.fontSize = 40
+        if defaults.integer(forKey: "coinCollect") > 99999 {
+            coinCollectLabel?.fontSize = fontCoinHigh
         }
-        coinCollectLabel?.text = String(GameViewController.coinCollect)
+        coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
         
         let alertSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "mainsence", ofType: "mp3")!)
         
@@ -174,6 +175,11 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             audioPlayer.stop()
         }
         
+        if FBSDKAccessToken.current() != nil {
+            username?.text = defaults.string(forKey: "nameFB")
+            textLogin?.text = "Log out"
+        }
+        
         if let _ = defaults.string(forKey: "tokenLogin") {
             if FBSDKAccessToken.current() != nil || TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
                 self.changePassword?.zPosition = -1
@@ -187,7 +193,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         } else {
             self.changePassword?.zPosition = -1
             self.textChangePassword?.zPosition = -1
-            textLogin?.text = "Login"
+//            textLogin?.text = "Login"
         }
         
 //        let textFieldFrame = CGRect(origin: CGPoint(x: username!.position.x + (self.frame.size.width / 2),y: -username!.position.y + (self.frame.size.height / 2)), size: CGSize(width: 200, height: 30))
@@ -264,13 +270,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     print("Edit")
                     username?.zPosition = -1
                     editName?.texture = SKTexture(imageNamed: "done_edit")
-                    let textFieldFrame = CGRect(origin: CGPoint(x: username!.position.x + (self.frame.size.width / 2),y: -username!.position.y + (self.frame.size.height / 2)), size: CGSize(width: BGSetting!.size.width / 3, height: 50))
+                    let textFieldFrame = CGRect(origin: CGPoint(x: username!.position.x + (self.frame.size.width / 2),y: -(username!.position.y * BGSetting!.yScale) + (self.frame.size.height / 2)), size: CGSize(width: BGSetting!.size.width / 2, height: BGSetting!.size.height / 10))
                     textField = UITextField(frame: textFieldFrame)
                     textField?.layer.anchorPoint = CGPoint(x: 1, y: 1)
                     textField?.backgroundColor = UIColor.white
-                    textField?.layer.borderWidth = 1
-                    textField?.layer.borderColor = UIColor.black.cgColor
-                    textField?.font = UIFont(name: "Comic Book", size: 30)
+//                    textField?.layer.borderWidth = 1
+//                    textField?.layer.borderColor = UIColor.black.cgColor
+                    textField?.becomeFirstResponder()
+                    textField?.font = UIFont(name: "Comic Book", size: GetSceneForDevice().getFontUserSetting(deviceName: UIDevice().modelName))
                     textField?.text = username?.text
                     self.view?.addSubview(textField!)
                     checkEdit = false
@@ -333,6 +340,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             //login with email & password
             if atPoint(location).name == "Login" || atPoint(location).name == "TextLogin" {
                 if textLogin?.text == "Login" {
+                    editName?.zPosition = 5
                     print("login")
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
                     let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
@@ -341,6 +349,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     print("logout")
                     if FBSDKAccessToken.current() != nil {
                         self.loginManager.logOut()
+                        defaults.removeObject(forKey: "nameFB")
                     }
                     if TWTRTwitter.sharedInstance().sessionStore.hasLoggedInUsers() {
                         TWTRTwitter.sharedInstance().sessionStore.logOutUserID(TWTRTwitter.sharedInstance().sessionStore.session()!.userID)
@@ -351,6 +360,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     textLogin?.text = "Login"
                     self.changePassword?.zPosition = -1
                     self.textChangePassword?.zPosition = -1
+                    editName?.zPosition = -1
                 }
             }
             //open setting
@@ -418,7 +428,8 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                         }
                     })
                 } else {
-                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/best-score", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/best-score", method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                        print("check best score", resBestScore)
                         if let respondBestScore = resBestScore.result.value as! [String: Any]? {
                             if (respondBestScore["state"] as? String) ?? "" == "error" {
                                 activityIndicatorView.stopAnimating()
@@ -536,14 +547,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy heart
             if atPoint(location).name == "Heart" {
-                if defaults.integer(forKey: "coinCollect") > 50 {
+                if defaults.integer(forKey: "coinCollect") >= 50 && defaults.integer(forKey: "itemHeart") < 999 {
                     defaults.set(defaults.integer(forKey: "itemHeart") + 1, forKey: "itemHeart")
                     quantityItemHeart?.text = "x\(String(defaults.integer(forKey: "itemHeart")))"
                     defaults.set(defaults.integer(forKey: "coinCollect") - 50, forKey: "coinCollect")
                     if defaults.integer(forKey: "coinCollect") > 99999 {
-                        coinCollectLabel?.fontSize = 40
+                        coinCollectLabel?.fontSize = fontCoinHigh
                     } else {
-                        coinCollectLabel?.fontSize = 45
+                        coinCollectLabel?.fontSize = fontCoinLow
                     }
                     coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                     defaults.set(defaults.integer(forKey: "orderHeart") + 1, forKey: "orderHeart")
@@ -552,14 +563,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy bom
             if atPoint(location).name == "Bom" {
-                if defaults.integer(forKey: "coinCollect") > 100 {
+                if defaults.integer(forKey: "coinCollect") >= 100 && defaults.integer(forKey: "itemBom") < 999 {
                     defaults.set(defaults.integer(forKey: "itemBom") + 1, forKey: "itemBom")
                     quantityItemBom?.text = "x\(String(defaults.integer(forKey: "itemBom")))"
                     defaults.set(defaults.integer(forKey: "coinCollect") - 100, forKey: "coinCollect")
                     if defaults.integer(forKey: "coinCollect") > 99999 {
-                        coinCollectLabel?.fontSize = 40
+                        coinCollectLabel?.fontSize = fontCoinHigh
                     } else {
-                        coinCollectLabel?.fontSize = 45
+                        coinCollectLabel?.fontSize = fontCoinLow
                     }
                     coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                     defaults.set(defaults.integer(forKey: "orderBom") + 1, forKey: "orderBom")
@@ -568,14 +579,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy coin
             if atPoint(location).name == "Coin" {
-                if defaults.integer(forKey: "coinCollect") > 160 {
+                if defaults.integer(forKey: "coinCollect") >= 160 && defaults.integer(forKey: "itemCoin") < 999 {
                     defaults.set(defaults.integer(forKey: "itemCoin") + 1, forKey: "itemCoin")
                     quantityItemCoin?.text = "x\(String(defaults.integer(forKey: "itemCoin")))"
                     defaults.set(defaults.integer(forKey: "coinCollect") - 160, forKey: "coinCollect")
                     if defaults.integer(forKey: "coinCollect") > 99999 {
-                        coinCollectLabel?.fontSize = 40
+                        coinCollectLabel?.fontSize = fontCoinHigh
                     } else {
-                        coinCollectLabel?.fontSize = 45
+                        coinCollectLabel?.fontSize = fontCoinLow
                     }
                     coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                     defaults.set(defaults.integer(forKey: "orderCoin") + 1, forKey: "orderCoin")
@@ -584,14 +595,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy slow
             if atPoint(location).name == "Slow" {
-                if defaults.integer(forKey: "coinCollect") > 200 {
+                if defaults.integer(forKey: "coinCollect") >= 200 && defaults.integer(forKey: "itemSlow") < 999 {
                     defaults.set(defaults.integer(forKey: "itemSlow") + 1, forKey: "itemSlow")
                     quantityItemSlow?.text = "x\(String(defaults.integer(forKey: "itemSlow")))"
                     defaults.set(defaults.integer(forKey: "coinCollect") - 200, forKey: "coinCollect")
                     if defaults.integer(forKey: "coinCollect") > 99999 {
-                        coinCollectLabel?.fontSize = 40
+                        coinCollectLabel?.fontSize = fontCoinHigh
                     } else {
-                        coinCollectLabel?.fontSize = 45
+                        coinCollectLabel?.fontSize = fontCoinLow
                     }
                     coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                     defaults.set(defaults.integer(forKey: "orderSlow") + 1, forKey: "orderSlow")
@@ -600,14 +611,14 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy protect
             if atPoint(location).name == "Protect" {
-                if defaults.integer(forKey: "coinCollect") > 250 {
+                if defaults.integer(forKey: "coinCollect") >= 250 && defaults.integer(forKey: "itemProtect") < 999 {
                     defaults.set(defaults.integer(forKey: "itemProtect") + 1, forKey: "itemProtect")
                     quantityItemProtect?.text = "x\(String(defaults.integer(forKey: "itemProtect")))"
                     defaults.set(defaults.integer(forKey: "coinCollect") - 250, forKey: "coinCollect")
                     if defaults.integer(forKey: "coinCollect") > 99999 {
-                        coinCollectLabel?.fontSize = 40
+                        coinCollectLabel?.fontSize = fontCoinHigh
                     } else {
-                        coinCollectLabel?.fontSize = 45
+                        coinCollectLabel?.fontSize = fontCoinLow
                     }
                     coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                     defaults.set(defaults.integer(forKey: "orderProtect") + 1, forKey: "orderProtect")
@@ -631,47 +642,57 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             
             //buy 100 coin
             if atPoint(location).name == "Coin1" {
-                defaults.set(defaults.integer(forKey: "coinCollect") + 100, forKey: "coinCollect")
-                if defaults.integer(forKey: "coinCollect") > 99999 {
-                    coinCollectLabel?.fontSize = 40
+                if defaults.integer(forKey: "coinCollect") < 999999 {
+                    defaults.set(defaults.integer(forKey: "coinCollect") + 100, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = fontCoinHigh
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                 }
-                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
             }
             
             //buy 500 coin
             if atPoint(location).name == "Coin2" {
-                defaults.set(defaults.integer(forKey: "coinCollect") + 500, forKey: "coinCollect")
-                if defaults.integer(forKey: "coinCollect") > 99999 {
-                    coinCollectLabel?.fontSize = 40
+                if defaults.integer(forKey: "coinCollect") < 999999 {
+                    defaults.set(defaults.integer(forKey: "coinCollect") + 500, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = fontCoinHigh
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                 }
-                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
             }
             
             //buy 1000 coin
             if atPoint(location).name == "Coin3" {
-                defaults.set(defaults.integer(forKey: "coinCollect") + 1000, forKey: "coinCollect")
-                if defaults.integer(forKey: "coinCollect") > 99999 {
-                    coinCollectLabel?.fontSize = 40
+                if defaults.integer(forKey: "coinCollect") < 999999 {
+                    defaults.set(defaults.integer(forKey: "coinCollect") + 1000, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = fontCoinHigh
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                 }
-                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
             }
             
             //buy 1800 coin
             if atPoint(location).name == "Coin4" {
-                defaults.set(defaults.integer(forKey: "coinCollect") + 1800, forKey: "coinCollect")
-                if defaults.integer(forKey: "coinCollect") > 99999 {
-                    coinCollectLabel?.fontSize = 40
+                if defaults.integer(forKey: "coinCollect") < 999999 {
+                    defaults.set(defaults.integer(forKey: "coinCollect") + 1800, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = fontCoinHigh
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                 }
-                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
             }
             
             //buy 2490 coin
             if atPoint(location).name == "Coin5" {
-                defaults.set(defaults.integer(forKey: "coinCollect") + 2490, forKey: "coinCollect")
-                if defaults.integer(forKey: "coinCollect") > 99999 {
-                    coinCollectLabel?.fontSize = 40
+                if defaults.integer(forKey: "coinCollect") < 999999 {
+                    defaults.set(defaults.integer(forKey: "coinCollect") + 2490, forKey: "coinCollect")
+                    if defaults.integer(forKey: "coinCollect") > 99999 {
+                        coinCollectLabel?.fontSize = fontCoinHigh
+                    }
+                    coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
                 }
-                coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
             }
             
             //open tab shop coin
@@ -766,6 +787,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     fileprivate func loginTWClicked() {
         TWTRTwitter.sharedInstance().logIn {(session, error) in
             if session != nil {
+                self.editName?.zPosition = 5
                 if let s = session {
                     let client = TWTRAPIClient()
                     
@@ -792,6 +814,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     self.textLogin?.text = "Log out"
                     self.changePassword?.zPosition = -1
                     self.textChangePassword?.zPosition = -1
+                    self.editName?.zPosition = 5
                     self.returnUserData()
                     //fbLoginManager.logOut()
                 }
@@ -830,6 +853,9 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil){
                     self.dict = result as! [String : AnyObject]
+                    defaults.set(self.dict["name"], forKey: "nameFB")
+                    self.view?.makeToast("Hello \(self.dict["name"] as! String)", duration: 3.0, position: .bottom)
+                    self.username?.text = self.dict["name"] as? String
                     print(result as Any)
                     print(self.dict)
                 }

@@ -16,7 +16,6 @@ class GameViewController: UIViewController {
     static var defaults = UserDefaults.standard
     
     static var bestScore: Int = 0
-    static var coinCollect: Int = 0
     static var checkSound: Bool = true
     static var checkMusic: Bool = true
 
@@ -26,11 +25,6 @@ class GameViewController: UIViewController {
         let bestScoreSave = GameViewController.defaults.integer(forKey: "bestScore")
         if bestScoreSave != 0 {
             GameViewController.bestScore = bestScoreSave
-        }
-        
-        let coinCollectSave = GameViewController.defaults.integer(forKey: "coinCollect")
-        if coinCollectSave != 0 {
-            GameViewController.coinCollect = coinCollectSave
         }
         
         let statusSound = GameViewController.defaults.string(forKey: "checkSound")

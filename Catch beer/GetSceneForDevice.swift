@@ -109,19 +109,38 @@ class GetSceneForDevice {
     func getFontCoin(deviceName: String) -> (low: CGFloat, high: CGFloat) {
         switch deviceName {
         case "iPhone 4s":
-            return (low: 16, high: 19)
+            return (low: 19, high: 16)
         case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
-            return (low: 18, high: 22)
+            return (low: 22, high: 18)
         case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
-            return (low: 18, high: 22)
+            return (low: 22, high: 18)
         case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
-            return (low: 22, high: 27)
+            return (low: 27, high: 22)
         case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
-            return (low: 40, high: 45)
+            return (low: 45, high: 40)
         case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
-            return (low: 45, high: 50)
+            return (low: 50, high: 45)
         default:
-            return (low: 42, high: 50)
+            return (low: 50, high: 42)
+        }
+    }
+    
+    func getFontUserSetting(deviceName: String) -> CGFloat {
+        switch deviceName {
+        case "iPhone 4s":
+            return 13
+        case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
+            return 14
+        case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
+            return 18
+        case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
+            return 19
+        case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
+            return 30
+        case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
+            return 55
+        default:
+            return 40
         }
     }
 
