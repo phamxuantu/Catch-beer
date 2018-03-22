@@ -52,7 +52,7 @@ class ForgotPasswordViewController: UIViewController {
         let parameters: Parameters = [
             "email" : txtEmail.text!,
         ]
-        Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/change-pass", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
+        Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/change-pass", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
             print("return respond reset password: ", respond)
             
             if let respondData = respond.result.value as! [String: Any]? {

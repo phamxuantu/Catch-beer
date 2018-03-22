@@ -67,7 +67,7 @@ class SignupViewController: UIViewController {
             activityIndicatorView.center = self.view.center
             activityIndicatorView.startAnimating()
             //        print("check param", parameters)
-            Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/register", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/register", method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("check response", response)
                 if let responseData = response.result.value as! [String: Any]? {

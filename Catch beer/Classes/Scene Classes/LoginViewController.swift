@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
         ]
         
         // request using alamofire
-        Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respon) in
+        Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respon) in
 //            activityIndicatorView.stopAnimating()
 //            print("respond: ", respon)
             if let respondData = respon.result.value as! [String: Any]? {
@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
                     ]
                     print("token: ", parametersUserInfo)
                     //get info user
-                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resUserInfo) in
+                    Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resUserInfo) in
 //                        activityIndicatorView.stopAnimating()
                         print("userInfo: ", resUserInfo)
                         if let respondInfoUser = resUserInfo.result.value as! [String: Any]? {
@@ -90,6 +90,7 @@ class LoginViewController: UIViewController {
                                 MainMenuScene.sharedInstance.changePassword?.zPosition = 5
                                 MainMenuScene.sharedInstance.textChangePassword?.zPosition = 6
                                 MainMenuScene.sharedInstance.textLogin?.text = "Log out"
+                                defaults.set("1", forKey: "userType")
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }
