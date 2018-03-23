@@ -123,7 +123,7 @@ class ItemController {
     
     func spawnNormal(y: CGFloat, width: CGFloat) -> SKSpriteNode {
         let item: SKSpriteNode?
-        let number = Int(randomBetweenNumbers(firstNum: 0, secondNum: 100))
+        let number = Int(randomBetweenNumbers(firstNum: 1, secondNum: 100))
         
         if number <= 20 {
             item = SKSpriteNode(imageNamed: "bom")

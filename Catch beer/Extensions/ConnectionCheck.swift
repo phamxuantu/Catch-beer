@@ -21,7 +21,6 @@ public class NetworkManager {
     func startNetworkReachabilityObserver() {
         
         
-        
         reachabilityManager?.listener = { status in
             switch status {
 

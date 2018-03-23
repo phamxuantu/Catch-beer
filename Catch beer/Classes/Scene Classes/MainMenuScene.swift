@@ -18,6 +18,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
     
     static var sharedInstance = MainMenuScene()
     
+    var flag = "0"
     var bestScoreLabel: SKLabelNode?
     var coinCollectLabel: SKLabelNode?
     var audioPlayer = AVAudioPlayer()
@@ -193,6 +194,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         } else {
             self.changePassword?.zPosition = -1
             self.textChangePassword?.zPosition = -1
+            editName?.zPosition = -2
 //            textLogin?.text = "Login"
         }
         
@@ -230,7 +232,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             "token" : tokenLogin,
             ]
         
-        Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON { (respond) in
+        Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/user/info", method: .post, parameters: parametersUserInfo, encoding: JSONEncoding.default).responseJSON { (respond) in
             if let respondData = respond.result.value as! [String: Any]? {
                 if (respondData["state"] as? String) ?? "" == "error" {
                     if (respondData["token"] != nil) {
@@ -297,7 +299,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     scene.scaleMode = .aspectFill
                     audioPlayer.stop()
                     // Present the scene
-                    view!.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: TimeInterval(2)))
+                    view!.presentScene(scene, transition: SKTransition.doorsOpenHorizontal(withDuration: TimeInterval(2)))
                 }
             }
             // login fb
@@ -340,7 +342,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
             //login with email & password
             if atPoint(location).name == "Login" || atPoint(location).name == "TextLogin" {
                 if textLogin?.text == "Login" {
-                    editName?.zPosition = 5
+//                    editName?.zPosition = 5
                     print("login")
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
                     let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
@@ -355,6 +357,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                         TWTRTwitter.sharedInstance().sessionStore.logOutUserID(TWTRTwitter.sharedInstance().sessionStore.session()!.userID)
                     }
                     defaults.removeObject(forKey: "tokenLogin")
+                    defaults.removeObject(forKey: "userType")
                     userInfo = [:]
                     self.username?.text = "Username"
                     textLogin?.text = "Login"
@@ -401,9 +404,12 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     
                     let parametersBestScore: Parameters = [
                         "token" : tokenLogin,
+                        "best_score": "\(defaults.integer(forKey: "bestScore"))",
+                        "user_type" : defaults.string(forKey: "userType")!,
+                        "flag": flag
                         ]
                     
-                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/user/top-best-score", method: .post, parameters: parametersBestScore, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                    Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/user/top-best-score-server", method: .post, parameters: parametersBestScore, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
                         if let respondBestScore = resBestScore.result.value as! [String: Any]? {
                             if (respondBestScore["state"] as? String) ?? "" == "error" {
                                 activityIndicatorView.stopAnimating()
@@ -411,9 +417,13 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                             } else if (respondBestScore["state"] as? String) ?? "" == "Success" {
                                 if let arrBestScore = respondBestScore["data"] as! [[String:Any]]? {
                                     for i in 0...arrBestScore.count - 1 {
-                                        let email = arrBestScore[i]["email"] as! String
+                                        let name = arrBestScore[i]["name"] as! String
 //                                        print("check email", "\(String(email.prefix(6)))...")
-                                        self.userNameHighScore[i] = "\(String(email.prefix(6)))..."
+                                        if name.count > 6 {
+                                            self.userNameHighScore[i] = "\(String(name.prefix(6)))..."
+                                        } else {
+                                            self.userNameHighScore[i] = "\(String(name))"
+                                        }
                                         let highScore = arrBestScore[i]["best_score"] as! Int
 //                                        print("check high score", highScore)
                                         self.scoreHighScore[i] = String(highScore)
@@ -428,7 +438,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                         }
                     })
                 } else {
-                    Alamofire.request("http://demo.tntechs.com.vn/manhtu/bear/api/best-score", method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
+                    Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/best-score", method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON(completionHandler: { (resBestScore) in
                         print("check best score", resBestScore)
                         if let respondBestScore = resBestScore.result.value as! [String: Any]? {
                             if (respondBestScore["state"] as? String) ?? "" == "error" {
@@ -438,8 +448,12 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                                 if let arrBestScore = respondBestScore["data"] as! [[String:Any]]? {
                                     for i in 0...arrBestScore.count - 1 {
                                         let name = arrBestScore[i]["name"] as! String
+                                        if name.count > 6 {
+                                            self.userNameHighScore[i] = "\(String(name.prefix(6)))..."
+                                        } else {
+                                            self.userNameHighScore[i] = "\(String(name))"
+                                        }
                                         //                                        print("check email", "\(String(email.prefix(6)))...")
-                                        self.userNameHighScore[i] = "\(String(name.prefix(6)))..."
                                         let highScore = arrBestScore[i]["best_score"] as! Int
                                         //                                        print("check high score", highScore)
                                         self.scoreHighScore[i] = String(highScore)
@@ -788,6 +802,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
         TWTRTwitter.sharedInstance().logIn {(session, error) in
             if session != nil {
                 self.editName?.zPosition = 5
+                defaults.set("3", forKey: "userType")
                 if let s = session {
                     let client = TWTRAPIClient()
                     
@@ -815,6 +830,7 @@ class MainMenuScene: SKScene, TWTRComposerViewControllerDelegate {
                     self.changePassword?.zPosition = -1
                     self.textChangePassword?.zPosition = -1
                     self.editName?.zPosition = 5
+                    defaults.set("2", forKey: "userType")
                     self.returnUserData()
                     //fbLoginManager.logOut()
                 }
