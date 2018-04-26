@@ -28,8 +28,16 @@ class ChangePasswordViewController: UIViewController {
     var hidetext2: Bool = true
     var hidetext3: Bool = true
     
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        // create loading view
+        activityIndicatorView.color = UIColor.black
+        self.view.addSubview(activityIndicatorView)
+        activityIndicatorView.frame = self.view.frame
+        activityIndicatorView.center = self.view.center
 
         // Do any additional setup after loading the view.
         
@@ -91,12 +99,6 @@ class ChangePasswordViewController: UIViewController {
     @IBAction func btn_ChangePass(_ sender: Any) {
         print("sender: ", sender)
         
-        // create loading view
-        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activityIndicatorView.color = UIColor.black
-        self.view.addSubview(activityIndicatorView)
-        activityIndicatorView.frame = self.view.frame
-        activityIndicatorView.center = self.view.center
 //        activityIndicatorView.startAnimating()
         
         if txtOldPassword.text == "" {
@@ -163,7 +165,7 @@ class ChangePasswordViewController: UIViewController {
                             self.view.makeToast(respondData["message"] as? String, duration: 1.5, position: .bottom)
                         }
                     }
-                    activityIndicatorView.stopAnimating()
+                    self.activityIndicatorView.stopAnimating()
                 })
             } else {
                 //expired token

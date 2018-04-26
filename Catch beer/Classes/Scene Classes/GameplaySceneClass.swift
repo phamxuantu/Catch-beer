@@ -10,6 +10,7 @@ import SpriteKit
 import AVFoundation
 import FBSDKShareKit
 import TwitterKit
+import Alamofire
 
 class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     
@@ -29,11 +30,17 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
 //    let width = UIScreen.main.bounds.width
     var width: CGFloat?
     var height: CGFloat?
+    var widthPlayer: CGFloat?
+    var heightPlayer: CGFloat?
     var checkSound: Bool = GameViewController.checkSound
     var BG: SKSpriteNode?
+    var bgMainScene: SKSpriteNode?
     var BGPopUp: SKSpriteNode?
     var textScore: SKLabelNode?
     var yourScoreLabel: SKLabelNode?
+    var lblBestScore: SKLabelNode?
+    var lblBestScorePoint: SKLabelNode?
+    var imgCup: SKSpriteNode?
     var menu: SKSpriteNode?
     var playAgain: SKSpriteNode?
     var share: SKSpriteNode?
@@ -41,13 +48,15 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     var checkGameScene: Bool = false
     var BGTap: SKSpriteNode?
     var textTap: SKLabelNode?
-    var BGPopupShare, ShareFB, ShareTwiter, ClosePopupShare, BGShare, BGSelectItem: SKSpriteNode?
+    var BGPopupShare, ShareFB, ShareTwiter, ClosePopupShare, BGShare, BGSelectItem, doubleCoin: SKSpriteNode?
     var checkTouch = false
     var image: UIImage?
-    var protect = false
-    var secondSlow = 5
+    var protectBool = false
+    var slowBool = false
+    var bomBool = false
+    var secondSlow = 10
     var secondProtect = 10
-    var itemTimerSLow, itemTimerProtect, quantityItemProtect, quantityItemSlow, quantityItemBom, doubleCoin, quantityItemHeart, quantityItemCoin: SKLabelNode?
+    var itemTimerSLow, itemTimerProtect, quantityItemProtect, quantityItemSlow, quantityItemBom, quantityItemHeart, quantityItemCoin: SKLabelNode?
     var quantityProtect, quantitySlow, quantityBom: Int?
     var timerSlow, timerProtect: Timer?
     var maxLife: Int = 5
@@ -56,8 +65,8 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
     
     var score = 0 {
         didSet {
-            if score > GameViewController.bestScore {
-                GameViewController.bestScore = score
+            if score > defaults.integer(forKey: "bestScore") {
+//                GameViewController.bestScore = score
                 checkBestScore = true
             }
             if score >= 100 && score < 250 {
@@ -131,7 +140,14 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         didSet {
             if life <= 0 {
                 checkGameScene = false
-                GameViewController.defaults.set(GameViewController.bestScore, forKey: "bestScore")
+//                defaults.set(GameViewController.bestScore, forKey: "bestScore")
+                score > defaults.integer(forKey: "bestScore") ? defaults.set(score, forKey: "bestScore") : nil
+                
+                
+                if let _ = defaults.string(forKey: "tokenLogin") {
+                    checkUpdateItem()
+                    
+                } // end if let tokenlogin
                 
                 firstBody.node?.removeFromParent()
                 secondBody.node?.removeFromParent()
@@ -144,6 +160,10 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 BG?.zPosition = 5
                 BGPopUp?.zPosition = 6
                 textScore?.zPosition = 7
+                lblBestScorePoint?.zPosition = 7
+                lblBestScorePoint?.text = "\(defaults.integer(forKey: "bestScore"))"
+                lblBestScore?.zPosition = 7
+                imgCup?.zPosition = 7
                 if checkBestScore {
                     textScore?.text = "High Score"
                     textScore?.run(SKAction.repeatForever(.sequence([SKAction.scale(to: 1.1, duration: 0.5), SKAction.scale(to: 0.9, duration: 0.5)])))
@@ -164,7 +184,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         width = self.frame.size.width
         height = self.frame.size.height
         sound = childNode(withName: "Sound") as? SKSpriteNode
-        doubleCoin = childNode(withName: "DoubleCoin") as? SKLabelNode
+        doubleCoin = childNode(withName: "x2Coin") as? SKSpriteNode
         
         if checkSound {
             sound?.texture = SKTexture(imageNamed: "sound")
@@ -172,14 +192,28 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             sound?.texture = SKTexture(imageNamed: "mute")
         }
         
+        // create position for items in scene
+        bgMainScene = childNode(withName: "bgMainScene") as? SKSpriteNode
+        bgMainScene?.size.width = width!
+        bgMainScene?.size.height = height!
         BG = childNode(withName: "BG") as? SKSpriteNode
         BG?.zPosition = -2
         BGPopUp = childNode(withName: "BGPopUp") as? SKSpriteNode
         BGPopUp?.zPosition = -2
         textScore = childNode(withName: "TextScore") as? SKLabelNode
+        textScore?.fontName = "Comic Book Bold"
         textScore?.zPosition = -2
         yourScoreLabel = childNode(withName: "YourScoreLabel") as? SKLabelNode
+        yourScoreLabel?.fontName = "Comic Book Bold"
         yourScoreLabel?.zPosition = -2
+        lblBestScore = childNode(withName: "lblBestScore") as? SKLabelNode
+        lblBestScore?.fontName = "Comic Book Bold"
+        lblBestScore?.zPosition = -2
+        lblBestScorePoint = childNode(withName: "lblBestScorePoint") as? SKLabelNode
+        lblBestScorePoint?.fontName = "Comic Book Bold"
+        lblBestScorePoint?.zPosition = -2
+        imgCup = childNode(withName: "imgCup") as? SKSpriteNode
+        imgCup?.zPosition = -2
         menu = childNode(withName: "Menu") as? SKSpriteNode
         menu?.zPosition = -2
         playAgain = childNode(withName: "PlayAgain") as? SKSpriteNode
@@ -215,8 +249,8 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         quantityItemCoin = BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "QuantityItemCoin") as? SKLabelNode
         BGSelectItem?.childNode(withName: "ItemHeart")?.childNode(withName: "ItemHeartSelected")?.zPosition = -22
         BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "ItemCoinSelected")?.zPosition = -22
-        quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart"))
-        quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin"))
+        quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart") < 0 ? 0 : defaults.integer(forKey: "itemHeart"))
+        quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin") < 0 ? 0 : defaults.integer(forKey: "itemCoin"))
         
         if defaults.integer(forKey: "itemBom") > 3 {
             quantityBom = 3
@@ -238,8 +272,11 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
         quantityItemBom?.text = "x\(String(quantityBom!))"
         quantityItemSlow = childNode(withName: "ItemSlow")?.childNode(withName: "QuantityItemSlow") as? SKLabelNode
         quantityItemSlow?.text = "x\(String(quantitySlow!))"
+        quantityItemBom?.fontName = "Comic Book Bold"
         quantityItemProtect = childNode(withName: "ItemProtect")?.childNode(withName: "QuantityItemProtect") as? SKLabelNode
         quantityItemProtect?.text = "x\(String(quantityProtect!))"
+        quantityItemSlow?.fontName = "Comic Book Bold"
+        quantityItemProtect?.fontName = "Comic Book Bold"
         
 //        initializeGame()
     }
@@ -332,7 +369,7 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             itemTimerSLow?.text = String(secondSlow)
         } else {
             timerSlow?.invalidate()
-            secondSlow = 5
+            secondSlow = 10
             childNode(withName: "SlowTimer")?.zPosition = -2
         }
     }
@@ -358,27 +395,31 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             
             //press item heart
             if atPoint(location).name == "ItemHeart" {
-                if checkSelectHeart {
-                    BGSelectItem?.childNode(withName: "ItemHeart")?.childNode(withName: "ItemHeartSelected")?.zPosition = -22
-                    quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart"))
-                    checkSelectHeart = false
-                } else {
-                    BGSelectItem?.childNode(withName: "ItemHeart")?.childNode(withName: "ItemHeartSelected")?.zPosition = 21
-                    quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart") - 1)
-                    checkSelectHeart = true
+                if defaults.integer(forKey: "itemHeart") > 0 {
+                    if checkSelectHeart {
+                        BGSelectItem?.childNode(withName: "ItemHeart")?.childNode(withName: "ItemHeartSelected")?.zPosition = -22
+                        quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart"))
+                        checkSelectHeart = false
+                    } else {
+                        BGSelectItem?.childNode(withName: "ItemHeart")?.childNode(withName: "ItemHeartSelected")?.zPosition = 21
+                        quantityItemHeart?.text = String(defaults.integer(forKey: "itemHeart") - 1)
+                        checkSelectHeart = true
+                    }
                 }
             }
             
             //press item coin
             if atPoint(location).name == "ItemCoin" {
-                if checkSelectCoin {
-                    BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "ItemCoinSelected")?.zPosition = -22
-                    quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin"))
-                    checkSelectCoin = false
-                } else {
-                    BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "ItemCoinSelected")?.zPosition = 21
-                    quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin") - 1)
-                    checkSelectCoin = true
+                if defaults.integer(forKey: "itemCoin") > 0 {
+                    if checkSelectCoin {
+                        BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "ItemCoinSelected")?.zPosition = -22
+                        quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin"))
+                        checkSelectCoin = false
+                    } else {
+                        BGSelectItem?.childNode(withName: "ItemCoin")?.childNode(withName: "ItemCoinSelected")?.zPosition = 21
+                        quantityItemCoin?.text = String(defaults.integer(forKey: "itemCoin") - 1)
+                        checkSelectCoin = true
+                    }
                 }
             }
             
@@ -389,11 +430,11 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 if checkSelectHeart {
                     life = 4
                     maxLife = 6
-                    defaults.set(defaults.integer(forKey: "itemHeart") - 1, forKey: "itemHeart")
+                    defaults.set(defaults.integer(forKey: "itemHeart") > 0 ? (defaults.integer(forKey: "itemHeart") - 1) : 0, forKey: "itemHeart")
                 }
                 if checkSelectCoin {
                     doubleCoin?.zPosition = 1
-                    defaults.set(defaults.integer(forKey: "itemCoin") - 1, forKey: "itemCoin")
+                    defaults.set(defaults.integer(forKey: "itemCoin") > 0 ? (defaults.integer(forKey: "itemCoin") - 1) : 0, forKey: "itemCoin")
                 }
                 initializeGame()
             }
@@ -402,13 +443,13 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             if atPoint(location).name == "Sound" {
                 if checkSound {
                     sound?.texture = SKTexture(imageNamed: "mute")
-                    GameViewController.defaults.set("mute", forKey: "checkSound")
-                    GameViewController.defaults.set("mute", forKey: "checkMusic")
+                    defaults.set("mute", forKey: "checkSound")
+                    defaults.set("mute", forKey: "checkMusic")
                     GameViewController.checkMusic = false
                 } else {
                     sound?.texture = SKTexture(imageNamed: "sound")
-                    GameViewController.defaults.set("sound", forKey: "checkSound")
-                    GameViewController.defaults.set("music", forKey: "checkMusic")
+                    defaults.set("sound", forKey: "checkSound")
+                    defaults.set("music", forKey: "checkMusic")
                     GameViewController.checkMusic = true
                 }
                 checkSound = !checkSound
@@ -417,21 +458,25 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             
             //press item slow
             if atPoint(location).name == "ItemSlow" {
-                if quantitySlow! > 0 {
-                    quantitySlow! -= 1
-                    quantityItemSlow?.text = "x\(String(quantitySlow!))"
-                    defaults.set(defaults.integer(forKey: "itemSlow") - 1, forKey: "itemSlow")
-                    DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
-                        self.physicsWorld.speed = 0.5
-                        self.speed = 0.5
-                        self.itemTimerSLow?.text = String(self.secondSlow)
-                        self.childNode(withName: "SlowTimer")?.zPosition = 0
-                        self.timerSlow = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerSLow), userInfo: nil, repeats: true)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
-                        self.physicsWorld.speed = 1
-                        self.speed = 1
-                    })
+                if !slowBool {
+                    if quantitySlow! > 0 {
+                        quantitySlow! -= 1
+                        quantityItemSlow?.text = "x\(String(quantitySlow!))"
+                        defaults.set(defaults.integer(forKey: "itemSlow") - 1, forKey: "itemSlow")
+                        slowBool = true
+                        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                            self.physicsWorld.speed = 0.5
+                            self.speed = 0.5
+                            self.itemTimerSLow?.text = String(self.secondSlow)
+                            self.childNode(withName: "SlowTimer")?.zPosition = 0
+                            self.timerSlow = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerSLow), userInfo: nil, repeats: true)
+                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+                            self.slowBool = false
+                            self.physicsWorld.speed = 1
+                            self.speed = 1
+                        })
+                    }
                 }
             }
             
@@ -504,19 +549,28 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             
             //press item protect
             if atPoint(location).name == "ItemProtect" {
-                if quantityProtect! > 0 {
-                    quantityProtect! -= 1
-                    quantityItemProtect?.text = "x\(String(quantityProtect!))"
-                    defaults.set(defaults.integer(forKey: "itemProtect") - 1, forKey: "itemProtect")
-                    DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
-                        self.protect = true
-                        self.itemTimerProtect?.text = String(self.secondProtect)
-                        self.childNode(withName: "ProtectTimer")?.zPosition = 0
-                        self.timerProtect = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerProtect), userInfo: nil, repeats: true)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
-                        self.protect = false
-                    })
+                if !protectBool {
+                    if quantityProtect! > 0 {
+                        quantityProtect! -= 1
+                        quantityItemProtect?.text = "x\(String(quantityProtect!))"
+                        defaults.set(defaults.integer(forKey: "itemProtect") - 1, forKey: "itemProtect")
+                        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                            self.protectBool = true
+                            self.itemTimerProtect?.text = String(self.secondProtect)
+                            self.childNode(withName: "ProtectTimer")?.zPosition = 0
+                            self.player?.texture = SKTexture(imageNamed: "protectedBeer")
+                            //GetSceneForDevice().getFontCoin(deviceName: UIDevice().modelName)
+                            let widthProtected = GetSceneForDevice().getSizeForPlayerProtected(deviceName: UIDevice().modelName).width
+                            let heightProtected =  GetSceneForDevice().getSizeForPlayerProtected(deviceName: UIDevice().modelName).height
+                            self.player?.size = CGSize(width: widthProtected, height: heightProtected)
+                            self.timerProtect = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerProtect), userInfo: nil, repeats: true)
+                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+                            self.protectBool = false
+                            self.player?.texture = SKTexture(imageNamed: "player")
+                            self.player?.size = CGSize(width: self.widthPlayer!, height: self.heightPlayer!)
+                        })
+                    }
                 }
             }
             
@@ -699,7 +753,49 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             if checkSound {
                 self.run(SKAction.playSoundFileNamed("boom.mp3", waitForCompletion: false))
             }
-            if !protect {
+            if !protectBool {
+                print("game over")
+                print("hight score: ", defaults.integer(forKey: "bestScore"))
+                
+                score > defaults.integer(forKey: "bestScore") ? defaults.set(score, forKey: "bestScore") : nil
+                
+                
+                if let _ = defaults.string(forKey: "tokenLogin") {
+                    checkUpdateItem()
+                    // check if score more than best score// update to server
+//                    let phBestScore = defaults.integer(forKey: "bestScore")
+                    
+//                    let parameters = [
+//                        "itemBom": defaults.integer(forKey: "itemBom"),
+//                        "itemSlow": defaults.integer(forKey: "itemSlow"),
+//                        "itemProtect": defaults.integer(forKey: "itemProtect"),
+//                        "itemCoin": defaults.integer(forKey: "itemCoin"),
+//                        "itemHeart": defaults.integer(forKey: "itemHeart"),
+//                        "best_score": score > phBestScore ? score : phBestScore,
+//                        "coin": defaults.integer(forKey: "coinCollect"),
+//                        "token": defaults.string(forKey: "tokenLogin")!,
+//                        "user_type": defaults.string(forKey: "userType") ?? "1"
+//                        ] as [String : Any]
+//
+//                    print("params: ", parameters)
+//
+//                    Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/user/update-coin-item", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
+//                        if let responseData = respond.result.value as! [String: Any]? {
+//                            if (responseData["state"] as? String) ?? "" == "Success" {
+//                                defaults.set(0, forKey: "flag")
+//                            } else {
+//                                defaults.set(1, forKey: "flag")
+//                            }
+//                        } else {
+//                            defaults.set(1, forKey: "flag")
+//                        }
+//                    })
+                    
+                } // end if let tokenlogin
+                
+                
+                
+                
                 lifeLabel?.text = "x0"
                 for child in self.children {
                     let explosion = SKEmitterNode(fileNamed: "Explosion")!
@@ -719,7 +815,8 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                 }
                 firstBody.node?.removeFromParent()
                 secondBody.node?.removeFromParent()
-            } else {
+            } else { // oke i has shield Muhaaaaaa
+                
                 let explosion = SKEmitterNode(fileNamed: "Explosion")!
                 explosion.position = secondBody.node!.position
                 secondBody.node?.removeFromParent()
@@ -728,24 +825,29 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
                     explosion.removeFromParent()
                 })
             }
-        }
+        } // end cut BOM BOM BOM
         
-    }
+    } // end did began
     
     // init game play
     private func initializeGame(){
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         player = childNode(withName: "Player") as? Player!
+        widthPlayer = player?.size.width
+        heightPlayer = player?.size.height
         player?.initializePlayer()
         
         scoreLabel = childNode(withName: "ScoreLabel") as? SKLabelNode!
         scoreLabel?.text = "0"
+        scoreLabel?.fontName = "Comic Book"
         
         lifeLabel = childNode(withName: "LifeLabel") as? SKLabelNode!
+        lifeLabel?.fontName = "Comic Book"
         lifeLabel?.text = "x\(String(life))"
         
         coinLabel = childNode(withName: "CoinLabel") as? SKLabelNode!
+        coinLabel?.fontName = "Comic Book"
         coinLabel?.text = "0"
         
         if gameTimer == nil {
@@ -825,4 +927,59 @@ class GameplaySceneClass: SKScene, SKPhysicsContactDelegate {
             view?.presentScene(scene, transition: SKTransition.doorsOpenHorizontal(withDuration: TimeInterval(2)))
         }
     }
+    
+//    func checkUpdateItemGameOver() {
+//        // check flag #1 is connect server update item
+//        if let _ = defaults.string(forKey: "tokenLogin") {
+//            //
+//            let parameters = [
+//                "itemBom": defaults.integer(forKey: "itemBom"),
+//                "itemSlow": defaults.integer(forKey: "itemSlow"),
+//                "itemProtect": defaults.integer(forKey: "itemProtect"),
+//                "itemCoin": defaults.integer(forKey: "itemCoin"),
+//                "itemHeart": defaults.integer(forKey: "itemHeart"),
+//                "best_score": defaults.integer(forKey: "bestScore"),
+//                "coin": defaults.integer(forKey: "coinCollect"),
+//                "token": defaults.string(forKey: "tokenLogin")!,
+//                "user_type": defaults.string(forKey: "userType") ?? "1"
+//                ] as [String : Any]
+//
+//            Alamofire.request("http://103.28.38.10/~tngame/manhtu/bear/api/user/update-coin-item", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { (respond) in
+//                print("respond check update \(respond)")
+//                if let responseData = respond.result.value as! [String: Any]? {
+//                    if (responseData["state"] as? String) ?? "" == "Success" {
+//                        defaults.set(0, forKey: "flag")
+//                        print("user infor in update: ", userInfo)
+//                        print("update item ssuccess")
+//                    } else {
+//                        if (responseData["token"] != nil) {
+//                            // save tokenLogin to local
+//                            print("update token")
+//                            defaults.set(responseData["token"] as! String, forKey: "tokenLogin")
+//                            MainMenuScene.sharedInstance.handleGetUserInfo()
+//                            self.checkUpdateItemGameOver()
+//                        } else {
+//                            print("update item failed")
+//                            defaults.set(0, forKey: "flag")
+//                            defaults.set(0, forKey: "itemBom")
+//                            defaults.set(0, forKey: "itemSlow")
+//                            defaults.set(0, forKey: "itemProtect")
+//                            defaults.set(0, forKey: "itemCoin")
+//                            defaults.set(0, forKey: "itemHeart")
+//                            defaults.set(0, forKey: "bestScore")
+//                            defaults.set(0, forKey: "coinCollect")
+//                            MainMenuScene.sharedInstance.bestScoreLabel?.text = "0"
+//                            MainMenuScene.sharedInstance.coinCollectLabel?.text = String(defaults.integer(forKey: "coinCollect"))
+//                            defaults.removeObject(forKey: "tokenLogin")
+//                            MainMenuScene.sharedInstance.textLogin?.text = "Login"
+//                            MainMenuScene.sharedInstance.LogoutSocial()
+//                        }
+//                        defaults.set(1, forKey: "flag")
+//                    }
+//                } else {
+//                    defaults.set(1, forKey: "flag")
+//                }
+//            })
+//        }
+//    }
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="comic.ttf">
+            <string>ComicSansMS</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Payment View Controller-->
+        <scene sceneID="MnR-Tp-13O">
+            <objects>
+                <viewController storyboardIdentifier="PaymentVC" id="zCd-KW-p79" customClass="PaymentViewController" customModule="Catch_beer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Vb-34-DRQ">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="RKi-yP-hZ0">
+                                <rect key="frame" x="259" y="70" width="250" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Ze8-Y7-Mjg"/>
+                                    <constraint firstAttribute="height" constant="200" id="mGX-Di-qHx"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="choose coin and price" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tz4-Jg-ebn">
+                                <rect key="frame" x="10" y="295" width="748" height="31"/>
+                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eva-bj-vjD">
+                                <rect key="frame" x="10" y="341" width="748" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Ms9-3Q-GoO"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfV-V2-02F">
+                                <rect key="frame" x="718" y="35" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="JqV-y9-hbM"/>
+                                    <constraint firstAttribute="height" constant="35" id="nga-VQ-JpZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" image="close-button">
+                                    <color key="titleColor" red="0.59993487599999995" green="0.60003864770000004" blue="0.59992027280000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btn_Cancel:" destination="zCd-KW-p79" eventType="touchUpInside" id="mzM-9p-oqj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zix-o7-oP1">
+                                <rect key="frame" x="284" y="431" width="200" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Dib-dP-icR"/>
+                                    <constraint firstAttribute="height" constant="50" id="fML-qY-fWS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ComicSansMS" family="Comic Sans MS" pointSize="20"/>
+                                <state key="normal" title="Pay" backgroundImage="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnPayWtihApple:" destination="zCd-KW-p79" eventType="touchUpInside" id="wTF-M8-fsV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zix-o7-oP1" firstAttribute="centerX" secondItem="2Vb-34-DRQ" secondAttribute="centerX" id="2pw-Ml-FGz"/>
+                            <constraint firstItem="eva-bj-vjD" firstAttribute="leading" secondItem="Owc-P5-38w" secondAttribute="leading" constant="10" id="6xO-vt-ZG0"/>
+                            <constraint firstAttribute="trailing" secondItem="eva-bj-vjD" secondAttribute="trailing" constant="10" id="9Sr-p3-KB6"/>
+                            <constraint firstItem="eva-bj-vjD" firstAttribute="top" secondItem="tz4-Jg-ebn" secondAttribute="bottom" constant="15" id="HU7-5M-DXZ"/>
+                            <constraint firstItem="RKi-yP-hZ0" firstAttribute="top" secondItem="Owc-P5-38w" secondAttribute="top" constant="50" id="OpX-CG-UBd"/>
+                            <constraint firstItem="tz4-Jg-ebn" firstAttribute="leading" secondItem="Owc-P5-38w" secondAttribute="leading" constant="10" id="RMr-wg-O1f"/>
+                            <constraint firstItem="zix-o7-oP1" firstAttribute="top" secondItem="eva-bj-vjD" secondAttribute="bottom" constant="40" id="XHc-XQ-JIB"/>
+                            <constraint firstItem="Owc-P5-38w" firstAttribute="trailing" secondItem="vfV-V2-02F" secondAttribute="trailing" constant="15" id="Ylr-8F-CBO"/>
+                            <constraint firstItem="eva-bj-vjD" firstAttribute="top" secondItem="tz4-Jg-ebn" secondAttribute="bottom" constant="15" id="bLt-rc-xcd"/>
+                            <constraint firstItem="vfV-V2-02F" firstAttribute="top" secondItem="Owc-P5-38w" secondAttribute="top" constant="15" id="cqM-et-mPS"/>
+                            <constraint firstItem="Owc-P5-38w" firstAttribute="trailing" secondItem="eva-bj-vjD" secondAttribute="trailing" constant="10" id="ec6-3L-h5m"/>
+                            <constraint firstItem="Owc-P5-38w" firstAttribute="trailing" secondItem="tz4-Jg-ebn" secondAttribute="trailing" constant="10" id="mhk-Ie-n84"/>
+                            <constraint firstItem="eva-bj-vjD" firstAttribute="leading" secondItem="Owc-P5-38w" secondAttribute="leading" constant="10" id="vTK-sM-xlA"/>
+                            <constraint firstItem="RKi-yP-hZ0" firstAttribute="centerX" secondItem="2Vb-34-DRQ" secondAttribute="centerX" id="y5I-Ea-GEY"/>
+                            <constraint firstItem="tz4-Jg-ebn" firstAttribute="top" secondItem="RKi-yP-hZ0" secondAttribute="bottom" constant="25" id="zQG-LA-3eL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Owc-P5-38w"/>
+                    </view>
+                    <connections>
+                        <outlet property="btn_PayWithApple" destination="zix-o7-oP1" id="s6N-sf-qho"/>
+                        <outlet property="lblTextCoinPrice" destination="tz4-Jg-ebn" id="SNf-CI-Glf"/>
+                        <outlet property="paymentMethodStackView" destination="eva-bj-vjD" id="YiR-xC-N7L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q1e-gL-5XB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122.40000000000001" y="178.56071964017991"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Button" width="156" height="24"/>
+        <image name="close-button" width="50" height="50"/>
+        <image name="logo" width="480" height="400"/>
+    </resources>
+</document>

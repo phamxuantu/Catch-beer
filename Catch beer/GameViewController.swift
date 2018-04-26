@@ -11,9 +11,10 @@ import SpriteKit
 import GameplayKit
 import Toast_Swift
 
+
 class GameViewController: UIViewController {
     
-    static var defaults = UserDefaults.standard
+//    static var defaults = UserDefaults.standard
     
     static var bestScore: Int = 0
     static var checkSound: Bool = true
@@ -22,12 +23,12 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let bestScoreSave = GameViewController.defaults.integer(forKey: "bestScore")
+        let bestScoreSave = defaults.integer(forKey: "bestScore")
         if bestScoreSave != 0 {
             GameViewController.bestScore = bestScoreSave
         }
         
-        let statusSound = GameViewController.defaults.string(forKey: "checkSound")
+        let statusSound = defaults.string(forKey: "checkSound")
         if statusSound != nil {
             if statusSound == "sound" {
                 GameViewController.checkSound = true
@@ -36,7 +37,7 @@ class GameViewController: UIViewController {
             }
         }
         
-        let statusMusic = GameViewController.defaults.string(forKey: "checkMusic")
+        let statusMusic = defaults.string(forKey: "checkMusic")
         if statusMusic != nil {
             if statusMusic == "music" {
                 GameViewController.checkMusic = true

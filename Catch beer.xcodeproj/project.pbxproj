@@ -61,6 +61,14 @@
 		0AF4F1492047970400A02B68 /* MotivaSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A8E9E792044118C005C08EE /* MotivaSans-MediumItalic.otf */; };
 		21376353205610A500AF7B24 /* ChangePassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21376352205610A500AF7B24 /* ChangePassword.storyboard */; };
 		2137635520565FFF00AF7B24 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */; };
+		218C6A86207313B6002CB649 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218C6A85207313B6002CB649 /* Functions.swift */; };
+		219381CC206A1E35003DBA2B /* Payment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 219381CB206A1E35003DBA2B /* Payment.storyboard */; };
+		219381CE206A3500003DBA2B /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219381CD206A3500003DBA2B /* PaymentViewController.swift */; };
+		219720AD207F4F6700D0C67A /* Amatic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 219720AB207F4EE600D0C67A /* Amatic-Bold.ttf */; };
+		219720AE207F4F6B00D0C67A /* AmaticSC-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 219720AC207F4EEA00D0C67A /* AmaticSC-Regular.ttf */; };
+		219720AF207F4F6E00D0C67A /* CarterOne.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 219720AA207F4EDB00D0C67A /* CarterOne.ttf */; };
+		21A001D52088371A00D32EF9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21A001D42088371A00D32EF9 /* StoreKit.framework */; };
+		21A001D720883B6D00D32EF9 /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A001D620883B6D00D32EF9 /* IAPHandler.swift */; };
 		21BB26F82052956A0001D224 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */; };
 		21BB26FC205295D50001D224 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FB205295D50001D224 /* LoginViewController.swift */; };
 		21BB26FE20537AC00001D224 /* ConnectionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BB26FD20537AC00001D224 /* ConnectionCheck.swift */; };
@@ -126,6 +134,14 @@
 		0AF4F147204795F600A02B68 /* comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic.ttf; sourceTree = "<group>"; };
 		21376352205610A500AF7B24 /* ChangePassword.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangePassword.storyboard; sourceTree = "<group>"; };
 		2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		218C6A85207313B6002CB649 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		219381CB206A1E35003DBA2B /* Payment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Payment.storyboard; sourceTree = "<group>"; };
+		219381CD206A3500003DBA2B /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		219720AA207F4EDB00D0C67A /* CarterOne.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CarterOne.ttf; sourceTree = "<group>"; };
+		219720AB207F4EE600D0C67A /* Amatic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Amatic-Bold.ttf"; sourceTree = "<group>"; };
+		219720AC207F4EEA00D0C67A /* AmaticSC-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AmaticSC-Regular.ttf"; sourceTree = "<group>"; };
+		21A001D42088371A00D32EF9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		21A001D620883B6D00D32EF9 /* IAPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 		21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		21BB26FB205295D50001D224 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		21BB26FD20537AC00001D224 /* ConnectionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCheck.swift; sourceTree = "<group>"; };
@@ -140,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB8D2836A115B4F5D3ADAEC5 /* Pods_Catch_beer.framework in Frameworks */,
+				21A001D52088371A00D32EF9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +259,7 @@
 				0AE0D6612053857A009C67FA /* Login.storyboard */,
 				0A77B36E20322EAB008ABA04 /* Launch Screen.storyboard */,
 				21376352205610A500AF7B24 /* ChangePassword.storyboard */,
+				219381CB206A1E35003DBA2B /* Payment.storyboard */,
 				0A4166CA201F156A00BD5087 /* Info.plist */,
 				0A706B47202BFCDA006FACB2 /* GetSceneForDevice.swift */,
 				0A3D6CA7203272F200CCC037 /* Catch beer-Bridging-Header.h */,
@@ -287,6 +305,7 @@
 				21BB26FB205295D50001D224 /* LoginViewController.swift */,
 				21BB26F72052956A0001D224 /* ForgotPasswordViewController.swift */,
 				2137635420565FFF00AF7B24 /* ChangePasswordViewController.swift */,
+				219381CD206A3500003DBA2B /* PaymentViewController.swift */,
 			);
 			path = "Scene Classes";
 			sourceTree = "<group>";
@@ -326,6 +345,8 @@
 				0A706B45202BFC1A006FACB2 /* UIDevice+Extensions.swift */,
 				0ABA1D4820454F930013B06B /* CustomTextField.swift */,
 				21BB26FD20537AC00001D224 /* ConnectionCheck.swift */,
+				218C6A85207313B6002CB649 /* Functions.swift */,
+				21A001D620883B6D00D32EF9 /* IAPHandler.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -339,6 +360,9 @@
 				0A762EB5203EA7090045D53E /* Comic Book Bold.otf */,
 				0A762EB7203EA7090045D53E /* Comic Book Italic.otf */,
 				0A762EB6203EA7090045D53E /* Comic Book.otf */,
+				219720AB207F4EE600D0C67A /* Amatic-Bold.ttf */,
+				219720AC207F4EEA00D0C67A /* AmaticSC-Regular.ttf */,
+				219720AA207F4EDB00D0C67A /* CarterOne.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -355,6 +379,7 @@
 		23658734913D30FB04D9C182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21A001D42088371A00D32EF9 /* StoreKit.framework */,
 				973CE7671B01BBC14B6D42B2 /* Pods_Catch_beer.framework */,
 			);
 			name = Frameworks;
@@ -397,6 +422,9 @@
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -429,6 +457,7 @@
 			files = (
 				0A5CD7B62043FBE000BB2AD8 /* Firework.sks in Resources */,
 				0A706B83202C29C3006FACB2 /* GameplaySceneIpad97.sks in Resources */,
+				219720AF207F4F6E00D0C67A /* CarterOne.ttf in Resources */,
 				0AE0D6622053857A009C67FA /* Login.storyboard in Resources */,
 				0A762EB9203EA72D0045D53E /* Comic Book Bold.otf in Resources */,
 				0A706B9F202C568A006FACB2 /* heart.wav in Resources */,
@@ -444,6 +473,8 @@
 				0A706B91202C2A7B006FACB2 /* MainMenuSE.sks in Resources */,
 				0AA6159620317CB600E2306A /* MainMenuSE copy.sks in Resources */,
 				0AA6159820317CE800E2306A /* MainMenu4s copy.sks in Resources */,
+				219720AD207F4F6700D0C67A /* Amatic-Bold.ttf in Resources */,
+				219720AE207F4F6B00D0C67A /* AmaticSC-Regular.ttf in Resources */,
 				0A4166D2201F169A00BD5087 /* MainMenu.sks in Resources */,
 				0A706B9C202C568A006FACB2 /* mainsence.mp3 in Resources */,
 				0A56F53C202C9CAE00BED006 /* bottleFalls.mp3 in Resources */,
@@ -470,6 +501,7 @@
 				0A77B36D20322DE8008ABA04 /* Assets.xcassets in Resources */,
 				0A4166BD201F156A00BD5087 /* Actions.sks in Resources */,
 				0ABA1D4B204557840013B06B /* Signup.storyboard in Resources */,
+				219381CC206A1E35003DBA2B /* Payment.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,7 +520,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterShareExtensionUIResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -507,6 +540,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
@@ -518,6 +552,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
@@ -555,10 +590,13 @@
 				21BB26FC205295D50001D224 /* LoginViewController.swift in Sources */,
 				0A4166D6201F171200BD5087 /* MainMenuScene.swift in Sources */,
 				0ABA1D4D204560EB0013B06B /* SignupViewController.swift in Sources */,
+				21A001D720883B6D00D32EF9 /* IAPHandler.swift in Sources */,
+				218C6A86207313B6002CB649 /* Functions.swift in Sources */,
 				0A4166C1201F156A00BD5087 /* GameViewController.swift in Sources */,
 				0A4166B9201F156A00BD5087 /* AppDelegate.swift in Sources */,
 				0ABA1D4920454F930013B06B /* CustomTextField.swift in Sources */,
 				0A4166DD201F272F00BD5087 /* Player.swift in Sources */,
+				219381CE206A3500003DBA2B /* PaymentViewController.swift in Sources */,
 				0A4166E0201F2F9700BD5087 /* ItemController.swift in Sources */,
 				21BB26F82052956A0001D224 /* ForgotPasswordViewController.swift in Sources */,
 				0A4166DA201F1E2B00BD5087 /* GameplaySceneClass.swift in Sources */,
@@ -697,11 +735,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Catch beer/Catch beer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HRYHLX4EPQ;
+				DEVELOPMENT_TEAM = 88JP8HVQJV;
 				INFOPLIST_FILE = "Catch beer/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer1141";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -715,11 +753,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Catch beer/Catch beer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HRYHLX4EPQ;
+				DEVELOPMENT_TEAM = 88JP8HVQJV;
 				INFOPLIST_FILE = "Catch beer/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tntechs.Application.Catch-beer1141";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

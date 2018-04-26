@@ -33,19 +33,19 @@ class GetSceneForDevice {
     func getScaleItem(deviceName: String) -> (bom: CGFloat, beer: CGFloat, beerGold: CGFloat, heart: CGFloat, coin: CGFloat) {
         switch deviceName {
         case "iPhone 4s":
-            return (bom: 0.065, beer: 0.25, beerGold: 0.25, heart: 0.25, coin: 0.25)
+            return (bom: 0.065, beer: 0.25, beerGold: 0.25, heart: 0.25, coin: 0.2)
         case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
-            return (bom: 0.08, beer: 0.3, beerGold: 0.3, heart: 0.3, coin: 0.3)
+            return (bom: 0.105, beer: 0.27, beerGold: 0.27, heart: 0.29, coin: 0.22)
         case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
-            return (bom: 0.1, beer: 0.35, beerGold: 0.35, heart: 0.4, coin: 0.4)
+            return (bom: 0.12, beer: 0.32, beerGold: 0.32, heart: 0.31, coin: 0.24)
         case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
-            return (bom: 0.11, beer: 0.4, beerGold: 0.4, heart: 0.45, coin: 0.43)
+            return (bom: 0.13, beer: 0.35, beerGold: 0.35, heart: 0.35, coin: 0.25)
         case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
-            return (bom: 0.17, beer: 0.6, beerGold: 0.6, heart: 0.7, coin: 0.6)
+            return (bom: 0.18, beer: 0.5, beerGold: 0.5, heart: 0.5, coin: 0.35)
         case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
-            return (bom: 0.23, beer: 0.8, beerGold: 0.8, heart: 0.8, coin: 0.8)
+            return (bom: 0.24, beer: 0.6, beerGold: 0.6, heart: 0.6, coin: 0.4)
         default:
-            return (bom: 0.18, beer: 0.6, beerGold: 0.6, heart: 0.8, coin: 0.68)
+            return (bom: 0.19, beer: 0.5, beerGold: 0.5, heart: 0.6, coin: 0.5)
         }
     }
     
@@ -109,19 +109,19 @@ class GetSceneForDevice {
     func getFontCoin(deviceName: String) -> (low: CGFloat, high: CGFloat) {
         switch deviceName {
         case "iPhone 4s":
-            return (low: 19, high: 16)
+            return (low: 18, high: 15)
         case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
-            return (low: 22, high: 18)
+            return (low: 21, high: 16)
         case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
-            return (low: 22, high: 18)
+            return (low: 21, high: 16)
         case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
-            return (low: 27, high: 22)
+            return (low: 25, high: 20)
         case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
-            return (low: 45, high: 40)
+            return (low: 43, high: 36)
         case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
-            return (low: 50, high: 45)
+            return (low: 47, high: 38)
         default:
-            return (low: 50, high: 42)
+            return (low: 47, high: 38)
         }
     }
     
@@ -141,6 +141,26 @@ class GetSceneForDevice {
             return 55
         default:
             return 40
+        }
+    }
+    
+    
+    func getSizeForPlayerProtected(deviceName: String) -> (width: CGFloat, height: CGFloat) {
+        switch deviceName {
+        case "iPhone 4s":
+            return (width: 97, height: 97)
+        case "iPhone 5", "iPhone 5s", "iPhone 5c", "iPhone SE", "iPod Touch 5", "iPod Touch 6":
+            return (width: 110, height: 110)
+        case "iPhone 6", "iPhone 6s", "iPhone 7", "iPhone 8":
+            return (width: 120, height: 120)
+        case "iPhone 6 Plus", "iPhone 6s Plus", "iPhone 7 Plus", "iPhone 8 Plus", "iPhone X":
+            return (width: 130, height: 130)
+        case "iPad 2", "iPad 3", "iPad 4", "iPad 5", "iPad Air", "iPad Air 2", "iPad Pro 9.7 Inch":
+            return (width: 160, height: 160)
+        case "iPad Pro 12.9 Inch", "iPad Pro 12.9 Inch 2. Generation", "iPad Pro 10.5 Inch":
+            return (width: 160, height: 160)
+        default:
+            return (width: 145, height: 145)
         }
     }
 

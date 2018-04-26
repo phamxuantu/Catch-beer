@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allows the app to use your location.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -29,9 +31,19 @@
 				<string>anothercustomurlscheme</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Tntechs.Application.Catch-beer1141.payments</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Tntechs.Application.Catch-beer1141.payments</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>4</string>
 	<key>FacebookAppID</key>
 	<string>245199002688611</string>
 	<key>FacebookDisplayName</key>
@@ -54,6 +66,9 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>AmaticSC-Regular.ttf</string>
+		<string>Amatic-Bold.ttf</string>
+		<string>CarterOne.ttf</string>
 		<string>Comic Book Bold Italic.otf</string>
 		<string>Comic Book Bold.otf</string>
 		<string>Comic Book Italic.otf</string>
@@ -69,6 +84,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>

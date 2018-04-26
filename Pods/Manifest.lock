@@ -12,6 +12,7 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.29.0):
     - FBSDKCoreKit
+  - SwiftyStoreKit (0.13.1)
   - Toast-Swift (3.0.1)
   - TwitterCore (3.1.0)
   - TwitterKit (3.3.0):
@@ -22,8 +23,21 @@ DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - SwiftyStoreKit
   - Toast-Swift (~> 3.0.1)
   - TwitterKit
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Bolts
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
+    - SwiftyStoreKit
+    - Toast-Swift
+    - TwitterCore
+    - TwitterKit
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
@@ -31,10 +45,11 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
+  SwiftyStoreKit: c36bb7841dd51a485ce5c38abf9e96fba988741f
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
   TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
   TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
 
-PODFILE CHECKSUM: 0db151f7eb071bb6ecb577637b86aebdc3bf271c
+PODFILE CHECKSUM: a33160c591254be047553163fb44b42eb801076f
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0
